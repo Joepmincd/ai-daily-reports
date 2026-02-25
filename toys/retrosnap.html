@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetroSnap 复古拍立得</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e5e5e5;
+            background-image: 
+                linear-gradient(45deg, #dadada 25%, transparent 25%), 
+                linear-gradient(-45deg, #dadada 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #dadada 75%), 
+                linear-gradient(-45deg, transparent 75%, #dadada 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            overflow: hidden;
+        }
+        
+        .camera-body {
+            background: linear-gradient(145deg, #f5f5f5, #e0e0e0);
+            border-radius: 30px;
+            box-shadow: 
+                10px 10px 30px rgba(0,0,0,0.25), 
+                inset -2px -2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .camera-lens {
+            background: radial-gradient(circle at 30% 30%, #4a4a4a, #1a1a1a);
+            border-radius: 50%;
+            box-shadow: 
+                inset 0 0 20px rgba(0,0,0,0.8),
+                0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .camera-lens::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            width: 30%;
+            height: 30%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3), transparent);
+            border-radius: 50%;
+        }
+        
+        .shutter-btn {
+            background: linear-gradient(145deg, #e74c3c, #c0392b);
+            border-radius: 50%;
+            box-shadow: 
+                0 4px 10px rgba(231, 76, 60, 0.4),
+                inset 0 -2px 5px rgba(0,0,0,0.2);
+            transition: all 0.1s ease;
+        }
+        
+        .shutter-btn:active {
+            transform: scale(0.95);
+            box-shadow: 
+                0 2px 5px rgba(231, 76, 60, 0.4),
+                inset 0 -1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .polaroid {
+            background: white;
+            padding: 12px 12px 40px 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15), 0 3px 6px rgba(0,0,0,0.10);
+            transition: transform 0.3s ease;
+            cursor: grab;
+        }
+        
+        .polaroid:active {
+            cursor: grabbing;
+        }
+        
+        .polaroid img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: sepia(20%) contrast(1.1);
+        }
+        
+        .polaroid-text {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+            color: #333;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .developing {
+            animation: develop 3s ease forwards;
+        }
+        
+        @keyframes develop {
+            0% { filter: brightness(0) sepia(100%) hue-rotate(180deg); }
+            100% { filter: brightness(1) sepia(20%) contrast(1.1); }
+        }
+        
+        .flash {
+            animation: flash 0.3s ease;
+        }
+        
+        @keyframes flash {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        
+        .eject-animation {
+            animation: eject 0.8s ease-out forwards;
+        }
+        
+        @keyframes eject {
+            0% { 
+                transform: translateY(0) scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(-150px) scale(1);
+                opacity: 1;
+            }
+        }
+        
+        #video-preview {
+            transform: scaleX(-1);
+        }
+    </style>
+</head>
+<body class="h-screen w-full relative">
+    
+    <!-- Help Text -->
+    <div class="absolute top-4 left-4 md:top-8 md:left-8 text-gray-600 text-sm opacity-70 pointer-events-none z-10 select-none">
+        <h1 class="text-3xl font-bold mb-3 text-gray-800">📸 RetroSnap</h1>
+        <p class="mb-1">1. 允许摄像头访问</p>
+        <p class="mb-1">2. 点击红色按钮拍照</p>
+        <p class="mb-1">3. 等待照片显影</p>
+        <p>4. 拖动照片布置你的照片墙</p>
+    </div>
+    
+    <!-- Clear Photos Button -->
+    <button onclick="clearPhotos()" class="absolute top-4 right-4 bg-gray-800 text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-700 transition z-20">
+        清空照片
+    </button>
+
+    <!-- Photo Wall -->
+    <div id="photo-wall" class="absolute inset-0 pointer-events-none">
+        <!-- Photos will be added here -->
+    </div>
+
+    <!-- Camera Container -->
+    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-8 z-30">
+        <div class="camera-body w-72 h-72 md:w-80 md:h-80 p-6 relative">
+            
+            <!-- Rainbow Stripe -->
+            <div class="absolute top-4 left-4 right-4 h-3 rounded-full overflow-hidden flex">
+                <div class="flex-1 bg-pink-400"></div>
+                <div class="flex-1 bg-blue-400"></div>
+                <div class="flex-1 bg-purple-500"></div>
+                <div class="flex-1 bg-orange-400"></div>
+                <div class="flex-1 bg-red-400"></div>
+            </div>
+            
+            <!-- Viewfinder -->
+            <div class="absolute top-8 right-8 w-12 h-8 bg-gray-800 rounded-lg border-2 border-gray-600">
+                <div class="w-full h-full bg-gradient-to-br from-blue-900 to-black opacity-80"></div>
+            </div>
+            
+            <!-- Lens Container -->
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <div class="camera-lens w-32 h-32 md:w-36 md:h-36 relative flex items-center justify-center overflow-hidden">
+                    <!-- Video Preview -->
+                    <video id="video-preview" class="absolute inset-0 w-full h-full object-cover" autoplay playsinline></video>
+                    <!-- Canvas for capture -->
+                    <canvas id="capture-canvas" class="hidden"></canvas>
+                </div>
+            </div>
+            
+            <!-- Shutter Button -->
+            <button onclick="takePhoto()" class="shutter-btn absolute bottom-6 left-1/2 transform -translate-x-1/2 w-16 h-16 md:w-20 md:h-20 flex items-center justify-center">
+                <div class="w-12 h-12 md:w-14 md:h-14 bg-red-500 rounded-full border-4 border-red-700"></div>
+            </button>
+            
+            <!-- Flash -->
+            <div id="flash" class="absolute inset-0 bg-white opacity-0 pointer-events-none rounded-3xl"></div>
+        </div>
+    </div>
+
+    <!-- Start Camera Button (if permission not granted) -->
+    <div id="start-screen" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-md mx-4">
+            <div class="text-6xl mb-4">📸</div>
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">欢迎使用 RetroSnap</h2>
+            <p class="text-gray-600 mb-6">复古拍立得相机，记录美好瞬间</p>
+            <button onclick="startCamera()" class="bg-gray-800 text-white px-8 py-3 rounded-full text-lg hover:bg-gray-700 transition">
+                开启相机
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video-preview');
+        const canvas = document.getElementById('capture-canvas');
+        const photoWall = document.getElementById('photo-wall');
+        const flash = document.getElementById('flash');
+        const startScreen = document.getElementById('start-screen');
+        
+        const quotes = [
+            "Time stands still",
+            "Capture the moment",
+            "Vintage Soul",
+            "Stay Golden",
+            "Visual Poetry",
+            "Eternal Sunshine",
+            "Memory Lane",
+            "Just Breathe",
+            "Life in Mono",
+            "Dream Logic",
+            "美好瞬间",
+            "时光定格",
+            "复古情怀",
+            "金色记忆"
+        ];
+        
+        let stream = null;
+        
+        async function startCamera() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: 'user',
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
+                    }, 
+                    audio: false 
+                });
+                video.srcObject = stream;
+                startScreen.style.display = 'none';
+            } catch (err) {
+                alert('无法访问摄像头，请确保已授予权限');
+                console.error('Camera error:', err);
+            }
+        }
+        
+        function takePhoto() {
+            if (!stream) {
+                alert('请先开启相机');
+                return;
+            }
+            
+            // Flash effect
+            flash.classList.add('flash');
+            setTimeout(() => flash.classList.remove('flash'), 300);
+            
+            // Capture image
+            canvas.width = video.videoWidth || 640;
+            canvas.height = video.videoHeight || 480;
+            const ctx = canvas.getContext('2d');
+            ctx.translate(canvas.width, 0);
+            ctx.scale(-1, 1);
+            ctx.drawImage(video, 0, 0);
+            
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+            createPolaroid(dataUrl);
+        }
+        
+        function createPolaroid(dataUrl) {
+            const id = Date.now().toString();
+            const quote = quotes[Math.floor(Math.random() * quotes.length)];
+            const rotation = (Math.random() - 0.5) * 10;
+            
+            const polaroid = document.createElement('div');
+            polaroid.className = 'polaroid eject-animation absolute pointer-events-auto';
+            polaroid.style.cssText = `
+                width: 200px;
+                left: 50%;
+                bottom: 300px;
+                transform: translateX(-50%) rotate(${rotation}deg);
+                z-index: ${1000 + Date.now()};
+            `;
+            
+            polaroid.innerHTML = `
+                <div class="bg-gray-100 overflow-hidden">
+                    <img src="${dataUrl}" alt="Photo" class="developing w-full h-40 object-cover">
+                </div>
+                <div class="polaroid-text">${quote}</div>
+            `;
+            
+            photoWall.appendChild(polaroid);
+            
+            // Make draggable after animation
+            setTimeout(() => {
+                makeDraggable(polaroid);
+            }, 800);
+            
+            // Random final position
+            setTimeout(() => {
+                const randomX = (Math.random() - 0.5) * window.innerWidth * 0.6;
+                const randomY = -100 - Math.random() * 200;
+                polaroid.style.transition = 'transform 0.5s ease';
+                polaroid.style.transform = `translate(calc(-50% + ${randomX}px), ${randomY}px) rotate(${rotation}deg)`;
+            }, 1000);
+        }
+        
+        function makeDraggable(element) {
+            let isDragging = false;
+            let currentX = 0;
+            let currentY = 0;
+            let initialX = 0;
+            let initialY = 0;
+            let xOffset = 0;
+            let yOffset = 0;
+            
+            element.addEventListener('mousedown', dragStart);
+            element.addEventListener('touchstart', dragStart, { passive: false });
+            
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('touchmove', drag, { passive: false });
+            
+            document.addEventListener('mouseup', dragEnd);
+            document.addEventListener('touchend', dragEnd);
+            
+            function dragStart(e) {
+                if (e.type === 'touchstart') {
+                    initialX = e.touches[0].clientX - xOffset;
+                    initialY = e.touches[0].clientY - yOffset;
+                } else {
+                    initialX = e.clientX - xOffset;
+                    initialY = e.clientY - yOffset;
+                }
+                
+                if (e.target.closest('.polaroid') === element) {
+                    isDragging = true;
+                    element.style.zIndex = 2000 + Date.now();
+                }
+            }
+            
+            function drag(e) {
+                if (isDragging) {
+                    e.preventDefault();
+                    
+                    if (e.type === 'touchmove') {
+                        currentX = e.touches[0].clientX - initialX;
+                        currentY = e.touches[0].clientY - initialY;
+                    } else {
+                        currentX = e.clientX - initialX;
+                        currentY = e.clientY - initialY;
+                    }
+                    
+                    xOffset = currentX;
+                    yOffset = currentY;
+                    
+                    const rect = element.getBoundingClientRect();
+                    const rotation = (Math.random() - 0.5) * 10;
+                    element.style.transform = `translate(calc(-50% + ${currentX}px), ${currentY - 300}px) rotate(${rotation}deg)`;
+                }
+            }
+            
+            function dragEnd() {
+                initialX = currentX;
+                initialY = currentY;
+                isDragging = false;
+            }
+        }
+        
+        function clearPhotos() {
+            photoWall.innerHTML = '';
+        }
+        
+        // Auto-start camera if permission already granted
+        if (navigator.permissions) {
+            navigator.permissions.query({ name: 'camera' }).then(result => {
+                if (result.state === 'granted') {
+                    startCamera();
+                }
+            });
+        }
+    </script>
+</body>
+</html>
