@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>任务汇总集 - 文件管理中心</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        .header {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .header-stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 10px 20px;
+            background: var(--light);
+            border-radius: 12px;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .header-time {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+            color: var(--gray);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-tab {
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--gray);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-tab:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .nav-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .nav-tab .badge {
+            background: rgba(255,255,255,0.3);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+        }
+        
+        /* Content Area */
+        .content-area {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            min-height: 400px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Section Title */
+        .section-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Accordion */
+        .accordion {
+            margin-bottom: 15px;
+        }
+        
+        .accordion-header {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            padding: 18px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+        
+        .accordion-header:hover {
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+            transform: translateX(5px);
+        }
+        
+        .accordion-header.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .accordion-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+        
+        .accordion-icon {
+            font-size: 1.3rem;
+        }
+        
+        .accordion-arrow {
+            transition: transform 0.3s ease;
+            font-size: 1.2rem;
+        }
+        
+        .accordion-header.active .accordion-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .accordion-content.open {
+            max-height: 2000px;
+        }
+        
+        .accordion-body {
+            padding: 20px;
+            background: white;
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+        }
+        
+        /* File Cards */
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .file-card {
+            background: linear-gradient(135deg, #f8fafc, white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .file-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .file-card:hover::before {
+            opacity: 1;
+        }
+        
+        .file-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .file-card.daily::before { background: var(--primary); }
+        .file-card.summary::before { background: var(--secondary); }
+        .file-card.config::before { background: var(--success); }
+        .file-card.archive::before { background: var(--gray); }
+        
+        .file-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .file-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .file-card.daily .file-icon { background: rgba(99,102,241,0.1); }
+        .file-card.summary .file-icon { background: rgba(236,72,153,0.1); }
+        .file-card.config .file-icon { background: rgba(16,185,129,0.1); }
+        .file-card.archive .file-icon { background: rgba(100,116,139,0.1); }
+        
+        .file-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .file-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--dark);
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .file-meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .file-tag {
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        
+        .tag-daily { background: rgba(99,102,241,0.15); color: var(--primary); }
+        .tag-summary { background: rgba(236,72,153,0.15); color: var(--secondary); }
+        .tag-config { background: rgba(16,185,129,0.15); color: var(--success); }
+        .tag-archive { background: rgba(100,116,139,0.15); color: var(--gray); }
+        
+        .file-desc {
+            font-size: 0.85rem;
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        
+        .file-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .file-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: var(--light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-icon:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--primary);
+        }
+        
+        .timeline-date {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .timeline-content {
+            background: var(--light);
+            padding: 15px;
+            border-radius: 12px;
+        }
+        
+        .timeline-files {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .timeline-file {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .timeline-file:hover {
+            background: linear-gradient(135deg, rgba(99,102,241,0.05), rgba(99,102,241,0.1));
+            transform: translateX(5px);
+        }
+        
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        
+        .data-table th,
+        .data-table td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .data-table th {
+            background: var(--light);
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .data-table tr:hover {
+            background: rgba(99,102,241,0.03);
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .status-done { background: rgba(16,185,129,0.15); color: var(--success); }
+        .status-pending { background: rgba(245,158,11,0.15); color: var(--warning); }
+        .status-archive { background: rgba(100,116,139,0.15); color: var(--gray); }
+        
+        /* Search */
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+        }
+        
+        .btn-primary {
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(99,102,241,0.3);
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+        }
+        
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .header-stats {
+                width: 100%;
+                justify-content: space-around;
+            }
+            
+            .nav-tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                padding-bottom: 5px;
+            }
+            
+            .file-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .data-table {
+                font-size: 0.8rem;
+            }
+            
+            .data-table th,
+            .data-table td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <h1>📁 任务汇总集</h1>
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">总文件</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">日报</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">1</div>
+                        <div class="stat-label">总结</div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-time">
+                📅 最后更新：2026年2月25日 14:00
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('overview')">
+                📊 总览
+            </button>
+            <button class="nav-tab" onclick="switchTab('byType')">
+                📂 按类型 <span class="badge">4</span>
+            </button>
+            <button class="nav-tab" onclick="switchTab('byTime')">
+                📅 按时间 <span class="badge">2</span>
+            </button>
+            <button class="nav-tab" onclick="switchTab('byTopic')">
+                🏷️ 按主题 <span class="badge">4</span>
+            </button>
+            <button class="nav-tab" onclick="switchTab('cron')">
+                ⏰ 定时任务 <span class="badge">3</span>
+            </button>
+        </div>
+        
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <h2 class="section-title">📊 文件总览</h2>
+                
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="🔍 搜索文件名、关键词..." id="searchInput" onkeyup="searchFiles()">
+                    <button class="btn-primary" onclick="refreshData()">🔄 刷新</button>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>文件名</th>
+                            <th>类型</th>
+                            <th>生成日期</th>
+                            <th>大小</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fileTableBody">
+                        <tr>
+                            <td>1</td>
+                            <td>x-ai-trends-2026-02-25.html</td>
+                            <td><span class="file-tag tag-daily">日报</span></td>
+                            <td>2026-02-25</td>
+                            <td>~18KB</td>
+                            <td><span class="status-badge status-done">✅ 已生成</span></td>
+                            <td><button class="btn-icon" onclick="openFile('x-ai-trends-2026-02-25.html')">👁️</button></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>ai-news-2026-02-25.html</td>
+                            <td><span class="file-tag tag-daily">日报</span></td>
+                            <td>2026-02-25</td>
+                            <td>~12KB</td>
+                            <td><span class="status-badge status-done">✅ 已生成</span></td>
+                            <td><button class="btn-icon" onclick="openFile('ai-news-2026-02-25.html')">👁️</button></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>producthunt-report-2026-02-25.html</td>
+                            <td><span class="file-tag tag-daily">日报</span></td>
+                            <td>2026-02-25</td>
+                            <td>~13KB</td>
+                            <td><span class="status-badge status-done">✅ 已生成</span></td>
+                            <td><button class="btn-icon" onclick="openFile('producthunt-report-2026-02-25.html')">👁️</button></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>三年春节AI发展回顾-2024-2026.html</td>
+                            <td><span class="file-tag tag-summary">总结</span></td>
+                            <td>2026-02-25</td>
+                            <td>~22KB</td>
+                            <td><span class="status-badge status-done">✅ 已生成</span></td>
+                            <td><button class="btn-icon" onclick="openFile('三年春节AI发展回顾-2024-2026.html')">👁️</button></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>系统提示词.md</td>
+                            <td><span class="file-tag tag-config">配置</span></td>
+                            <td>2026-02-25</td>
+                            <td>~3KB</td>
+                            <td><span class="status-badge status-done">✅ 已生成</span></td>
+                            <td><button class="btn-icon" onclick="openFile('系统提示词.md')">👁️</button></td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>producthunt-report-2026-02-24.html</td>
+                            <td><span class="file-tag tag-daily">日报</span></td>
+                            <td>2026-02-24</td>
+                            <td>~28KB</td>
+                            <td><span class="status-badge status-archive">📦 存档</span></td>
+                            <td><button class="btn-icon" onclick="openFile('producthunt-report-2026-02-24.html')">👁️</button></td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>x-ai-trends-2025-02-25.html</td>
+                            <td><span class="file-tag tag-archive">旧版</span></td>
+                            <td>2026-02-25</td>
+                            <td>~18KB</td>
+                            <td><span class="status-badge status-pending">⚠️ 测试</span></td>
+                            <td><button class="btn-icon" onclick="openFile('x-ai-trends-2025-02-25.html')">👁️</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- By Type Tab -->
+            <div id="byType" class="tab-content">
+                <!-- Daily Reports -->
+                <div class="accordion">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title">
+                            <span class="accordion-icon">📰</span>
+                            <span>日报类 (Daily Reports) <span class="file-tag tag-daily" style="margin-left:10px">4个</span></span>
+                        </div>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="file-grid">
+                                <div class="file-card daily" onclick="openFile('x-ai-trends-2026-02-25.html')">
+                                    <div class="file-header">
+                                        <div class="file-icon">🔥</div>
+                                        <div class="file-info">
+                                            <div class="file-name">X AI趋势日报</div>
+                                            <div class="file-meta">
+                                                <span class="file-tag tag-daily">日报</span>
+                                                <span style="font-size:0.75rem;color:var(--gray)">2026-02-25</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="file-desc">X平台AI热点话题分析，涵盖Agent爆发、DeepSeek影响、编程工具革命</div>
+                                    <div class="file-footer">
+                                        <span>~18KB</span>
+                                        <div class="file-actions">
+                                            <button class="btn-icon">👁️</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="file-card daily" onclick="openFile('ai-news-2026-02-25.html')">
+                                    <div class="file-header">
+                                        <div class="file-icon">🤖</div>
+                                        <div class="file-info">
+                                            <div class="file-name">AI热点新闻日报</div>
+                                            <div class="file-meta">
+                                                <span class="file-tag tag-daily">日报</span>
+                                                <span style="font-size:0.75rem;color:var(--gray)">2026-02-25</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="file-desc">全球AI新闻汇总，科技巨头投资动态、中国AI春节大战、欧盟监管新规</div>
+                                    <div class="file-footer">
+                                        <span>~12KB</span>
+                                        <div class="file-actions">
+                                            <button class="btn-icon">👁️</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="file-card daily" onclick="openFile('producthunt-report-2026-02-25.html')">
+                                    <div class="file-header">
+                                        <div class="file-icon">🚀</div>
+                                        <div class="file-info">
+                                            <div class="file-name">Product Hunt日报</div>
+                                            <div class="file-meta">
+                                                <span class="file-tag tag-daily">日报</span>
+                                                <span style="font-size:0.75rem;color:var(--gray)">2026-02-25</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="file-desc">Product Hunt热门产品分析，AI工具趋势、创新产品洞察</div>
+                                    <div class="file-footer">
+                                        <span>~13KB</span>
+                                        <div class="file-actions">
+                                            <button class="btn-icon">👁️</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="file-card archive" onclick="openFile('producthunt-report-2026-02-24.html')">
+                                    <div class="file-header">
+                                        <div class="file-icon">📦</div>
+                                        <div class="file-info">
+                                            <div class="file-name">Product Hunt日报 (存档)</div>
+                                            <div class="file-meta">
+                                                <span class="file-tag tag-archive">存档</span>
+                                                <span style="font-size:0.75rem;color:var(--gray)">2026-02-24</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="file-desc">昨日Product Hunt产品分析报告</div>
+                                    <div class="file-footer">
+                                        <span>~28KB</span>
+                                        <div class="file-actions">
+                                            <button class="btn-icon">👁️</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Summaries -->
+                <div class="accordion">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title">
+                            <span class="accordion-icon">📚</span>
+                            <span>总结类 (Summaries) <span class="file-tag tag-summary" style="margin-left:10px">1个</span></span>
+                        </div>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="file-grid">
+                                <div class="file-card summary" onclick="openFile('三年春节AI发展回顾-2024-2026.html')">
+                                    <div class="file-header">
+                                        <div class="file-icon">🧧</div>
+                                        <div class="file-info">
+                                            <div class="file-name">三年春节AI发展回顾</div>
+                                            <div class="file-meta">
+                                                <span class="file-tag tag-summary">总结</span>
+                                                <span style="font-size:0.75rem;color:var(--gray)">2026-02-25</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="file-desc">系统性回顾2024-2026年春节AI发展：Sora发布、DeepSeek崛起、百模大战</div>
+                                    <div class="file-footer">
+                                        <span>~22KB</span>
+                                        <div class="file-actions">
+                                            <button class="btn-icon">👁️</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Configs -->
+                <div class="accordion">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title">
+                            <span class="accordion-icon">⚙️</span>
+                            <span>配置类 (Configurations) <span class="file-tag tag-config" style="margin-left:10px">1个</span></span>
+                        </div>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="file-grid">
+                                <div class="file-card config" onclick="openFile('系统提示词.md')">
+                                    <div class="file-header">
+                                        <div class="file-icon">🧠</div>
+                                        <div class="file-info">
+                                            <div class="file-name">系统提示词</div>
+                                            <div class="file-meta">
+                                                <span class="file-tag tag-config">配置</span>
+                                                <span style="font-size:0.75rem;color:var(--gray)">2026-02-25</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="file-desc">28种结构化思维框架，金字塔原理、MECE、第一性原理等分析方法论</div>
+                                    <div class="file-footer">
+                                        <span>~3KB</span>
+                                        <div class="file-actions">
+                                            <button class="btn-icon">👁️</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- By Time Tab -->
+            <div id="byTime" class="tab-content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026年2月25日 (今日)</div>
+                        <div class="timeline-content">
+                            <div class="timeline-files">
+                                <div class="timeline-file" onclick="openFile('x-ai-trends-2026-02-25.html')">
+                                    <span>🔥</span>
+                                    <span>X AI趋势日报</span>
+                                    <span class="file-tag tag-daily" style="margin-left:auto">09:59</span>
+                                </div>
+                                <div class="timeline-file" onclick="openFile('ai-news-2026-02-25.html')">
+                                    <span>🤖</span>
+                                    <span>AI热点新闻日报</span>
+                                    <span class="file-tag tag-daily" style="margin-left:auto">10:45</span>
+                                </div>
+                                <div class="timeline-file" onclick="openFile('producthunt-report-2026-02-25.html')">
+                                    <span>🚀</span>
+                                    <span>Product Hunt日报</span>
+                                    <span class="file-tag tag-daily" style="margin-left:auto">10:47</span>
+                                </div>
+                                <div class="timeline-file" onclick="openFile('系统提示词.md')">
+                                    <span>🧠</span>
+                                    <span>系统提示词</span>
+                                    <span class="file-tag tag-config" style="margin-left:auto">11:58</span>
+                                </div>
+                                <div class="timeline-file" onclick="openFile('三年春节AI发展回顾-2024-2026.html')">
+                                    <span>🧧</span>
+                                    <span>三年春节AI发展回顾</span>
+                                    <span class="file-tag tag-summary" style="margin-left:auto">12:03</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026年2月24日 (昨日)</div>
+                        <div class="timeline-content">
+                            <div class="timeline-files">
+                                <div class="timeline-file" onclick="openFile('producthunt-report-2026-02-24.html')">
+                                    <span>📦</span>
+                                    <span>Product Hunt日报 (存档)</span>
+                                    <span class="file-tag tag-archive" style="margin-left:auto">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- By Topic Tab -->
+            <div id="byTopic" class="tab-content">
+                <div class="accordion">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title">
+                            <span class="accordion-icon">🔥</span>
+                            <span>AI行业趋势 <span class="file-tag" style="margin-left:10px;background:rgba(99,102,241,0.15);color:var(--primary)">2个</span></span>
+                        </div>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="file-grid">
+                                <div class="file-card daily" onclick="openFile('x-ai-trends-2026-02-25.html')">
+                                    <div class="file-header">
+                                        <div class="file-icon">🔥</div>
+                                        <div class="file-info">
+                                            <div class="file-name">X AI趋势日报</div>
+                                        </div>
+                                    </div>
+                                    <div class="file-desc">Agent爆发、DeepSeek影响、编程工具革命</div>
+                                </div>
+                                <div class="file-card summary" onclick="openFile('三年春节AI发展回顾-2024-2026.html')">
+                                    <div class="file-header">
+                                        <div class="file-icon">🧧</div>
+                                        <div class="file-info">
+                                            <div class="file-name">三年春节AI发展回顾</div>
+                                        </div>
+                                    </div>
+                                    <div class="file-desc">Sora、DeepSeek、百模大战历史回顾</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title">
+                            <span class="accordion-icon">🚀</span>
+                            <span>产品分析 <span class="file-tag" style="margin-left:10px;background:rgba(236,72,153,0.15);color:var(--secondary)">2个</span></span>
+                        </div>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="file-grid">
+                                <div class="file-card daily" onclick="openFile('producthunt-report-2026-02-25.html')">
+                                    <div class="file-header">
+                                        <div class="file-icon">🚀</div>
+                                        <div class="file-info">
+                                            <div class="file-name">Product Hunt日报</div>
+                                        </div>
+                                    </div>
+                                    <div class="file-desc">今日热门产品分析</div>
+                                </div>
+                                <div class="file-card archive" onclick="openFile('producthunt-report-2026-02-24.html')">
+                                    <div class="file-header">
+                                        <div class="file-icon">📦</div>
+                                        <div class="file-info">
+                                            <div class="file-name">Product Hunt日报 (存档)</div>
+                                        </div>
+                                    </div>
+                                    <div class="file-desc">昨日产品分析存档</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title">
+                            <span class="accordion-icon">📰</span>
+                            <span>新闻资讯 <span class="file-tag" style="margin-left:10px;background:rgba(16,185,129,0.15);color:var(--success)">1个</span></span>
+                        </div>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="file-grid">
+                                <div class="file-card daily" onclick="openFile('ai-news-2026-02-25.html')">
+                                    <div class="file-header">
+                                        <div class="file-icon">🤖</div>
+                                        <div class="file-info">
+                                            <div class="file-name">AI热点新闻日报</div>
+                                        </div>
+                                    </div>
+                                    <div class="file-desc">全球AI新闻汇总</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title">
+                            <span class="accordion-icon">⚙️</span>
+                            <span>系统配置 <span class="file-tag" style="margin-left:10px;background:rgba(100,116,139,0.15);color:var(--gray)">1个</span></span>
+                        </div>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="file-grid">
+                                <div class="file-card config" onclick="openFile('系统提示词.md')">
+                                    <div class="file-header">
+                                        <div class="file-icon">🧠</div>
+                                        <div class="file-info">
+                                            <div class="file-name">系统提示词</div>
+                                        </div>
+                                    </div>
+                                    <div class="file-desc">思维框架与分析方法论配置</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cron Jobs Tab -->
+            <div id="cron" class="tab-content">
+                <h2 class="section-title">⏰ 定时任务配置</h2>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>任务ID</th>
+                            <th>任务名称</th>
+                            <th>执行时间</th>
+                            <th>输出文件</th>
+                            <th>状态</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>d35129d0...</code></td>
+                            <td>🐦 X AI趋势日报</td>
+                            <td>每天 08:00</td>
+                            <td>x-ai-trends-YYYY-MM-DD.html</td>
+                            <td><span class="status-badge status-done">✅ 运行中</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>abdfb2b7...</code></td>
+                            <td>🤖 AI新闻日报</td>
+                            <td>每天 08:30</td>
+                            <td>ai-news-YYYY-MM-DD.html</td>
+                            <td><span class="status-badge status-done">✅ 运行中</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>eee9c91d...</code></td>
+                            <td>🚀 Product Hunt日报</td>
+                            <td>每天 18:00</td>
+                            <td>producthunt-report-YYYY-MM-DD.html</td>
+                            <td><span class="status-badge status-done">✅ 运行中</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div style="margin-top:30px;padding:20px;background:var(--light);border-radius:12px;">
+                    <h3 style="margin-bottom:15px;display:flex;align-items:center;gap:10px;">
+                        <span>📝</span> 自动更新规则
+                    </h3>
+                    <ul style="margin-left:20px;line-height:2;color:var(--gray);">
+                        <li>新生成日报文件时 → 自动添加到"日报类"和"按时间线"章节</li>
+                        <li>新生成总结文件时 → 添加到"总结类"章节</li>
+                        <li>文件内容主题明确时 → 添加到对应"主题标签"分类</li>
+                        <li>每月1日自动清理 → 归档超过30天的日报文件</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Tab Switching
+        function switchTab(tabId) {
+            // Remove active from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active to clicked tab
+            event.target.closest('.nav-tab').classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+        
+        // Accordion Toggle
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const isOpen = content.classList.contains('open');
+            
+            // Close all accordions in the same parent
+            header.parentElement.parentElement.querySelectorAll('.accordion-content').forEach(c => {
+                c.classList.remove('open');
+                c.previousElementSibling.classList.remove('active');
+            });
+            
+            // Toggle current
+            if (!isOpen) {
+                content.classList.add('open');
+                header.classList.add('active');
+            }
+        }
+        
+        // Open File
+        function openFile(filename) {
+            // In a real environment, this would open the file
+            // For now, show an alert with the file info
+            alert(`📁 打开文件: ${filename}\n\n在实际环境中，这里会打开对应的文件。`);
+        }
+        
+        // Search Files
+        function searchFiles() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const tbody = document.getElementById('fileTableBody');
+            const rows = tbody.getElementsByTagName('tr');
+            
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let found = false;
+                
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].textContent.toLowerCase().indexOf(filter) > -1) {
+                        found = true;
+                        break;
+                    }
+                }
+                
+                rows[i].style.display = found ? '' : 'none';
+            }
+        }
+        
+        // Refresh Data
+        function refreshData() {
+            alert('🔄 刷新数据...\n\n在实际环境中，这会重新扫描文件夹并更新列表。');
+        }
+        
+        // Auto-open first accordion in each tab
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                const firstAccordion = tab.querySelector('.accordion-header');
+                if (firstAccordion) {
+                    toggleAccordion(firstAccordion);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

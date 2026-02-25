@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Hunt 产品分析报告 - 2026年2月25日</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%); min-height: 100vh; padding: 40px 20px; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 40px; color: white; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .header .subtitle { font-size: 1.1rem; opacity: 0.9; margin-bottom: 5px; }
+        .header .date { font-size: 0.9rem; opacity: 0.8; }
+        .product-card { background: white; border-radius: 16px; padding: 28px; margin-bottom: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); transition: transform 0.3s ease; }
+        .product-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+        .product-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
+        .rank { background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; flex-shrink: 0; }
+        .product-info { flex: 1; }
+        .product-name { font-size: 1.4rem; color: #1a1a2e; font-weight: 600; margin-bottom: 4px; }
+        .product-name a { color: #1a1a2e; text-decoration: none; }
+        .product-name a:hover { color: #FF6B6B; text-decoration: underline; }
+        .product-tagline { color: #666; font-size: 0.95rem; }
+        .product-meta { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+        .upvotes { background: #FFF5E6; color: #FF8E53; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; }
+        .category { background: #f0f0f5; color: #667eea; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; }
+        .product-desc { color: #444; line-height: 1.8; font-size: 0.95rem; margin-bottom: 16px; }
+        .product-analysis { background: #f8f9fa; border-radius: 12px; padding: 16px; margin-top: 16px; }
+        .analysis-title { font-weight: 600; color: #1a1a2e; margin-bottom: 8px; font-size: 0.95rem; }
+        .analysis-content { color: #555; font-size: 0.9rem; line-height: 1.7; }
+        .analysis-content ul { margin-left: 20px; }
+        .analysis-content li { margin-bottom: 4px; }
+        .section-title { font-size: 1.5rem; color: white; margin: 40px 0 20px; text-align: center; }
+        .footer { text-align: center; color: white; opacity: 0.8; margin-top: 40px; font-size: 0.9rem; }
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.8rem; }
+            .product-card { padding: 20px; }
+            .product-name { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Product Hunt 产品分析</h1>
+            <p class="subtitle">发现全球最新最热门的产品和创新</p>
+            <p class="date">2026年2月25日 · 星期三</p>
+        </div>
+
+        <h2 class="section-title">📅 本周热门产品</h2>
+
+        <div class="product-card">
+            <div class="product-header">
+                <div class="rank">1</div>
+                <div class="product-info">
+                    <div class="product-name"><a href="https://www.producthunt.com/products/happycapy" target="_blank">Happycapy</a></div>
+                    <div class="product-tagline">The agent-native computer, for the rest of us.</div>
+                </div>
+            </div>
+            <div class="product-meta">
+                <span class="upvotes">🔥 高赞产品</span>
+                <span class="category">AI 硬件</span>
+                <span class="category">Agent 原生</span>
+            </div>
+            <div class="product-desc">
+                Happycapy 是一款面向普通用户的原生AI Agent计算机。它将AI Agent能力深度集成到操作系统层面，让用户可以通过自然语言与计算机交互，自动完成复杂任务。不同于传统的AI助手，Happycapy 可以主动理解用户意图，自主规划并执行多步骤操作。
+            </div>
+            <div class="product-analysis">
+                <div class="analysis-title">💡 产品分析</div>
+                <div class="analysis-content">
+                    <ul>
+                        <li><strong>定位：</strong>面向大众市场的AI原生计算设备，降低AI Agent使用门槛</li>
+                        <li><strong>亮点：</strong>深度系统集成，支持自主任务规划和执行</li>
+                        <li><strong>商业模式：</strong>硬件销售 + Agent服务订阅</li>
+                        <li><strong>市场机会：</strong>AI Agent从软件向硬件延伸的新品类</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-header">
+                <div class="rank">2</div>
+                <div class="product-info">
+                    <div class="product-name"><a href="https://www.producthunt.com/products/claude-in-powerpoint" target="_blank">Claude in PowerPoint</a></div>
+                    <div class="product-tagline">Use Claude to build, edit & refine PowerPoint presentations.</div>
+                </div>
+            </div>
+            <div class="product-meta">
+                <span class="upvotes">📊 办公效率</span>
+                <span class="category">AI 办公</span>
+                <span class="category">生产力工具</span>
+            </div>
+            <div class="product-desc">
+                将 <a href="https://www.anthropic.com/claude" target="_blank">Anthropic Claude</a> 的强大能力直接集成到 Microsoft PowerPoint 中。用户可以直接在PPT中调用Claude来创建、编辑和优化演示文稿，支持智能排版、内容生成、设计建议等功能。
+            </div>
+            <div class="product-analysis">
+                <div class="analysis-title">💡 产品分析</div>
+                <div class="analysis-content">
+                    <ul>
+                        <li><strong>定位：</strong>AI+办公软件的深度集成插件</li>
+                        <li><strong>亮点：</strong>直接在PowerPoint工作流中使用Claude，无需切换应用</li>
+                        <li><strong>商业模式：</strong>订阅制，可能按使用量或功能层级收费</li>
+                        <li><strong>竞争优势：</strong>背靠Claude强大能力，切入办公场景刚需</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-header">
+                <div class="rank">3</div>
+                <div class="product-info">
+                    <div class="product-name"><a href="https://www.producthunt.com/products/gemini-3-1-pro" target="_blank">Gemini 3.1 Pro</a></div>
+                    <div class="product-tagline">A smarter model for your most complex tasks.</div>
+                </div>
+            </div>
+            <div class="product-meta">
+                <span class="upvotes">🤖 大模型</span>
+                <span class="category">AI 模型</span>
+                <span class="category">Google</span>
+            </div>
+            <div class="product-desc">
+                <a href="https://deepmind.google" target="_blank">Google DeepMind</a> 发布的最新旗舰AI模型，在ARC-AGI-2基准测试中达到77.1%，推理性能较上一代提升超过2倍。专为复杂问题解决、科学研究和多模态理解设计。
+            </div>
+            <div class="product-analysis">
+                <div class="analysis-title">💡 产品分析</div>
+                <div class="analysis-content">
+                    <ul>
+                        <li><strong>定位：</strong>企业级复杂任务处理和专业领域应用</li>
+                        <li><strong>亮点：</strong>ARC-AGI-2 77.1%，GPQA Diamond 94.3%，科学推理能力突出</li>
+                        <li><strong>定价：</strong>$2/百万输入token，$12/百万输出token</li>
+                        <li><strong>竞争格局：</strong>与Claude Opus 4.6、GPT-5.3直接竞争</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-header">
+                <div class="rank">4</div>
+                <div class="product-info">
+                    <div class="product-name"><a href="https://www.producthunt.com/products/straion" target="_blank">Straion</a></div>
+                    <div class="product-tagline">Manage Rules for AI Coding Agents</div>
+                </div>
+            </div>
+            <div class="product-meta">
+                <span class="upvotes">💻 开发者工具</span>
+                <span class="category">AI 编程</span>
+                <span class="category">开发者工具</span>
+            </div>
+            <div class="product-desc">
+                专为AI编程Agent设计的规则管理工具。帮助开发团队为AI编码助手（如Claude Code、GitHub Copilot等）制定、管理和执行编码规范，确保AI生成的代码符合团队标准。
+            </div>
+            <div class="product-analysis">
+                <div class="analysis-title">💡 产品分析</div>
+                <div class="analysis-content">
+                    <ul>
+                        <li><strong>定位：</strong>AI编程Agent的治理和管理平台</li>
+                        <li><strong>亮点：</strong>解决AI生成代码质量不一致的痛点</li>
+                        <li><strong>商业模式：</strong>SaaS订阅，按团队规模收费</li>
+                        <li><strong>市场时机：</strong>AI编程工具普及，治理需求凸显</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-header">
+                <div class="rank">5</div>
+                <div class="product-info">
+                    <div class="product-name"><a href="https://www.producthunt.com/products/lunair" target="_blank">Lunair</a></div>
+                    <div class="product-tagline">Generate studio-quality explainer videos. Instantly.</div>
+                </div>
+            </div>
+            <div class="product-meta">
+                <span class="upvotes">🎬 视频生成</span>
+                <span class="category">AI 视频</span>
+                <span class="category">内容创作</span>
+            </div>
+            <div class="product-desc">
+                即时生成高质量解释视频的AI工具。用户只需输入脚本或产品描述，Lunair就能自动生成专业级的解说视频，包括动画、配音、字幕等，大幅降低视频制作门槛和成本。
+            </div>
+            <div class="product-analysis">
+                <div class="analysis-title">💡 产品分析</div>
+                <div class="analysis-content">
+                    <ul>
+                        <li><strong>定位：</strong>企业营销和产品的AI视频制作工具</li>
+                        <li><strong>亮点：</strong>一键生成，studio-quality输出，无需专业技能</li>
+                        <li><strong>商业模式：</strong>按视频时长或订阅制收费</li>
+                        <li><strong>竞争环境：</strong>与HeyGen、Synthesia等竞争，差异化在于"instant"体验</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">📊 本月趋势洞察</h2>
+
+        <div class="product-card">
+            <div class="product-analysis">
+                <div class="analysis-title">🔥 热门趋势</div>
+                <div class="analysis-content">
+                    <ul>
+                        <li><strong>AI Agent 硬件化：</strong>Happycapy代表AI Agent从软件向专用硬件延伸的趋势</li>
+                        <li><strong>办公场景深度集成：</strong>AI能力直接嵌入Office套件，如Claude in PowerPoint</li>
+                        <li><strong>AI编程治理：</strong>Straion等工具解决AI生成代码的管理和规范问题</li>
+                        <li><strong>视频生成平民化：</strong>Lunair等工具让专业视频制作触手可及</li>
+                        <li><strong>大模型竞争白热化：</strong>Gemini 3.1 Pro、Claude 4.6、GPT-5.3密集发布</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>📰 数据来源：<a href="https://www.producthunt.com" target="_blank" style="color: white;">Product Hunt</a></p>
+            <p style="margin-top: 8px; font-size: 0.8rem;">生成时间：2026年2月25日 10:50 (北京时间)</p>
+        </div>
+    </div>
+</body>
+</html>
