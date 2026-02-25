@@ -3,30 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI视频创作完全指南 - 从脚本到成片</title>
+    <title>AI视频创作完全指南</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Noto Sans SC', sans-serif; }
-        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-    </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <header class="gradient-bg text-white py-12">
-        <div class="container mx-auto px-4 text-center">
-            <div class="text-6xl mb-4">🎬</div>
-            <h1 class="text-4xl font-bold mb-4">AI视频创作完全指南</h1>
-            <p class="text-xl text-white/80">从脚本到成片，手把手教你用AI制作专业视频</p>
-        </div>
+<body class="bg-gray-50">
+    <header class="bg-gradient-to-r from-purple-600 to-blue-600 text-white py-12 text-center">
+        <h1 class="text-4xl font-bold">AI视频创作完全指南</h1>
+        <p class="mt-4">从脚本到成片，手把手教你用AI制作专业视频</p>
     </header>
     
     <main class="container mx-auto px-4 py-12 max-w-4xl">
-        <section class="mb-12">
-            <h2 class="text-2xl font-bold mb-6">📋 教程简介</h2>
-            <div class="bg-white rounded-xl p-6 shadow-lg">
-                <p class="text-gray-600 mb-4">
-                    本教程将带你完整体验如何使用AI工具完成视频创作的全流程。
-                </p>
+        <section class="bg-white rounded-xl p-6 shadow-lg mb-8">
+            <h2 class="text-2xl font-bold mb-4">🛠️ 主流AI视频工具</h2>
+            
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="border rounded-lg p-4">
+                    <h3 class="font-bold text-purple-700">Runway Gen-4</h3>
+                    <p class="text-sm text-gray-600 mt-2">专业级AI视频生成工具，提供Motion Brush、Director Mode等高级控制功能。价格：$12-95/月</p>
+                </div>
+                
+                <div class="border rounded-lg p-4">
+                    <h3 class="font-bold text-pink-700">Pika 2.2</h3>
+                    <p class="text-sm text-gray-600 mt-2">用户友好的AI视频工具，生成速度快（15-30秒），适合初学者。价格：$10-58/月</p>
+                </div>
+                
+                <div class="border rounded-lg p-4">
+                    <h3 class="font-bold text-green-700">可灵AI</h3>
+                    <p class="text-sm text-gray-600 mt-2">国产高质量AI视频生成工具，在中文场景和本土化方面表现优秀。</p>
+                </div>
+                
+                <div class="border rounded-lg p-4">
+                    <h3 class="font-bold text-blue-700">Sora (OpenAI)</h3>
+                    <p class="text-sm text-gray-600 mt-2">OpenAI的AI视频生成工具，通过ChatGPT Plus提供有限访问。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl p-6 shadow-lg mb-8">
+            <h2 class="text-2xl font-bold mb-4">📝 第一步：使用AI生成视频脚本</h2>
+            
+            <div class="bg-purple-50 border-l-4 border-purple-500 p-4 mb-4">
+                <p class="text-sm"><strong>💡 提示词技巧：</strong> 给AI提供尽可能详细的背景信息，包括品牌调性、目标受众、视频时长、核心卖点等。</p>
+            </div>
+
+            <h3 class="font-semibold mb-2">向AI输入的提示词示例：</h3>
+            
+            <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">请帮我创作一个30秒的咖啡品牌宣传视频脚本。
+
+品牌信息：
+- 品牌名：晨曦咖啡
+- 产品：精品手冲咖啡
+- 核心卖点：新鲜烘焙、匠心工艺、唤醒每一天
+- 目标受众：25-35岁都市白领
+- 调性：温暖、专业、有格调
+
+请提供：
+1. 分镜脚本（画面描述 + 时长）
+2. 旁白文案
+3. 背景音乐风格建议
+4. 字幕文案</pre>
+        </section>
+
+        <section class="bg-white rounded-xl p-6 shadow-lg mb-8">
+            <h2 class="text-2xl font-bold mb-4">🎨 第二步：图像生成与分镜设计</h2>
+            
+            <p class="text-gray-600 mb-4">使用Midjourney或DALL-E生成完美静帧，这是图像转视频工作流程的关键。</p>
+            
+            <h3 class="font-semibold mb-2">Midjourney提示词示例：</h3>
+            
+            <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">/imagine 木桌上咖啡杯的电影镜头，
+蒸汽升起，透过窗户的温暖晨光，
+浅景深，专业摄影，8k quality
+--ar 16:9 --s 150 --v 6</pre>
+
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mt-4">
+                <p class="text-sm"><strong>💡 关键提示：</strong> 图像迭代比视频迭代快10倍。先在Midjourney中完善帧，再制作动画。</p>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl p-6 shadow-lg mb-8">
+            <h2 class="text-2xl font-bold mb-4">🎬 第三步：AI视频生成</h2>
+            
+            <h3 class="font-semibold mb-2">Runway图像转视频工作流程：</h3>
+            
+            <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                <li>选择"图像转视频"模式</li>
+                <li>上传Midjourney生成的完美静帧</li>
+                <li>添加运动提示词（可选但推荐）</li>
+                <li>选择时长（建议首次迭代用5秒）</li>
+                <li>点击生成，等待1-3分钟</li>
+            </ol>
+
+            <h3 class="font-semibold mb-2 mt-4">运动提示词示例：</h3>
+            
+            <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">杯子轻轻升起蒸汽，摄像机缓慢推进，晨光闪烁</pre>
+        </section>
+
+        <section class="bg-white rounded-xl p-6 shadow-lg mb-8">
+            <h2 class="text-2xl font-bold mb-4">✂️ 第四步：视频剪辑与后期</h2>
+            
+            <p class="text-gray-600 mb-4">使用CapCut、Premiere或Final Cut进行后期制作，包括调色、转场、声音设计。</p>
+            
+            <h3 class="font-semibold mb-2">后期制作清单：</h3>
+            
+            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                <li>导入所有AI生成的视频片段</li>
+                <li>添加转场效果（切割、淡入淡出）</li>
+                <li>调整颜色和曝光</li>
+                <li>添加背景音乐和音效</li>
+                <li>添加字幕和文字覆盖</li>
+                <li>导出最终视频</li>
+            </ul>
+        </section>
+
+        <section class="bg-white rounded-xl p-6 shadow-lg">
+            <h2 class="text-2xl font-bold mb-4">💡 专业技巧与建议</h2>
+            
+            <div class="space-y-4">
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4">
+                    <p class="font-semibold">1. 总是从图像开始</p>
+                    <p class="text-sm text-gray-600">文本转视频是赌博。图像转视频给你控制。先在Midjourney中生成完美帧。</p>
+                </div>
+                
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4">
+                    <p class="font-semibold">2. 保持片段简短</p>
+                    <p class="text-sm text-gray-600">不要试图生成10秒史诗。生成3-5秒微型片段并将它们编辑在一起。</p>
+                </div>
+                
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4">
+                    <p class="font-semibold">3. 学习真实电影摄影</p>
+                    <p class="text-sm text-gray-600">你越了解真实的摄像机移动和照明，你的AI视频提示词就越好。</p>
+                </div>
+                
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4">
+                    <p class="font-semibold">4. 便宜迭代，然后扩展</p>
+                    <p class="text-sm text-gray-600">在Turbo模式下生成5个变体，选择最好的一个，然后以高质量重新生成。</p>
+                </div>
             </div>
         </section>
     </main>
