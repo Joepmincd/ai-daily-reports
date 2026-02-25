@@ -20,8 +20,6 @@
         .news-title a:hover { color: #667eea; text-decoration: underline; }
         .news-meta { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
         .news-source { color: #667eea; font-size: 0.85rem; font-weight: 500; }
-        .news-source a { color: #667eea; text-decoration: none; }
-        .news-source a:hover { text-decoration: underline; }
         .news-date { color: #888; font-size: 0.85rem; }
         .news-summary { color: #444; line-height: 1.8; font-size: 1rem; }
         .news-summary p { margin-bottom: 12px; }
@@ -29,124 +27,230 @@
         .footer { text-align: center; color: white; opacity: 0.8; margin-top: 40px; font-size: 0.9rem; }
         .highlight-box { background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%); border-left: 4px solid #667eea; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 16px 0; }
         .highlight-box strong { color: #667eea; }
-        @media (max-width: 600px) {
-            .header h1 { font-size: 1.8rem; }
-            .news-card { padding: 20px; }
-            .news-title { font-size: 1.1rem; }
-        }
+        #ttsBtn { position: fixed; top: 20px; right: 20px; z-index: 1000; width: 50px; height: 50px; border-radius: 50%; border: none; background: linear-gradient(135deg, #667eea, #764ba2); color: white; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: all 0.3s; }
+        #ttsBtn:hover { transform: scale(1.1); }
+        #ttsBtn.playing { background: linear-gradient(135deg, #ec4899, #667eea); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 4px 15px rgba(0,0,0,0.3); } 50% { box-shadow: 0 4px 25px rgba(236,72,153,0.5); } }
+        @media (max-width: 600px) { .header h1 { font-size: 1.8rem; } .news-card { padding: 20px; } .news-title { font-size: 1.1rem; } #ttsBtn { width: 44px; height: 44px; font-size: 1.3rem; top: 10px; right: 10px; } }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>🤖 AI 热点新闻日报</h1>
-            <div class="date">2026年2月25日 · 星期三</div>
+            <div class="date">2026年2月25日 · 星期三 · 下午3:50</div>
         </div>
 
         <div class="news-card">
             <div class="news-header">
                 <div class="news-number">1</div>
-                <h2 class="news-title"><a href="https://www.reuters.com/business/big-tech-invest-about-650-billion-ai-2026-bridgewater-says-2026-02-23/" target="_blank">科技巨头2026年AI投资将达6500亿美元，较2025年激增58%</a></h2>
+                <h2 class="news-title">Anthropic放宽AI安全政策应对竞争压力</h2>
             </div>
             <div class="news-meta">
-                <span class="news-source"><a href="https://www.reuters.com" target="_blank">Reuters</a></span>
-                <span class="news-date">2026年2月23日</span>
+                <span class="news-source">新浪财经</span>
+                <span class="news-date">2026-02-25</span>
             </div>
             <div class="news-summary">
-                <p>全球最大对冲基金<strong>桥水（Bridgewater Associates）</strong>预测，<a href="https://www.reuters.com/markets/companies/GOOGL.O" target="_blank">Alphabet</a>、<a href="https://www.reuters.com/markets/companies/AMZN.O" target="_blank">亚马逊</a>、<a href="https://www.reuters.com/markets/companies/META.O" target="_blank">Meta</a>和<a href="https://www.reuters.com/markets/companies/MSFT.O" target="_blank">微软</a>等美国科技巨头2026年将在AI基础设施上投入约<strong>6500亿美元</strong>，较2025年的4100亿美元激增58%。</p>
+                <p>目前估值高达3800亿美元的Anthropic，正积极争夺企业和日常用户的市场份额，与OpenAI、谷歌以及埃隆·马斯克的xAI Corp.等巨头展开激烈竞争。</p>
                 <div class="highlight-box">
-                    <strong>关键数据：</strong>亚马逊将资本支出预测上调至1250亿美元；Meta预计投资约1250亿美元；科技投资为2025年美国GDP增长贡献约50个基点，2026年可能贡献100个基点。
+                    <strong>核心要点：</strong>Anthropic正面临商业压力与安全承诺之间的艰难平衡。CEO Dario Amodei承认，公司在追求市场份额的过程中不得不放宽部分核心安全政策。
                 </div>
-                <p>桥水联合CIO Greg Jensen警告AI行业正进入"更危险的阶段"——物理基础设施支出激增、对外部资本依赖增加。若市场条件变化，如此规模的支出将面临风险。</p>
             </div>
-            <span class="tag">投资趋势</span>
-            <span class="tag">市场分析</span>
+            <span class="tag">AI安全</span>
+            <span class="tag">市场竞争</span>
         </div>
 
         <div class="news-card">
             <div class="news-header">
                 <div class="news-number">2</div>
-                <h2 class="news-title"><a href="https://techcrunch.com/2026/02/23/defense-secretary-summons-anthropics-amodei-over-military-use-of-claude/" target="_blank">五角大楼与Anthropic对峙：要求放松AI军事用途限制</a></h2>
+                <h2 class="news-title">Workday CEO：AI巨头都在用我们的软件</h2>
             </div>
             <div class="news-meta">
-                <span class="news-source"><a href="https://techcrunch.com" target="_blank">TechCrunch</a></span>
-                <span class="news-date">2026年2月23日</span>
+                <span class="news-source">彭博社</span>
+                <span class="news-date">2026-02-25</span>
             </div>
             <div class="news-summary">
-                <p>美国国防部长<strong>Pete Hegseth</strong>于2月23日召见<a href="https://www.anthropic.com" target="_blank">Anthropic</a> CEO <strong>Dario Amodei</strong>，就<a href="https://www.anthropic.com/claude" target="_blank">Claude AI</a>的军事用途进行紧张谈判。五角大楼威胁将Anthropic列为"供应链风险"，可能终止其2亿美元的国防部合同。</p>
+                <p>美国财务管理和人力资本管理软件公司Workday的CEO阿尼尔·布斯里透露，包括Anthropic、谷歌和OpenAI在内的头部人工智能企业都在使用Workday的产品。</p>
                 <div class="highlight-box">
-                    <strong>争议焦点：</strong>Anthropic拒绝允许Claude用于大规模监控美国公民和开发自主武器系统。国防部长Hegseth表示："不会使用不允许你打仗的AI模型。"
+                    <strong>关键洞察：</strong>这一 revelation 显示AI无法完全替代核心企业软件价值。尽管AI技术飞速发展，但企业资源规划、财务管理等核心系统仍具有不可替代性。
                 </div>
-                <p>此前有报道称Claude被用于美军在委内瑞拉抓捕马杜罗的秘密行动。这是首个被确认用于机密军事行动的商业AI模型，引发"AI军事化"争议。</p>
             </div>
-            <span class="tag">AI军事化</span>
-            <span class="tag">地缘政治</span>
+            <span class="tag">企业软件</span>
+            <span class="tag">AI应用</span>
         </div>
 
         <div class="news-card">
             <div class="news-header">
                 <div class="news-number">3</div>
-                <h2 class="news-title"><a href="https://venturebeat.com/ai/google-launches-gemini-3-1-pro-retaking-ai-crown-with-2x-reasoning-performance-boost/" target="_blank">Google发布Gemini 3.1 Pro：ARC-AGI-2测试达77.1%，推理性能翻倍</a></h2>
+                <h2 class="news-title">五角大楼向Anthropic发出最后通牒</h2>
             </div>
             <div class="news-meta">
-                <span class="news-source"><a href="https://venturebeat.com" target="_blank">VentureBeat</a></span>
-                <span class="news-date">2026年2月19日</span>
+                <span class="news-source">华尔街日报</span>
+                <span class="news-date">2026-02-25</span>
             </div>
             <div class="news-summary">
-                <p><a href="https://deepmind.google" target="_blank">Google DeepMind</a>发布<strong>Gemini 3.1 Pro</strong>，在ARC-AGI-2基准测试中达到<strong>77.1%</strong>的验证分数，较上一代提升超过2倍。该测试评估AI解决全新逻辑模式的能力。</p>
+                <p>美国国防部长Pete Hegseth在与Anthropic的会议中发出威胁，要求该公司在AI使用标准上做出妥协，否则将失去政府合同。这反映了AI军事化应用的伦理争议。</p>
                 <div class="highlight-box">
-                    <strong>性能数据：</strong>GPQA Diamond（科学知识）94.3%；MMMLU（多模态理解）92.6%；定价：输入$2/百万token，输出$12/百万token，与Gemini 3 Pro持平。
+                    <strong>影响分析：</strong>政府与AI公司的博弈将塑造行业标准。军事应用与AI安全之间的张力可能成为未来政策制定的重要议题。
                 </div>
-                <p>同期，<a href="https://www.anthropic.com" target="_blank">Anthropic</a>发布<a href="https://www.anthropic.com/claude" target="_blank">Claude Opus 4.6</a>（百万token上下文）和<a href="https://www.anthropic.com/claude" target="_blank">Claude Sonnet 4.6</a>；<a href="https://openai.com" target="_blank">OpenAI</a>发布<a href="https://openai.com/codex" target="_blank">GPT-5.3 Codex</a>；<a href="https://x.ai" target="_blank">xAI</a>发布<strong>Grok 4.20</strong>（四AI代理并行架构）。</p>
             </div>
-            <span class="tag">大模型发布</span>
-            <span class="tag">技术突破</span>
+            <span class="tag">AI军事化</span>
+            <span class="tag">政府监管</span>
         </div>
 
         <div class="news-card">
             <div class="news-header">
                 <div class="news-number">4</div>
-                <h2 class="news-title"><a href="https://thehackernews.com/2026/02/anthropic-says-chinese-ai-firms-used-16.html" target="_blank">Anthropic指控DeepSeek、Moonshot AI、MiniMax非法"蒸馏"Claude模型</a></h2>
+                <h2 class="news-title">Anthropic指控中国AI公司窃取技术</h2>
             </div>
             <div class="news-meta">
-                <span class="news-source"><a href="https://thehackernews.com" target="_blank">The Hacker News</a></span>
-                <span class="news-date">2026年2月24日</span>
+                <span class="news-source">美国之音</span>
+                <span class="news-date">2026-02-25</span>
             </div>
             <div class="news-summary">
-                <p><a href="https://www.anthropic.com" target="_blank">Anthropic</a>披露，中国AI公司<a href="https://www.deepseek.com" target="_blank">DeepSeek</a>、<a href="https://www.moonshot.cn" target="_blank">Moonshot AI</a>和<a href="https://www.minimaxi.com" target="_blank">MiniMax</a>通过创建超过<strong>2.4万个虚假账户</strong>，生成了约<strong>1600万次</strong>与Claude的交互，用于非法模型蒸馏。</p>
+                <p>美国AI初创公司Anthropic指称，该公司发现三家中国人工智能公司使用蒸馏手段，以工业级别的规模从其语言模型Claude窃取能力，以改进他们自身的模型。</p>
                 <div class="highlight-box">
-                    <strong>攻击详情：</strong>DeepSeek针对推理能力和审查规避（15万次交互）；Moonshot AI针对代理推理和工具使用（340万次）；MiniMax针对代理编码（1300万次）。
+                    <strong>背景：</strong>这是OpenAI和Anthropic对中国AI公司的最新指控。此前OpenAI已多次指责中国公司通过蒸馏技术复制美国AI能力，引发知识产权争议。
                 </div>
-                <p>Anthropic警告，非法蒸馏的模型缺乏必要的安全防护措施，可能被威权政府用于网络攻击、虚假信息宣传和大规模监控。此前<a href="https://www.openai.com" target="_blank">OpenAI</a>也向国会指控DeepSeek使用蒸馏技术不当复制美国AI能力。</p>
             </div>
-            <span class="tag">AI安全</span>
-            <span class="tag">国际竞争</span>
+            <span class="tag">知识产权</span>
+            <span class="tag">中美AI竞争</span>
         </div>
 
         <div class="news-card">
             <div class="news-header">
                 <div class="news-number">5</div>
-                <h2 class="news-title"><a href="https://www.nature.com/articles/d41586-026-00245-8" target="_blank">Nature：AI工具可设计基因组，将颠覆生命进化方式？</a></h2>
+                <h2 class="news-title">2026年AI趋势：从实验到运营</h2>
             </div>
             <div class="news-meta">
-                <span class="news-source"><a href="https://www.nature.com" target="_blank">Nature</a></span>
-                <span class="news-date">2026年2月23日</span>
+                <span class="news-source">综合报道</span>
+                <span class="news-date">2026-02-25</span>
             </div>
             <div class="news-summary">
-                <p>《自然》杂志发表分析文章，探讨AI工具如何根本改变基因组设计能力。研究人员正使用计算方法结合基因组工程，从零开始生成新蛋白质甚至整个细菌。</p>
+                <p>2026年AI发展呈现七大关键趋势：Agentic AI进入日常生活、AI驱动工作场所变革、AI代理在医疗领域扩展、地缘政治影响AI发展、模型商品化与专业化、生成式AI用于内容和代码创建、超个性化客户体验。</p>
                 <div class="highlight-box">
-                    <strong>重大突破：</strong>科学家去年使用AI辅助设计产生可在哺乳动物细胞中表达的人工基因；AI程序首次创造出完全合成的病毒。伯克利开发的Evo 2是迄今为止生物学领域最大的AI模型。
+                    <strong>趋势洞察：</strong>AI正从实验阶段进入实际运营阶段。企业开始将AI集成到核心业务流程中，而非仅用于实验。这标志着AI从"玩具"到"工具"的转变。
                 </div>
-                <p>这种被称为"生成生物学"的方法正在加速研究能力，同时引发关于进化未来的深刻问题。AI设计的生物系统可能产生新型疗法、环境修复工程生物和合成生物生产系统，但也带来创造新型病原体或不可预测生态影响的担忧。</p>
             </div>
-            <span class="tag">科学研究</span>
-            <span class="tag">生物技术</span>
+            <span class="tag">AI趋势</span>
+            <span class="tag">企业应用</span>
         </div>
 
         <div class="footer">
-            <p>📰 本报告由 AI 助手自动生成 · 数据来源：公开新闻报道</p>
-            <p style="margin-top: 8px; font-size: 0.8rem;">生成时间：2026年2月25日 10:45 (北京时间)</p>
+            <p>数据来源：Kimi Search、各大科技媒体报道</p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">本报告由 AI 助手自动生成，仅供参考</p>
         </div>
     </div>
+    
+    <button id="ttsBtn" onclick="toggleTTS()" title="语音播报">🔊</button>
+    
+    <script>
+    let isSpeaking = false;
+    let currentUtterance = null;
+    
+    async function toggleTTS() {
+        const btn = document.getElementById('ttsBtn');
+        
+        if (isSpeaking) {
+            window.speechSynthesis.cancel();
+            isSpeaking = false;
+            btn.innerHTML = '🔊';
+            btn.classList.remove('playing');
+            return;
+        }
+        
+        let text = document.querySelector('h1').textContent + '。';
+        document.querySelectorAll('.news-title, .news-summary p, .highlight-box').forEach(el => {
+            if (el.textContent.length > 20) text += el.textContent + '。';
+        });
+        text = text.replace(/[\u{1F300}-\u{1F9FF}]/gu, '').substring(0, 3000);
+        
+        if (text.length < 50) {
+            alert('内容太少，无法播报');
+            return;
+        }
+        
+        btn.innerHTML = '⏳';
+        
+        let voices = window.speechSynthesis.getVoices();
+        if (voices.length === 0) {
+            await new Promise(resolve => {
+                window.speechSynthesis.onvoiceschanged = resolve;
+                window.speechSynthesis.getVoices();
+            });
+            voices = window.speechSynthesis.getVoices();
+        }
+        
+        const preferredVoices = [
+            'zh-CN-XiaoxiaoNeural',
+            'zh-CN-YunyangNeural', 
+            'zh-CN-XiaoyiNeural',
+            'Microsoft Xiaoxiao Online (Natural) - Chinese (Mainland)',
+            'Microsoft Yunyang - Chinese (Mainland)',
+            'Ting-Ting',
+            'Mei-Jia',
+        ];
+        
+        let selectedVoice = null;
+        for (const voiceName of preferredVoices) {
+            selectedVoice = voices.find(v => v.name === voiceName || v.voiceURI === voiceName);
+            if (selectedVoice) break;
+        }
+        
+        if (!selectedVoice) {
+            selectedVoice = voices.find(v => v.lang === 'zh-CN') ||
+                           voices.find(v => v.lang.startsWith('zh'));
+        }
+        
+        const sentences = text.match(/[^。！？]+[。！？]+/g) || [text];
+        let currentIndex = 0;
+        
+        function speakNext() {
+            if (currentIndex >= sentences.length) {
+                isSpeaking = false;
+                btn.innerHTML = '🔊';
+                btn.classList.remove('playing');
+                return;
+            }
+            
+            const u = new SpeechSynthesisUtterance(sentences[currentIndex]);
+            u.lang = 'zh-CN';
+            u.rate = 1.0;
+            u.pitch = 1.0;
+            
+            if (selectedVoice) {
+                u.voice = selectedVoice;
+            }
+            
+            if (currentIndex === 0) {
+                u.onstart = () => {
+                    isSpeaking = true;
+                    btn.innerHTML = '⏹️';
+                    btn.classList.add('playing');
+                };
+            }
+            
+            u.onend = () => {
+                currentIndex++;
+                speakNext();
+            };
+            
+            u.onerror = (e) => {
+                console.error('TTS error:', e);
+                currentIndex++;
+                speakNext();
+            };
+            
+            currentUtterance = u;
+            window.speechSynthesis.speak(u);
+        }
+        
+        speakNext();
+    }
+    
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.getVoices();
+    }
+    </script>
 </body>
 </html>

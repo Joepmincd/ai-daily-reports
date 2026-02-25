@@ -1133,11 +1133,9 @@
             }
         }
         
-        // Open File
+        // Open File - 直接跳转到文件
         function openFile(filename) {
-            // In a real environment, this would open the file
-            // For now, show an alert with the file info
-            alert(`📁 打开文件: ${filename}\n\n在实际环境中，这里会打开对应的文件。`);
+            window.open(filename, '_blank');
         }
         
         // Search Files
