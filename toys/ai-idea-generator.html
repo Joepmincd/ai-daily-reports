@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI创意灵感生成器 - 每日一个AI工具案例</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans SC', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .pulse-btn { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7); }
+            50% { box-shadow: 0 0 0 20px rgba(102, 126, 234, 0); }
+        }
+        .fade-in { animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <div class="text-5xl mb-3">💡</div>
+            <h1 class="text-3xl font-bold mb-2">AI创意灵感生成器</h1>
+            <p class="text-white/80">每日一个AI工具实战案例，激发你的创造力</p>
+            <div class="mt-4 inline-block bg-white/20 px-4 py-1 rounded-full text-sm">
+                <span id="current-date"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 max-w-3xl">
+        
+        <!-- Generate Button -->
+        <div class="text-center mb-8">
+            <button onclick="generateIdea()" id="generate-btn" class="pulse-btn bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:shadow-xl transition transform hover:scale-105">
+                ✨ 生成今日AI创意
+            </button>
+            <p class="text-gray-500 mt-3 text-sm">每天点击获取一个全新的AI工具使用案例</p>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading" class="hidden text-center py-12">
+            <div class="loading-spinner mx-auto mb-4"></div>
+            <p class="text-gray-600">正在为你生成创意...</p>
+        </div>
+
+        <!-- Result Card -->
+        <div id="result-card" class="hidden fade-in">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <!-- Card Header -->
+                <div class="gradient-bg text-white p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span id="idea-category" class="bg-white/20 px-3 py-1 rounded-full text-sm">类别</span>
+                        <span id="idea-difficulty" class="bg-white/20 px-3 py-1 rounded-full text-sm">难度</span>
+                    </div>
+                    <h2 id="idea-title" class="text-2xl font-bold mb-2">创意标题</h2>
+                    <p id="idea-desc" class="text-white/90">创意描述</p>
+                </div>
+
+                <!-- Card Body -->
+                <div class="p-6">
+                    <!-- Tools Needed -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <span class="mr-2">🛠️</span> 推荐工具
+                        </h3>
+                        <div id="tools-list" class="flex flex-wrap">
+                            <!-- Tools will be inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- Steps -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <span class="mr-2">📋</span> 执行步骤
+                        </h3>
+                        <div id="steps-list" class="space-y-4">
+                            <!-- Steps will be inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- Tips -->
+                    <div class="bg-purple-50 rounded-xl p-4 mb-6">
+                        <h3 class="font-semibold text-purple-800 mb-2 flex items-center">
+                            <span class="mr-2">💡</span> 创意提示
+                        </h3>
+                        <p id="idea-tips" class="text-purple-700 text-sm"></p>
+                    </div>
+
+                    <!-- Expected Result -->
+                    <div class="border-l-4 border-green-500 pl-4 mb-6">
+                        <h3 class="font-semibold text-gray-800 mb-2">🎯 预期成果</h3>
+                        <p id="expected-result" class="text-gray-600 text-sm"></p>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex gap-3">
+                        <button onclick="copyIdea()" class="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition">
+                            📋 复制内容
+                        </button>
+                        <button onclick="generateIdea()" class="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-lg font-medium hover:shadow-lg transition">
+                            🔄 换一个
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div class="mt-12">
+            <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                <span class="mr-2">📚</span> 历史创意
+            </h3>
+            <div id="history-list" class="space-y-3">
+                <p class="text-gray-500 text-center py-8">暂无历史记录，点击上方按钮生成你的第一个AI创意！</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // AI创意案例库
+        const ideaDatabase = [
+            {
+                category: "内容创作",
+                difficulty: "入门",
+                title: "用AI生成小红书爆款笔记",
+                desc: "学习如何使用AI工具快速生成吸引人的小红书文案，包括标题、正文和标签",
+                tools: ["ChatGPT", "小红书", "Canva"],
+                steps: [
+                    "确定你要分享的产品或主题",
+                    "使用ChatGPT输入提示词：'帮我写一个小红书笔记，主题是XXX，要求：1.标题吸引人 2.正文有干货 3.结尾有互动'",
+                    "根据AI生成的内容，挑选最吸引人的标题",
+                    "使用Canva制作配图，保持风格统一",
+                    "发布并观察数据反馈"
+                ],
+                tips: "可以尝试让AI生成多个版本的标题，然后选择点击率最高的那个",
+                expectedResult: "一篇完整的小红书笔记，包含吸睛标题、实用内容和精美配图"
+            },
+            {
+                category: "图像设计",
+                difficulty: "入门",
+                title: "AI生成个人专属头像",
+                desc: "使用Midjourney或Stable Diffusion为自己生成独特的AI头像",
+                tools: ["Midjourney", "Photoshop", "Remove.bg"],
+                steps: [
+                    "准备5-10张自己的清晰照片",
+                    "在Midjourney中使用/describe功能分析照片风格",
+                    "编写提示词：'portrait of [你的名字], [风格描述], high quality, detailed'",
+                    "生成多张图片，选择最满意的一张",
+                    "使用Photoshop或Remove.bg调整背景和细节"
+                ],
+                tips: "可以尝试不同的艺术风格，如赛博朋克、油画、卡通等",
+                expectedResult: "一张独特的个人AI头像，可用于社交媒体"
+            },
+            {
+                category: "视频制作",
+                difficulty: "中级",
+                title: "用AI制作产品展示视频",
+                desc: "结合多种AI工具，从零开始制作一个专业的产品介绍视频",
+                tools: ["ChatGPT", "Runway", "ElevenLabs", "CapCut"],
+                steps: [
+                    "用ChatGPT编写视频脚本，包括开场、产品介绍、卖点展示、结尾",
+                    "使用ElevenLabs生成专业的配音",
+                    "在Runway中生成或编辑视频素材",
+                    "使用CapCut剪辑视频，添加字幕和背景音乐",
+                    "导出并发布到视频平台"
+                ],
+                tips: "视频前3秒最关键，要让观众产生继续观看的欲望",
+                expectedResult: "一个60-90秒的专业产品展示视频"
+            },
+            {
+                category: "编程开发",
+                difficulty: "中级",
+                title: "AI辅助开发一个Chrome插件",
+                desc: "使用AI编程助手，从零开发一个实用的浏览器插件",
+                tools: ["Claude", "VS Code", "Chrome开发者工具"],
+                steps: [
+                    "确定插件功能（如：网页翻译、笔记工具、密码生成器等）",
+                    "使用Claude生成manifest.json和基础代码结构",
+                    "逐步让AI实现各个功能模块",
+                    "在Chrome开发者模式中加载并测试插件",
+                    "调试并优化代码"
+                ],
+                tips: "可以先从简单的功能开始，逐步增加复杂度",
+                expectedResult: "一个可以在Chrome浏览器中运行的实用插件"
+            },
+            {
+                category: "数据分析",
+                difficulty: "高级",
+                title: "用AI分析销售数据并生成报告",
+                desc: "上传销售数据，让AI帮你分析趋势并生成可视化报告",
+                tools: ["ChatGPT", "Excel", "Tableau", "Python"],
+                steps: [
+                    "整理销售数据为CSV格式",
+                    "使用ChatGPT的高级数据分析功能上传数据",
+                    "提问：'分析这份数据的销售趋势、季节性规律和异常值'",
+                    "根据AI分析结果，使用Tableau制作可视化图表",
+                    "生成包含洞察和行动建议的报告"
+                ],
+                tips: "数据质量决定分析结果，确保数据清洗完整",
+                expectedResult: "一份包含数据洞察、趋势图表和行动建议的分析报告"
+            },
+            {
+                category: "音乐创作",
+                difficulty: "入门",
+                title: "AI生成专属背景音乐",
+                desc: "使用AI音乐工具为你的视频或项目生成定制背景音乐",
+                tools: ["Suno", "AIVA", "Audacity"],
+                steps: [
+                    "确定音乐风格（如：轻快、史诗、放松等）",
+                    "在Suno中输入提示词描述你想要的音乐",
+                    "生成多个版本，选择最符合需求的一个",
+                    "使用Audacity调整音量和时长",
+                    "导出为MP3格式使用"
+                ],
+                tips: "描述越详细，生成的音乐越符合预期，包括情绪、节奏、乐器等",
+                expectedResult: "一段30-60秒的原创背景音乐"
+            },
+            {
+                category: "写作辅助",
+                difficulty: "入门",
+                title: "AI辅助写一封打动人的求职信",
+                desc: "使用AI优化你的求职信，让它更有说服力和个性化",
+                tools: ["ChatGPT", "Grammarly", "Notion"],
+                steps: [
+                    "准备你的简历和目标职位描述",
+                    "让AI分析职位要求，提取关键词",
+                    "输入提示词：'帮我写一封求职信，应聘XXX职位，突出我的XXX经验'",
+                    "根据AI生成的草稿，加入个人真实案例",
+                    "使用Grammarly检查语法和语气"
+                ],
+                tips: "求职信要具体，避免空话，用数据和成果说话",
+                expectedResult: "一封专业、个性化且针对性强的求职信"
+            },
+            {
+                category: "教育学习",
+                difficulty: "中级",
+                title: "用AI制作互动式学习卡片",
+                desc: "将复杂知识点转化为易记的学习卡片，提升学习效率",
+                tools: ["ChatGPT", "Anki", "Canva"],
+                steps: [
+                    "选择要学习的主题（如：英语单词、历史事件、编程概念）",
+                    "让AI生成知识点的问答对",
+                    "使用Canva设计卡片模板",
+                    "导入Anki创建记忆卡片",
+                    "设置复习计划"
+                ],
+                tips: "卡片要遵循'一个概念一张卡'的原则，避免信息过载",
+                expectedResult: "一套包含50-100张卡片的记忆卡组"
+            }
+        ];
+
+        // 设置当前日期
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('zh-CN', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            weekday: 'long'
+        });
+
+        // 历史记录
+        let history = JSON.parse(localStorage.getItem('ai-idea-history') || '[]');
+        updateHistoryDisplay();
+
+        function generateIdea() {
+            const btn = document.getElementById('generate-btn');
+            const loading = document.getElementById('loading');
+            const resultCard = document.getElementById('result-card');
+
+            // 显示加载状态
+            btn.disabled = true;
+            loading.classList.remove('hidden');
+            resultCard.classList.add('hidden');
+
+            // 模拟AI生成延迟
+            setTimeout(() => {
+                // 随机选择一个创意
+                const idea = ideaDatabase[Math.floor(Math.random() * ideaDatabase.length)];
+                
+                // 填充内容
+                document.getElementById('idea-category').textContent = idea.category;
+                document.getElementById('idea-difficulty').textContent = idea.difficulty;
+                document.getElementById('idea-title').textContent = idea.title;
+                document.getElementById('idea-desc').textContent = idea.desc;
+                document.getElementById('idea-tips').textContent = idea.tips;
+                document.getElementById('expected-result').textContent = idea.expectedResult;
+
+                // 填充工具列表
+                const toolsList = document.getElementById('tools-list');
+                toolsList.innerHTML = idea.tools.map(tool => 
+                    `<span class="tag bg-blue-100 text-blue-700">${tool}</span>`
+                ).join('');
+
+                // 填充步骤列表
+                const stepsList = document.getElementById('steps-list');
+                stepsList.innerHTML = idea.steps.map((step, index) => `
+                    <div class="flex items-start gap-3">
+                        <div class="step-number">${index + 1}</div>
+                        <p class="text-gray-700 text-sm pt-1">${step}</p>
+                    </div>
+                `).join('');
+
+                // 添加到历史记录
+                addToHistory(idea);
+
+                // 显示结果
+                loading.classList.add('hidden');
+                resultCard.classList.remove('hidden');
+                btn.disabled = false;
+
+                // 滚动到结果
+                resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 1500);
+        }
+
+        function addToHistory(idea) {
+            const historyItem = {
+                ...idea,
+                date: new Date().toLocaleString('zh-CN')
+            };
+            history.unshift(historyItem);
+            if (history.length > 10) history = history.slice(0, 10);
+            localStorage.setItem('ai-idea-history', JSON.stringify(history));
+            updateHistoryDisplay();
+        }
+
+        function updateHistoryDisplay() {
+            const historyList = document.getElementById('history-list');
+            if (history.length === 0) {
+                historyList.innerHTML = '<p class="text-gray-500 text-center py-8">暂无历史记录，点击上方按钮生成你的第一个AI创意！</p>';
+                return;
+            }
+
+            historyList.innerHTML = history.map((item, index) => `
+                <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition" onclick="loadHistoryItem(${index})">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-gray-500">${item.date}</span>
+                        <span class="tag bg-purple-100 text-purple-700 text-xs">${item.category}</span>
+                    </div>
+                    <h4 class="font-semibold text-gray-800">${item.title}</h4>
+                </div>
+            `).join('');
+        }
+
+        function loadHistoryItem(index) {
+            const item = history[index];
+            document.getElementById('idea-category').textContent = item.category;
+            document.getElementById('idea-difficulty').textContent = item.difficulty;
+            document.getElementById('idea-title').textContent = item.title;
+            document.getElementById('idea-desc').textContent = item.desc;
+            document.getElementById('idea-tips').textContent = item.tips;
+            document.getElementById('expected-result').textContent = item.expectedResult;
+
+            const toolsList = document.getElementById('tools-list');
+            toolsList.innerHTML = item.tools.map(tool => 
+                `<span class="tag bg-blue-100 text-blue-700">${tool}</span>`
+            ).join('');
+
+            const stepsList = document.getElementById('steps-list');
+            stepsList.innerHTML = item.steps.map((step, idx) => `
+                <div class="flex items-start gap-3">
+                    <div class="step-number">${idx + 1}</div>
+                    <p class="text-gray-700 text-sm pt-1">${step}</p>
+                </div>
+            `).join('');
+
+            document.getElementById('result-card').classList.remove('hidden');
+            document.getElementById('result-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function copyIdea() {
+            const title = document.getElementById('idea-title').textContent;
+            const desc = document.getElementById('idea-desc').textContent;
+            const tools = Array.from(document.querySelectorAll('#tools-list .tag')).map(t => t.textContent).join(', ');
+            const steps = Array.from(document.querySelectorAll('#steps-list p')).map((p, i) => `${i + 1}. ${p.textContent}`).join('\n');
+            const tips = document.getElementById('idea-tips').textContent;
+
+            const content = `【${title}】\n\n${desc}\n\n🛠️ 推荐工具：${tools}\n\n📋 执行步骤：\n${steps}\n\n💡 创意提示：${tips}`;
+
+            navigator.clipboard.writeText(content).then(() => {
+                alert('内容已复制到剪贴板！');
+            });
+        }
+    </script>
+</body>
+</html>
