@@ -184,9 +184,9 @@
     </main>
 
     <script>
-        const API_BASE_URL = window.location.hostname === 'localhost' 
-            ? 'http://localhost:3001' 
-            : 'https://api.example.com';
+        // Together AI API 配置
+        const TOGETHER_API_KEY = '7b2f59f8c3e1a4d6b5c8e9f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1';
+        const TOGETHER_API_URL = 'https://api.together.xyz/v1/chat/completions';
 
         async function generateSkillGuide() {
             const skillInput = document.getElementById('skillInput');
@@ -202,18 +202,152 @@
             document.getElementById('generateBtn').disabled = true;
 
             try {
-                const response = await fetch(`${API_BASE_URL}/api/skill-guide?skill=${encodeURIComponent(skill)}`);
-                
-                if (!response.ok) {
-                    throw new Error('获取指南失败');
-                }
-
-                const data = await response.json();
+                const data = await callTogetherAI(skill);
                 displayResult(skill, data);
             } catch (error) {
                 console.error('Error:', error);
                 displayMockResult(skill);
             }
+        }
+
+        async function callTogetherAI(skill) {
+            const systemPrompt = `你是一位顶级的技能导师和课程设计专家，擅长为初学者设计系统化、高质量的学习路径。
+
+你的教学理念：
+1. 深度而非广度 - 每个知识点都要讲透
+2. 实践导向 - 每个理论都要有对应的动手练习
+3. 循序渐进 - 从简单到复杂，建立知识体系
+4. 真实案例 - 使用真实世界的案例
+
+输出要求：
+- 内容要具体、可操作，避免空洞的理论
+- 每个步骤都要有明确的行动指引
+- 提供真实可用的资源
+- 预判学习者的困难点并给出解决方案`;
+
+            const userPrompt = `请为"${skill}"生成一份深度、系统、高质量的学习指南。
+
+## 要求深度研究的内容：
+
+### 1. 技能全景分析（是什么）
+- 完整定义和核心概念体系
+- 行业定位和重要性
+- 主要应用领域和实际价值
+- 与其他相关技能的关系图谱
+- 需要具备的前置知识
+
+### 2. 深度价值分析（为什么）
+- 具体收益（量化描述）
+- 职业发展应用场景
+- 市场需求现状和趋势
+- 不同水平的能力对应的价值差异
+
+### 3. 系统化学习路径（怎么样）
+**第一阶段：基础构建（第1-2周）**
+- 核心概念详解（3-5个核心概念）
+- 每个概念的具体解释和实例
+- 配套练习
+- 检验标准
+
+**第二阶段：技能深化（第3-4周）**
+- 进阶技术点（4-6个技术点）
+- 常见误区和避坑指南
+- 实战小项目（2-3个）
+- 代码/操作示例
+
+**第三阶段：综合应用（第5-6周）**
+- 完整项目实战（从0到1）
+- 最佳实践和行业规范
+- 性能优化和进阶技巧
+
+### 4. 完整实战案例
+- 项目背景和目标
+- 详细步骤（至少10步，每步都要具体）
+- 完整的代码/操作示例
+- 预期成果和验收标准
+- 常见问题和解决方案
+
+### 5. 学习资源地图
+- 推荐书籍（3-5本）
+- 在线课程（3-5个）
+- 官方文档和权威网站
+- 社区和论坛推荐
+- 练习平台和工具
+
+### 6. 学习路线图
+- 6周的详细学习计划
+- 每天的学习任务
+- 每周的里程碑和检验点
+
+输出格式：
+请以 JSON 格式返回，所有内容使用 HTML 标签格式化：
+{
+  "difficulty": "学习难度和预计时间",
+  "tags": ["标签1", "标签2", "标签3"],
+  "what": "HTML格式的详细内容",
+  "why": "HTML格式的详细内容",
+  "how": "HTML格式的详细内容",
+  "case": "HTML格式的详细内容",
+  "roadmap": "HTML格式的详细内容"
+}
+
+注意：
+1. 内容要深入具体，不要泛泛而谈
+2. 每个部分都要有实质性的内容
+3. 使用 h4, p, ul, ol, li, strong, div 等 HTML 标签
+4. 重要内容用 strong 或 em 标注
+5. 使用 emoji 增加可读性`;
+
+            const response = await fetch(TOGETHER_API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${TOGETHER_API_KEY}`
+                },
+                body: JSON.stringify({
+                    model: 'meta-llama/Llama-3.3-70B-Instruct-Turbo',
+                    messages: [
+                        { role: 'system', content: systemPrompt },
+                        { role: 'user', content: userPrompt }
+                    ],
+                    max_tokens: 4000,
+                    temperature: 0.7,
+                    top_p: 0.7,
+                    top_k: 50,
+                    repetition_penalty: 1.2
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('API 请求失败');
+            }
+
+            const result = await response.json();
+            
+            if (result.choices && result.choices[0] && result.choices[0].message) {
+                const content = result.choices[0].message.content;
+                
+                // 提取 JSON 部分
+                const jsonMatch = content.match(/\{[\s\S]*\}/);
+                if (jsonMatch) {
+                    try {
+                        return JSON.parse(jsonMatch[0]);
+                    } catch (e) {
+                        console.error('JSON 解析失败，返回格式化内容');
+                        return {
+                            difficulty: '中等 - 预计4-6周',
+                            tags: ['AI生成', '系统学习', '实战导向'],
+                            what: `<div>${content.substring(0, 1500)}...</div>`,
+                            why: '<div>详细内容请查看完整指南</div>',
+                            how: '<div>详细内容请查看完整指南</div>',
+                            case: '<div>详细内容请查看完整指南</div>',
+                            roadmap: '<div>详细内容请查看完整指南</div>'
+                        };
+                    }
+                }
+            }
+            
+            throw new Error('无法解析响应');
         }
 
         function displayResult(skill, data) {
