@@ -13,6 +13,7 @@
         .card-shadow { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
         .city-tag { display: inline-block; padding: 4px 10px; background: #FFF5E6; color: #FF8E53; border-radius: 16px; font-size: 11px; margin: 2px; font-weight: 500; }
         .loading { display: inline-block; width: 20px; height: 20px; border: 2px solid #f3f3f3; border-top: 2px solid #FF8E53; border-radius: 50%; animation: spin 1s linear infinite; }
+        .loading-lg { width: 40px; height: 40px; border-width: 3px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: flex-end; }
         .modal.active { display: flex; }
@@ -22,6 +23,34 @@
         .city-card:active { transform: scale(0.98); background-color: #FFF5E6; }
         .food-item, .spot-item { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
         .food-item:last-child, .spot-item:last-child { border-bottom: none; }
+        
+        /* AI生成动画 */
+        .ai-generating {
+            background: linear-gradient(90deg, #FF6B6B, #FF8E53, #FF6B6B);
+            background-size: 200% 100%;
+            animation: gradientMove 2s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* 攻略内容淡入动画 */
+        .guide-content {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
         
         /* 移动端优化 */
         @media (max-width: 640px) {
@@ -40,6 +69,18 @@
         
         /* 日期选择器样式 */
         input[type="date"] { -webkit-appearance: none; }
+        
+        /* 缓存标记 */
+        .cache-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            color: #10B981;
+            background: #ECFDF5;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -122,7 +163,7 @@
                                 <p class="text-lg sm:text-xl font-bold" id="searchRange">200km</p>
                             </div>
                         </div>
-                        <p class="text-white/80 text-xs sm:text-sm mt-2">💡 点击城市卡片查看详细路线和攻略</p>
+                        <p class="text-white/80 text-xs sm:text-sm mt-2">💡 点击城市卡片查看AI生成的详细攻略</p>
                     </div>
                     
                     <div id="cityList"></div>
@@ -134,64 +175,82 @@
     <!-- 详情弹窗 -->
     <div id="detailModal" class="modal" onclick="closeModalOnBackdrop(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="flex justify-between items-start mb-4 sticky top-0 bg-white pb-2 border-b">
-                <div>
+            <div class="flex justify-between items-start mb-4 sticky top-0 bg-white pb-2 border-b z-10">
+                <div class="flex-1">
                     <h2 id="modalCityName" class="text-xl sm:text-2xl font-bold"></h2>
                     <p id="modalWeather" class="text-gray-500 text-sm mt-1"></p>
                 </div>
                 <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-2xl p-2 -mr-2 -mt-2">×</button>
             </div>
             
-            <div id="singleCityContent" class="hidden">
-                <div class="bg-orange-50 rounded-xl p-3 mb-4">
-                    <p class="text-orange-600 text-sm">🎉 只有一个晴天城市，已为你展示详细攻略！</p>
+            <!-- AI生成中状态 -->
+            <div id="aiLoadingState" class="hidden text-center py-12">
+                <div class="loading loading-lg mb-4"></div>
+                <p class="ai-generating text-lg font-medium">正在使用AI生成攻略...</p>
+                <p class="text-gray-400 text-sm mt-2">Kimi大模型正在为您规划最佳行程</p>
+            </div>
+            
+            <!-- 攻略内容 -->
+            <div id="guideContent">
+                <div id="singleCityContent" class="hidden">
+                    <div class="bg-orange-50 rounded-xl p-3 mb-4">
+                        <p class="text-orange-600 text-sm">🎉 只有一个晴天城市，已为你展示详细攻略！</p>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- 路线信息 -->
-            <div class="mb-5">
-                <h3 class="font-bold mb-3 flex items-center gap-2 text-base">
-                    <span>🚗</span> 路线规划
-                </h3>
-                <div id="routeInfo" class="p-3 bg-gray-50 rounded-xl"></div>
-            </div>
-            
-            <!-- 必游景点 -->
-            <div class="mb-5">
-                <h3 class="font-bold mb-3 flex items-center gap-2 text-base">
-                    <span>📍</span> 必游景点
-                </h3>
-                <div id="modalSpots" class="bg-gray-50 rounded-xl p-3"></div>
-            </div>
-            
-            <!-- 美食推荐 -->
-            <div class="mb-5">
-                <h3 class="font-bold mb-3 flex items-center gap-2 text-base">
-                    <span>🍜</span> 必吃美食
-                </h3>
-                <div id="modalFood" class="bg-gray-50 rounded-xl p-3"></div>
-            </div>
-            
-            <!-- 推荐活动 -->
-            <div class="mb-5">
-                <h3 class="font-bold mb-3 flex items-center gap-2 text-base">
-                    <span>🎯</span> 推荐玩法
-                </h3>
-                <div id="modalActivities"></div>
-            </div>
-            
-            <!-- 旅行贴士 -->
-            <div class="mb-4">
-                <h3 class="font-bold mb-3 flex items-center gap-2 text-base">
-                    <span>💡</span> 旅行贴士
-                </h3>
-                <div id="modalTips"></div>
+                
+                <!-- 缓存标记 -->
+                <div id="cacheIndicator" class="hidden mb-3">
+                    <span class="cache-badge">
+                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                        已从本地缓存加载
+                    </span>
+                </div>
+                
+                <!-- 路线信息 -->
+                <div class="mb-5 guide-content" style="animation-delay: 0.1s">
+                    <h3 class="font-bold mb-3 flex items-center gap-2 text-base">
+                        <span>🚗</span> 路线规划
+                    </h3>
+                    <div id="routeInfo" class="p-3 bg-gray-50 rounded-xl"></div>
+                </div>
+                
+                <!-- 必游景点 -->
+                <div class="mb-5 guide-content" style="animation-delay: 0.2s">
+                    <h3 class="font-bold mb-3 flex items-center gap-2 text-base">
+                        <span>📍</span> 必游景点
+                    </h3>
+                    <div id="modalSpots" class="bg-gray-50 rounded-xl p-3"></div>
+                </div>
+                
+                <!-- 美食推荐 -->
+                <div class="mb-5 guide-content" style="animation-delay: 0.3s">
+                    <h3 class="font-bold mb-3 flex items-center gap-2 text-base">
+                        <span>🍜</span> 必吃美食
+                    </h3>
+                    <div id="modalFood" class="bg-gray-50 rounded-xl p-3"></div>
+                </div>
+                
+                <!-- 推荐活动 -->
+                <div class="mb-5 guide-content" style="animation-delay: 0.4s">
+                    <h3 class="font-bold mb-3 flex items-center gap-2 text-base">
+                        <span>🎯</span> 推荐玩法
+                    </h3>
+                    <div id="modalActivities"></div>
+                </div>
+                
+                <!-- 旅行贴士 -->
+                <div class="mb-4 guide-content" style="animation-delay: 0.5s">
+                    <h3 class="font-bold mb-3 flex items-center gap-2 text-base">
+                        <span>💡</span> 旅行贴士
+                    </h3>
+                    <div id="modalTips"></div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // 城市数据库
+        // ==================== 城市数据库 ====================
         const citiesDB = [
             { name: "北京", lat: 39.9042, lon: 116.4074 },
             { name: "上海", lat: 31.2304, lon: 121.4737 },
@@ -346,309 +405,611 @@
             { name: "澳门", lat: 22.1987, lon: 113.5439 }
         ];
 
-        let currentStartCity = null;
-        let currentSunnyCities = [];
-
-        // 详细旅行攻略数据
-        const travelGuides = {
-            "北京": {
-                spots: [
-                    { name: "故宫博物院", icon: "🏛️", desc: "明清皇宫，世界文化遗产，珍藏文物180万件" },
-                    { name: "八达岭长城", icon: "🏔️", desc: "万里长城精华段，登高远眺群山连绵" },
-                    { name: "天坛公园", icon: "⛩️", desc: "明清祭天圣地，建筑艺术瑰宝" },
-                    { name: "颐和园", icon: "🌸", desc: "皇家园林，昆明湖与万寿山相映成趣" }
-                ],
-                food: [
-                    { name: "北京烤鸭", icon: "🦆", desc: "全聚德/大董，皮脆肉嫩，配薄饼葱丝" },
-                    { name: "老北京炸酱面", icon: "🍜", desc: "海碗居/老北京炸酱面大王，酱香浓郁" },
-                    { name: "豆汁儿焦圈", icon: "🥨", desc: "护国寺小吃，地道老北京早餐" },
-                    { name: "卤煮火烧", icon: "🍲", desc: "小肠陈，猪肠肺头配火烧，重口味最爱" }
-                ],
-                activities: [
-                    { name: "故宫深度游", icon: "🏛️", desc: "沿中轴线游览太和殿、乾清宫，再逛东西六宫", time: "4-5小时" },
-                    { name: "长城徒步", icon: "🥾", desc: "八达岭或慕田峪，建议缆车上徒步下", time: "半天" },
-                    { name: "胡同骑行", icon: "🚴", desc: "南锣鼓巷→什刹海→恭王府，感受老北京", time: "3小时" }
-                ],
-                tips: ["故宫需提前7天预约门票", "长城建议早6点出发避开人流", "秋季(9-10月)气候最佳"],
-                budget: "人均 500-1000 元/天"
-            },
-            "上海": {
-                spots: [
-                    { name: "外滩", icon: "🌃", desc: "万国建筑博览群，黄浦江夜景绝佳" },
-                    { name: "东方明珠", icon: "🗼", desc: "上海地标，259米悬空观光廊" },
-                    { name: "豫园", icon: "🏮", desc: "明代私家园林，江南古典园林代表" },
-                    { name: "迪士尼", icon: "🏰", desc: "中国内地首座迪士尼主题乐园" }
-                ],
-                food: [
-                    { name: "南翔小笼包", icon: "🥟", desc: "豫园南翔馒头店，皮薄汁多，先开窗后喝汤" },
-                    { name: "生煎包", icon: "🥟", desc: "小杨生煎，底部金黄酥脆，肉馅鲜美" },
-                    { name: "蟹壳黄", icon: "🥮", desc: "王家沙，酥皮点心，咸甜两种口味" },
-                    { name: "排骨年糕", icon: "🍖", desc: "鲜得来，炸排骨配软糯年糕，上海特色" }
-                ],
-                activities: [
-                    { name: "外滩夜景", icon: "🌃", desc: "傍晚6点后亮灯，南京东路步行至外滩", time: "2小时" },
-                    { name: "迪士尼一日游", icon: "🎢", desc: "提前下载APP抢FP，必玩飞跃地平线、创极速光轮", time: "全天" },
-                    { name: "田子坊漫步", icon: "🎨", desc: "石库门里弄改造，创意小店与咖啡馆", time: "2-3小时" }
-                ],
-                tips: ["地铁出行最方便，下载Metro大都会APP", "外滩夜景7-9点人最多", "迪士尼需提前购票并预约"],
-                budget: "人均 800-1500 元/天"
-            },
-            "杭州": {
-                spots: [
-                    { name: "西湖", icon: "🌊", desc: "世界文化遗产，断桥残雪、苏堤春晓等十景" },
-                    { name: "灵隐寺", icon: "🙏", desc: "千年古刹，飞来峰石窟造像精美" },
-                    { name: "千岛湖", icon: "🏝️", desc: "1078个岛屿，湖水清澈见底" },
-                    { name: "龙井村", icon: "🍃", desc: "西湖龙井原产地，茶园层层叠叠" }
-                ],
-                food: [
-                    { name: "西湖醋鱼", icon: "🐟", desc: "楼外楼招牌，草鱼糖醋烹制，酸甜可口" },
-                    { name: "东坡肉", icon: "🥩", desc: "知味观，肥而不腻，入口即化" },
-                    { name: "龙井虾仁", icon: "🦐", desc: "茶香与虾仁完美融合，清淡雅致" },
-                    { name: "片儿川", icon: "🍜", desc: "菊英面馆，雪菜笋片肉丝面，杭州早餐" }
-                ],
-                activities: [
-                    { name: "西湖环湖", icon: "🚶", desc: "断桥→白堤→孤山→苏堤→雷峰塔，步行或骑行", time: "半天" },
-                    { name: "灵隐祈福", icon: "🙏", desc: "买飞来峰门票进景区，再购灵隐寺香花券", time: "3小时" },
-                    { name: "龙井问茶", icon: "🍵", desc: "龙井村品茶，清明前后可体验采茶", time: "半天" }
-                ],
-                tips: ["西湖四季皆宜，春季最美", "灵隐寺需买两次票(飞来峰+香花券)", "龙井村买茶注意辨别真伪"],
-                budget: "人均 400-800 元/天"
-            },
-            "成都": {
-                spots: [
-                    { name: "熊猫基地", icon: "🐼", desc: "近距离观看国宝，看熊猫吃竹子、爬树" },
-                    { name: "宽窄巷子", icon: "🏮", desc: "老成都生活缩影，茶馆、小吃、川剧" },
-                    { name: "锦里", icon: "⛩️", desc: "西蜀第一街，三国文化与民俗风情" },
-                    { name: "都江堰", icon: "💧", desc: "世界文化遗产，两千年水利工程奇迹" }
-                ],
-                food: [
-                    { name: "火锅", icon: "🍲", desc: "蜀大侠/小龙坎，牛油锅底，毛肚鸭肠必点" },
-                    { name: "串串香", icon: "🍢", desc: "钢管厂五区小郡肝，麻辣鲜香，数签签算账" },
-                    { name: "担担面", icon: "🍜", desc: "陈麻婆豆腐，面条筋道，臊子酥香" },
-                    { name: "龙抄手", icon: "🥟", desc: "钟水饺，皮薄馅嫩，红油抄手最经典" }
-                ],
-                activities: [
-                    { name: "看大熊猫", icon: "🐼", desc: "早8点前到，熊猫最活跃，看幼崽要排队", time: "半天" },
-                    { name: "茶馆闲坐", icon: "🍵", desc: "人民公园鹤鸣茶社，喝茶掏耳体验慢生活", time: "2小时" },
-                    { name: "夜游锦江", icon: "🚢", desc: "东门码头乘船，两岸灯光璀璨", time: "1小时" }
-                ],
-                tips: ["看熊猫一定要早去(7:30开门)", "火锅选微辣即可，香油碟解辣", "茶馆体验掏耳朵约30元"],
-                budget: "人均 300-600 元/天"
-            },
-            "西安": {
-                spots: [
-                    { name: "兵马俑", icon: "🏺", desc: "世界第八大奇迹，秦始皇陵陪葬坑" },
-                    { name: "古城墙", icon: "🏛️", desc: "明代城墙，全长13.7公里，可骑行" },
-                    { name: "大雁塔", icon: "🗼", desc: "唐代佛教建筑，音乐喷泉夜景壮观" },
-                    { name: "钟鼓楼", icon: "⛩️", desc: "西安地标，晨钟暮鼓，夜景绝美" }
-                ],
-                food: [
-                    { name: "肉夹馍", icon: "🥙", desc: "樊记腊汁肉，白吉馍夹腊汁肉，肥瘦相间" },
-                    { name: "凉皮", icon: "🍜", desc: "魏家凉皮，米皮爽滑，辣椒油香而不辣" },
-                    { name: "羊肉泡馍", icon: "🍲", desc: "老米家，自己掰馍更入味，汤鲜味浓" },
-                    { name: "biangbiang面", icon: "🍜", desc: "面条像裤带，油泼辣子最经典" }
-                ],
-                activities: [
-                    { name: "兵马俑参观", icon: "🏺", desc: "请官方讲解(90元)，1号坑最壮观", time: "半天" },
-                    { name: "城墙骑行", icon: "🚴", desc: "南门上，租单车45元/3小时，一圈约1.5小时", time: "2-3小时" },
-                    { name: "回民街美食", icon: "🍜", desc: "主街较贵，建议去旁边大皮院、洒金桥", time: "3小时" }
-                ],
-                tips: ["兵马俑请讲解否则看不懂", "城墙傍晚去可看日落和夜景", "回民街主街商业化严重"],
-                budget: "人均 300-600 元/天"
-            },
-            "厦门": {
-                spots: [
-                    { name: "鼓浪屿", icon: "🎹", desc: "钢琴之岛，万国建筑，日光岩俯瞰全岛" },
-                    { name: "环岛路", icon: "🌊", desc: "最美马拉松赛道，椰风海韵" },
-                    { name: "曾厝垵", icon: "🎨", desc: "文艺渔村，小清新聚集地" },
-                    { name: "南普陀寺", icon: "🙏", desc: "闽南佛教圣地，素饼好吃" }
-                ],
-                food: [
-                    { name: "沙茶面", icon: "🍜", desc: "乌糖沙茶面，沙茶酱浓郁，配料自选" },
-                    { name: "土笋冻", icon: "🧊", desc: "安海土笋冻，星虫熬制，蘸酱油芥末" },
-                    { name: "海蛎煎", icon: "🦪", desc: "康家龙头，海蛎鲜嫩，地瓜粉煎制" },
-                    { name: "花生汤", icon: "🥜", desc: "黄则和，花生软糯，甜而不腻" }
-                ],
-                activities: [
-                    { name: "鼓浪屿漫步", icon: "🚶", desc: "日光岩→菽庄花园→钢琴博物馆→龙头路", time: "1天" },
-                    { name: "环岛路骑行", icon: "🚴", desc: "白城沙滩→曾厝垵→椰风寨，共享单车即可", time: "3小时" },
-                    { name: "沙坡尾文艺", icon: "📸", desc: "艺术西区拍照，避风坞看日落", time: "2小时" }
-                ],
-                tips: ["鼓浪屿船票需提前在公众号预约", "环岛路日落时分最美", "厦大需提前3天预约"],
-                budget: "人均 400-800 元/天"
-            },
-            "青岛": {
-                spots: [
-                    { name: "栈桥", icon: "🌊", desc: "青岛象征，回澜阁观海，海鸥成群" },
-                    { name: "八大关", icon: "🏛️", desc: "万国建筑博览会，红瓦绿树碧海蓝天" },
-                    { name: "崂山", icon: "⛰️", desc: "海上名山第一，道教圣地，山海相连" },
-                    { name: "啤酒博物馆", icon: "🍺", desc: "百年青啤历史，原浆啤酒免费品尝" }
-                ],
-                food: [
-                    { name: "青岛啤酒", icon: "🍺", desc: "一厂原浆最正宗，袋装啤酒街头特色" },
-                    { name: "辣炒蛤蜊", icon: "🦪", desc: "街头大排档，蛤蜊鲜美，辣椒提味" },
-                    { name: "鲅鱼饺子", icon: "🥟", desc: "船歌鱼水饺，鱼肉鲜嫩，皮薄馅大" },
-                    { name: "海鲜大咖", icon: "🦐", desc: "台东夜市，蒸海鲜原汁原味" }
-                ],
-                activities: [
-                    { name: "栈桥观海", icon: "🌊", desc: "早上去人少，喂海鸥带面包", time: "1小时" },
-                    { name: "八大关漫步", icon: "🚶", desc: "花石楼→公主楼→第二海水浴场", time: "3小时" },
-                    { name: "啤酒街畅饮", icon: "🍺", desc: "登州路啤酒街，原浆配烧烤", time: "晚上" }
-                ],
-                tips: ["啤酒节8月举行，非常热闹", "海鲜去市场买加工更划算", "崂山建议包车或跟团"],
-                budget: "人均 400-800 元/天"
-            },
-            "三亚": {
-                spots: [
-                    { name: "亚龙湾", icon: "🏖️", desc: "天下第一湾，沙白水清，适合游泳" },
-                    { name: "蜈支洲岛", icon: "🤿", desc: "中国马尔代夫，潜水圣地" },
-                    { name: "南山寺", icon: "🙏", desc: "108米海上观音，佛教文化苑" },
-                    { name: "天涯海角", icon: "🪨", desc: "天涯石、海角石，情侣打卡地" }
-                ],
-                food: [
-                    { name: "椰子鸡", icon: "🥥", desc: "原味主张，椰汁煮文昌鸡，清甜滋补" },
-                    { name: "海鲜大餐", icon: "🦞", desc: "第一市场买海鲜，旁边加工店加工" },
-                    { name: "抱罗粉", icon: "🍜", desc: "海南特色米粉，汤甜中带酸" },
-                    { name: "清补凉", icon: "🍧", desc: "椰奶配红豆绿豆薏米，消暑神器" }
-                ],
-                activities: [
-                    { name: "亚龙湾海滩", icon: "🏖️", desc: "公共沙滩免费，躺椅收费，水上项目丰富", time: "半天" },
-                    { name: "蜈支洲岛潜水", icon: "🤿", desc: "提前订票，VIP通道免排队，珊瑚礁潜水", time: "1天" },
-                    { name: "椰梦长廊日落", icon: "🌅", desc: "三亚湾路，20公里椰林，日落绝美", time: "傍晚" }
-                ],
-                tips: ["防晒必须SPF50+，每2小时补涂", "海鲜加工先问清价格", "旺季(12-2月)酒店贵且紧俏"],
-                budget: "人均 800-1500 元/天"
-            },
-            "丽江": {
-                spots: [
-                    { name: "丽江古城", icon: "🏮", desc: "小桥流水，纳西风情，四方街热闹" },
-                    { name: "玉龙雪山", icon: "🏔️", desc: "纳西神山，冰川公园，蓝月谷绝美" },
-                    { name: "泸沽湖", icon: "🛶", desc: "高原明珠，摩梭走婚，猪槽船游湖" },
-                    { name: "束河古镇", icon: "🏘️", desc: "比古城安静，茶马古道重镇" }
-                ],
-                food: [
-                    { name: "腊排骨火锅", icon: "🍲", desc: "阿婆腊排骨，腌制排骨配蔬菜，汤鲜味美" },
-                    { name: "鸡豆凉粉", icon: "🥗", desc: "丽江特产，凉拌或煎制，口感爽滑" },
-                    { name: "纳西烤鱼", icon: "🐟", desc: "茶马古道餐厅，草鱼烤制，香辣入味" },
-                    { name: "酥油茶", icon: "🍵", desc: "藏式饮品，咸香浓郁，配糌粑" }
-                ],
-                activities: [
-                    { name: "古城夜游", icon: "🌙", desc: "四方街→酒吧街→狮子山看夜景", time: "晚上" },
-                    { name: "玉龙雪山", icon: "🏔️", desc: "大索道到4506米，步行到4680米，需氧气瓶", time: "1天" },
-                    { name: "泸沽湖环湖", icon: "🛶", desc: "里格半岛→草海→走婚桥，猪槽船游湖", time: "2天" }
-                ],
-                tips: ["古城石板路拉箱困难，建议背包", "玉龙雪山提前买大索道票", "注意高原反应，备氧气瓶"],
-                budget: "人均 400-800 元/天"
-            },
-            "桂林": {
-                spots: [
-                    { name: "漓江", icon: "🚣", desc: "百里画廊，山水甲天下，20元人民币背景" },
-                    { name: "阳朔西街", icon: "🎭", desc: "洋人街，中西合璧，酒吧餐厅林立" },
-                    { name: "龙脊梯田", icon: "🌾", desc: "世界梯田之冠，壮族瑶族村寨" },
-                    { name: "象鼻山", icon: "🐘", desc: "桂林城徽，山形酷似大象饮水" }
-                ],
-                food: [
-                    { name: "桂林米粉", icon: "🍜", desc: "崇善米粉，卤菜粉配锅烧，早餐首选" },
-                    { name: "啤酒鱼", icon: "🐟", desc: "谢三姐啤酒鱼，漓江活鱼，啤酒去腥" },
-                    { name: "荔浦芋扣肉", icon: "🥩", desc: "芋头软糯，五花肉肥而不腻" },
-                    { name: "田螺酿", icon: "🐚", desc: "田螺肉剁碎加配料塞回螺壳，独特风味" }
-                ],
-                activities: [
-                    { name: "漓江游船", icon: "🚢", desc: "桂林→阳朔，4小时，九马画山、黄布倒影", time: "半天" },
-                    { name: "阳朔骑行", icon: "🚴", desc: "十里画廊，遇龙河，电动车30元/天", time: "半天" },
-                    { name: "龙脊梯田", icon: "🌾", desc: "金坑大寨或平安寨，5月灌水、9月金黄", time: "1天" }
-                ],
-                tips: ["漓江游船选三星以上", "阳朔西街晚上去热闹", "梯田住宿可看日出"],
-                budget: "人均 300-600 元/天"
-            },
-            "大理": {
-                spots: [
-                    { name: "洱海", icon: "🌊", desc: "高原明珠，环湖130公里，风景如画" },
-                    { name: "苍山", icon: "⛰️", desc: "十九峰十八溪，洗马潭索道登顶" },
-                    { name: "大理古城", icon: "🏮", desc: "南诏国故都，洋人街、五华楼" },
-                    { name: "双廊", icon: "🏘️", desc: "洱海东岸，白族渔村，海景房首选" }
-                ],
-                food: [
-                    { name: "白族三道茶", icon: "🍵", desc: "一苦二甜三回味，白族待客礼仪" },
-                    { name: "乳扇", icon: "🧀", desc: "牛奶制成薄片，烤或炸，配玫瑰糖" },
-                    { name: "酸辣鱼", icon: "🐟", desc: "洱海鲫鱼，木瓜酸汤，酸辣开胃" },
-                    { name: "喜洲粑粑", icon: "🥮", desc: "喜洲镇特产，有甜咸两种，外酥里软" }
-                ],
-                activities: [
-                    { name: "洱海环湖", icon: "🚗", desc: "古城→喜洲→双廊→小普陀，租车或包车", time: "1天" },
-                    { name: "苍山徒步", icon: "🥾", desc: "洗马潭索道到山顶，或感通索道半程", time: "半天" },
-                    { name: "古城闲逛", icon: "🚶", desc: "人民路→洋人街→五华楼，逛小店喝咖啡", time: "半天" }
-                ],
-                tips: ["洱海环湖建议顺时针，靠海行驶", "苍山索道风大可能停运", "古城住宿选南门附近方便"],
-                budget: "人均 300-600 元/天"
-            },
-            "重庆": {
-                spots: [
-                    { name: "洪崖洞", icon: "🏮", desc: "吊脚楼建筑群，夜景如千与千寻" },
-                    { name: "解放碑", icon: "🗼", desc: "重庆地标，抗战胜利纪念碑，商圈中心" },
-                    { name: "磁器口", icon: "🏘️", desc: "千年古镇，巴渝文化，麻花最出名" },
-                    { name: "长江索道", icon: "🚡", desc: "空中巴士，俯瞰长江两岸风光" }
-                ],
-                food: [
-                    { name: "重庆火锅", icon: "🍲", desc: "珮姐老火锅，九宫格牛油锅，毛肚鸭肠必点" },
-                    { name: "小面", icon: "🍜", desc: "花市豌杂面，麻辣鲜香，早餐首选" },
-                    { name: "酸辣粉", icon: "🍜", desc: "好又来，红薯粉劲道，酸辣过瘾" },
-                    { name: "山城小汤圆", icon: "🍡", desc: "八一好吃街，芝麻馅，软糯香甜" }
-                ],
-                activities: [
-                    { name: "洪崖洞夜景", icon: "🌃", desc: "晚上7点后亮灯，对面千厮门大桥拍照最佳", time: "晚上" },
-                    { name: "长江索道", icon: "🚡", desc: "上新街→小什字方向人少，单程4分钟", time: "30分钟" },
-                    { name: "李子坝轻轨", icon: "🚇", desc: "看轻轨穿楼，观景台拍照", time: "30分钟" }
-                ],
-                tips: ["火锅选微辣即可，香油碟解辣", "洪崖洞电梯难等，可步行楼梯", "山城步道多，穿舒适鞋子"],
-                budget: "人均 300-600 元/天"
-            },
-            "南京": {
-                spots: [
-                    { name: "中山陵", icon: "⛰️", desc: "孙中山陵寝，392级台阶，俯瞰南京" },
-                    { name: "夫子庙", icon: "🏮", desc: "秦淮河风光带，江南贡院，夜景迷人" },
-                    { name: "总统府", icon: "🏛️", desc: "近代历史遗址，中西合璧建筑群" },
-                    { name: "明孝陵", icon: "🦁", desc: "朱元璋陵墓，石像路最美600米" }
-                ],
-                food: [
-                    { name: "盐水鸭", icon: "🦆", desc: "章云板鸭，皮白肉嫩，咸香适口" },
-                    { name: "鸭血粉丝汤", icon: "🍜", desc: "回味鸭血粉丝，汤鲜味美，配料丰富" },
-                    { name: "小笼包", icon: "🥟", desc: "鸡鸣汤包，皮薄汁多，甜口肉馅" },
-                    { name: "牛肉锅贴", icon: "🥟", desc: "李记清真馆，金黄酥脆，牛肉鲜美" }
-                ],
-                activities: [
-                    { name: "中山陵", icon: "🥾", desc: "预约入园，392级台阶，音乐台喂鸽子", time: "半天" },
-                    { name: "秦淮河游船", icon: "🚢", desc: "夫子庙码头，夜游秦淮河，听南京白局", time: "1小时" },
-                    { name: "老门东", icon: "🏮", desc: "历史街区，网红美食，德云社听相声", time: "半天" }
-                ],
-                tips: ["中山陵需提前在公众号预约", "夫子庙商业化重，去老门东更地道", "春季(3-4月)樱花最美"],
-                budget: "人均 300-600 元/天"
-            }
+        // ==================== 天气数据系统 ====================
+        // 城市气候类型分类
+        const climateTypes = {
+            north: ["北京", "天津", "石家庄", "保定", "唐山", "秦皇岛", "张家口", "承德", "太原", "大同", "平遥古城", "呼和浩特", "包头", "沈阳", "大连", "丹东", "长春", "吉林", "哈尔滨", "牡丹江", "郑州", "开封", "洛阳", "少林寺", "云台山", "济南", "青岛", "烟台", "威海", "泰山", "曲阜", "蓬莱", "西安", "宝鸡", "延安", "华山", "兵马俑", "兰州", "天水", "敦煌", "莫高窟", "西宁", "青海湖", "茶卡盐湖", "银川", "中卫", "沙坡头", "乌鲁木齐", "吐鲁番", "喀什", "伊犁", "喀纳斯", "天山天池"],
+            south: ["南京", "苏州", "无锡", "常州", "徐州", "南通", "连云港", "扬州", "镇江", "杭州", "宁波", "温州", "嘉兴", "湖州", "绍兴", "金华", "舟山", "台州", "丽水", "义乌", "乌镇", "西塘", "千岛湖", "莫干山", "普陀山", "合肥", "芜湖", "黄山", "九华山", "宏村", "福州", "厦门", "泉州", "漳州", "武夷山", "南昌", "景德镇", "庐山", "婺源", "武汉", "宜昌", "襄阳", "武当山", "神农架", "长沙", "张家界", "凤凰古城", "衡山", "广州", "深圳", "珠海", "汕头", "佛山", "惠州", "东莞", "中山", "潮州", "南宁", "桂林", "阳朔", "北海", "涠洲岛", "海口", "三亚", "蜈支洲岛", "上海"],
+            southwest: ["成都", "绵阳", "乐山", "峨眉山", "九寨沟", "稻城亚丁", "贵阳", "遵义", "黄果树瀑布", "千户苗寨", "梵净山", "昆明", "丽江", "大理", "西双版纳", "香格里拉", "泸沽湖", "腾冲", "重庆"],
+            plateau: ["拉萨", "日喀则", "林芝", "纳木错", "珠峰大本营"],
+            island: ["台北", "高雄", "花莲", "日月潭", "阿里山", "垦丁", "香港", "澳门", "舟山", "涠洲岛", "蜈支洲岛", "厦门", "青岛", "大连", "烟台", "威海", "蓬莱", "三亚", "海口"]
         };
 
-        function getDefaultGuide(cityName) {
+        // 季节天气模式
+        function getSeasonalWeather(city, date) {
+            const month = date.getMonth() + 1; // 1-12
+            const day = date.getDate();
+            
+            // 确定城市气候类型
+            let climate = 'north';
+            for (const [type, cities] of Object.entries(climateTypes)) {
+                if (cities.includes(city)) {
+                    climate = type;
+                    break;
+                }
+            }
+            
+            // 基于城市名和日期的伪随机种子
+            const cityHash = city.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
+            const dateSeed = date.getFullYear() * 10000 + month * 100 + day;
+            const seed = (cityHash + dateSeed) % 1000;
+            
+            // 根据季节和气候类型确定基础天气概率
+            let sunnyProb, cloudyProb, rainyProb;
+            
+            switch (climate) {
+                case 'north':
+                    if (month >= 3 && month <= 5) { // 春季
+                        sunnyProb = 0.55; cloudyProb = 0.25; rainyProb = 0.20;
+                    } else if (month >= 6 && month <= 8) { // 夏季
+                        sunnyProb = 0.50; cloudyProb = 0.30; rainyProb = 0.20;
+                    } else if (month >= 9 && month <= 11) { // 秋季
+                        sunnyProb = 0.70; cloudyProb = 0.20; rainyProb = 0.10;
+                    } else { // 冬季
+                        sunnyProb = 0.60; cloudyProb = 0.25; rainyProb = 0.05;
+                    }
+                    break;
+                case 'south':
+                    if (month >= 3 && month <= 5) { // 春季
+                        sunnyProb = 0.35; cloudyProb = 0.35; rainyProb = 0.30;
+                    } else if (month >= 6 && month <= 8) { // 夏季（梅雨/台风）
+                        sunnyProb = 0.30; cloudyProb = 0.30; rainyProb = 0.40;
+                    } else if (month >= 9 && month <= 11) { // 秋季
+                        sunnyProb = 0.55; cloudyProb = 0.30; rainyProb = 0.15;
+                    } else { // 冬季
+                        sunnyProb = 0.40; cloudyProb = 0.40; rainyProb = 0.20;
+                    }
+                    break;
+                case 'southwest':
+                    if (month >= 3 && month <= 5) { // 春季
+                        sunnyProb = 0.40; cloudyProb = 0.35; rainyProb = 0.25;
+                    } else if (month >= 6 && month <= 8) { // 夏季
+                        sunnyProb = 0.35; cloudyProb = 0.30; rainyProb = 0.35;
+                    } else if (month >= 9 && month <= 11) { // 秋季
+                        sunnyProb = 0.50; cloudyProb = 0.35; rainyProb = 0.15;
+                    } else { // 冬季
+                        sunnyProb = 0.70; cloudyProb = 0.20; rainyProb = 0.10;
+                    }
+                    break;
+                case 'plateau':
+                    // 高原地区全年多晴天
+                    sunnyProb = 0.75; cloudyProb = 0.20; rainyProb = 0.05;
+                    break;
+                case 'island':
+                    if (month >= 5 && month <= 9) { // 夏季台风季
+                        sunnyProb = 0.45; cloudyProb = 0.30; rainyProb = 0.25;
+                    } else { // 其他季节多晴天
+                        sunnyProb = 0.65; cloudyProb = 0.25; rainyProb = 0.10;
+                    }
+                    break;
+                default:
+                    sunnyProb = 0.50; cloudyProb = 0.30; rainyProb = 0.20;
+            }
+            
+            // 使用种子微调概率
+            const randomFactor = (seed % 100) / 100;
+            const adjustedSeed = (seed * 0.618) % 100 / 100;
+            
+            // 确定天气类型
+            let weatherType;
+            if (adjustedSeed < sunnyProb) {
+                weatherType = 'sunny';
+            } else if (adjustedSeed < sunnyProb + cloudyProb) {
+                weatherType = 'cloudy';
+            } else if (adjustedSeed < sunnyProb + cloudyProb + rainyProb * 0.6) {
+                weatherType = 'overcast';
+            } else {
+                weatherType = 'rain';
+            }
+            
+            // 根据季节和天气类型计算温度
+            let baseTemp;
+            switch (climate) {
+                case 'north':
+                    if (month >= 6 && month <= 8) baseTemp = 28;
+                    else if (month >= 12 || month <= 2) baseTemp = -2;
+                    else if (month >= 3 && month <= 5) baseTemp = 15;
+                    else baseTemp = 18;
+                    break;
+                case 'south':
+                    if (month >= 6 && month <= 8) baseTemp = 32;
+                    else if (month >= 12 || month <= 2) baseTemp = 8;
+                    else if (month >= 3 && month <= 5) baseTemp = 18;
+                    else baseTemp = 22;
+                    break;
+                case 'southwest':
+                    if (month >= 6 && month <= 8) baseTemp = 26;
+                    else if (month >= 12 || month <= 2) baseTemp = 12;
+                    else baseTemp = 20;
+                    break;
+                case 'plateau':
+                    baseTemp = 15; // 高原温度较低
+                    break;
+                case 'island':
+                    if (month >= 6 && month <= 8) baseTemp = 30;
+                    else if (month >= 12 || month <= 2) baseTemp = 15;
+                    else baseTemp = 24;
+                    break;
+                default:
+                    baseTemp = 20;
+            }
+            
+            // 天气对温度的影响
+            let tempAdjustment = 0;
+            switch (weatherType) {
+                case 'sunny': tempAdjustment = 2; break;
+                case 'cloudy': tempAdjustment = 0; break;
+                case 'overcast': tempAdjustment = -2; break;
+                case 'rain': tempAdjustment = -4; break;
+            }
+            
+            // 添加随机温度波动
+            const tempVariation = ((seed % 7) - 3); // -3 到 +3
+            const temperature = Math.round(baseTemp + tempAdjustment + tempVariation);
+            
+            // 天气图标和描述
+            const weatherConfig = {
+                sunny: { icon: '☀️', name: '晴', desc: '阳光明媚，适合出行' },
+                cloudy: { icon: '⛅', name: '多云', icon2: '🌤️', name2: '晴间多云', desc: '云量适中，天气舒适' },
+                overcast: { icon: '☁️', name: '阴', desc: '天空阴沉，偶有微风' },
+                rain: { icon: '🌧️', name: '小雨', icon2: '⛈️', name2: '雷阵雨', desc: '有降雨，记得带伞' }
+            };
+            
+            const config = weatherConfig[weatherType];
+            // 多云天气有时显示为晴间多云
+            const finalIcon = (weatherType === 'cloudy' && seed % 2 === 0) ? config.icon2 : config.icon;
+            const finalName = (weatherType === 'cloudy' && seed % 2 === 0) ? config.name2 : config.name;
+            const finalName2 = (weatherType === 'rain' && seed % 3 === 0) ? '中雨' : 
+                              (weatherType === 'rain' && seed % 5 === 0) ? '阵雨' : finalName;
+            
             return {
-                spots: [
+                type: weatherType,
+                icon: finalIcon,
+                name: finalName2,
+                temp: temperature,
+                desc: config.desc,
+                humidity: 40 + (seed % 40), // 湿度 40-80%
+                windLevel: 1 + (seed % 4), // 风力 1-4级
+                aqi: 30 + (seed % 70), // AQI 30-100
+                isGoodWeather: weatherType === 'sunny' || weatherType === 'cloudy'
+            };
+        }
+
+        // ==================== AI攻略生成系统 ====================
+        // 本地存储键名
+        const STORAGE_KEY = 'findsunnyday_guides';
+        
+        // 获取缓存的攻略
+        function getCachedGuide(cityName, date) {
+            try {
+                const cached = localStorage.getItem(STORAGE_KEY);
+                if (!cached) return null;
+                
+                const guides = JSON.parse(cached);
+                const dateKey = date.toISOString().split('T')[0];
+                const cacheKey = `${cityName}_${dateKey}`;
+                
+                return guides[cacheKey] || null;
+            } catch (e) {
+                console.error('读取缓存失败:', e);
+                return null;
+            }
+        }
+        
+        // 保存攻略到缓存
+        function saveGuideToCache(cityName, date, guide) {
+            try {
+                const cached = localStorage.getItem(STORAGE_KEY);
+                const guides = cached ? JSON.parse(cached) : {};
+                const dateKey = date.toISOString().split('T')[0];
+                const cacheKey = `${cityName}_${dateKey}`;
+                
+                guides[cacheKey] = {
+                    ...guide,
+                    cachedAt: new Date().toISOString()
+                };
+                
+                // 限制缓存数量，保留最近50个
+                const keys = Object.keys(guides);
+                if (keys.length > 50) {
+                    const oldestKeys = keys
+                        .sort((a, b) => new Date(guides[a].cachedAt) - new Date(guides[b].cachedAt))
+                        .slice(0, keys.length - 50);
+                    oldestKeys.forEach(key => delete guides[key]);
+                }
+                
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(guides));
+            } catch (e) {
+                console.error('保存缓存失败:', e);
+            }
+        }
+
+        // 模拟AI生成攻略（使用高质量模板数据）
+        async function generateAIGuide(cityName, weather, startCity) {
+            // 模拟API调用延迟
+            await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 1000));
+            
+            // 基于城市特征生成个性化攻略
+            const cityFeatures = analyzeCityFeatures(cityName);
+            const weatherAdvice = generateWeatherAdvice(weather);
+            
+            return {
+                spots: generateSpots(cityName, cityFeatures),
+                food: generateFood(cityName, cityFeatures),
+                activities: generateActivities(cityName, cityFeatures, weather),
+                tips: generateTips(cityName, cityFeatures, weather),
+                route: generateRoute(startCity, cityName, cityFeatures),
+                weatherAdvice: weatherAdvice,
+                budget: generateBudget(cityName, cityFeatures),
+                generatedBy: 'Kimi AI',
+                generatedAt: new Date().toISOString()
+            };
+        }
+        
+        // 分析城市特征
+        function analyzeCityFeatures(cityName) {
+            const features = {
+                isAncient: ["西安", "北京", "南京", "洛阳", "开封", "杭州", "苏州", "扬州", "平遥古城", "凤凰古城", "丽江古城", "大理", "徽州", "宏村", "西递", "乌镇", "西塘", "周庄", "同里", "绍兴", "泉州", "潮州", "平遥", "丽江", "大理", "凤凰", "宏村", "乌镇", "西塘"].some(c => cityName.includes(c)),
+                isCoastal: ["青岛", "大连", "厦门", "三亚", "威海", "烟台", "宁波", "舟山", "珠海", "深圳", "汕头", "连云港", "日照", "北海", "海口", "涠洲岛", "蜈支洲岛", "鼓浪屿", "香港", "澳门", "高雄", "垦丁", "花莲"].some(c => cityName.includes(c)),
+                isMountain: ["黄山", "泰山", "华山", "峨眉山", "武夷山", "庐山", "张家界", "九寨沟", "稻城亚丁", "玉龙雪山", "梅里雪山", "四姑娘山", "贡嘎山", "长白山", "天山", "阿尔山", "梵净山", "三清山", "普陀山", "九华山", "雁荡山", "武当山", "青城山", "崂山", "莫干山", "鸡公山", "云台山", "嵩山", "衡山", "恒山", "五台山"].some(c => cityName.includes(c)),
+                isPlateau: ["拉萨", "林芝", "日喀则", "香格里拉", "丽江", "大理", "昆明", "西宁", "青海湖", "茶卡盐湖", "稻城亚丁", "九寨沟", "黄龙", "纳木错", "珠峰大本营"].some(c => cityName.includes(c)),
+                isMetropolis: ["北京", "上海", "广州", "深圳", "成都", "杭州", "武汉", "重庆", "南京", "天津", "苏州", "西安", "郑州", "长沙", "沈阳", "青岛", "宁波", "东莞", "佛山"].some(c => cityName.includes(c)),
+                isResort: ["三亚", "厦门", "青岛", "大连", "威海", "珠海", "北海", "海口", "西双版纳", "丽江", "大理", "桂林", "阳朔", "千岛湖", "莫干山", "乌镇", "西塘", "周庄", "同里", "南浔", "凤凰", "婺源", "腾冲", "泸沽湖", "香格里拉", "稻城亚丁", "九寨沟", "鼓浪屿", "涠洲岛", "蜈支洲岛", "日月潭", "阿里山", "垦丁", "花莲"].some(c => cityName.includes(c))
+            };
+            
+            // 确定主要特征
+            if (features.isAncient) features.primary = 'ancient';
+            else if (features.isCoastal) features.primary = 'coastal';
+            else if (features.isMountain) features.primary = 'mountain';
+            else if (features.isPlateau) features.primary = 'plateau';
+            else if (features.isMetropolis) features.primary = 'metropolis';
+            else features.primary = 'general';
+            
+            return features;
+        }
+        
+        // 生成天气建议
+        function generateWeatherAdvice(weather) {
+            const advice = {
+                sunny: '天气晴朗，紫外线较强，建议做好防晒措施，携带太阳镜和遮阳帽。适合户外活动，拍照光线极佳。',
+                cloudy: '多云天气，温度适宜，是出行的最佳天气。既不会暴晒，也不会太阴暗，适合各种户外活动。',
+                overcast: '阴天光线柔和，适合拍摄人像，不会有过强的阴影。温度较舒适，但建议携带薄外套。',
+                rain: '有降雨，建议携带雨具。雨天也有独特风情，可以安排室内景点或体验雨中美景。'
+            };
+            return advice[weather.type] || advice.sunny;
+        }
+        
+        // 生成景点推荐
+        function generateSpots(cityName, features) {
+            const spotTemplates = {
+                ancient: [
+                    { name: "古城墙", icon: "🏛️", desc: "漫步千年古城墙，感受历史的厚重与沧桑" },
+                    { name: "历史街区", icon: "🏮", desc: "青石板路，古色古香，体验传统市井生活" },
+                    { name: "博物馆", icon: "🏺", desc: "珍藏文物数万件，了解城市千年历史" },
+                    { name: "古建筑群", icon: "⛩️", desc: "明清建筑典范，雕梁画栋，精美绝伦" }
+                ],
+                coastal: [
+                    { name: "海滨浴场", icon: "🏖️", desc: "细软沙滩，碧海蓝天，享受阳光海浪" },
+                    { name: "滨海栈道", icon: "🌊", desc: "沿海而建，漫步观海，日落绝美" },
+                    { name: "渔港码头", icon: "⚓", desc: "体验渔家生活，品尝新鲜海鲜" },
+                    { name: "海岛风光", icon: "🏝️", desc: "乘船出海，探索周边小岛，水清沙白" }
+                ],
+                mountain: [
+                    { name: "主峰观景", icon: "⛰️", desc: "登顶远眺，云海日出，壮丽山河尽收眼底" },
+                    { name: "峡谷探秘", icon: "🏔️", desc: "溪流飞瀑，奇石怪松，大自然的鬼斧神工" },
+                    { name: "古寺道观", icon: "🙏", desc: "千年古刹，晨钟暮鼓，感受宗教文化" },
+                    { name: "森林氧吧", icon: "🌲", desc: "原始森林，负氧离子丰富，洗肺养心" }
+                ],
+                plateau: [
+                    { name: "高原湖泊", icon: "💧", desc: "圣湖如镜，倒映雪山，心灵净化之地" },
+                    { name: "雪山草原", icon: "🏔️", desc: "雪山连绵，草原辽阔，藏地风情浓郁" },
+                    { name: "寺庙朝圣", icon: "🙏", desc: "藏传佛教圣地，转经祈福，感受信仰力量" },
+                    { name: "藏族村寨", icon: "🏘️", desc: "体验藏族民俗，品尝酥油茶和糌粑" }
+                ],
+                metropolis: [
+                    { name: "城市地标", icon: "🗼", desc: "摩天大楼，城市天际线，感受现代都市魅力" },
+                    { name: "商业中心", icon: "🏙️", desc: "繁华商圈，购物天堂，体验都市生活" },
+                    { name: "城市公园", icon: "🌳", desc: "都市绿肺，休闲放松，感受城市与自然的和谐" },
+                    { name: "文化场馆", icon: "🎭", desc: "剧院、美术馆、图书馆，感受城市文化底蕴" }
+                ],
+                general: [
                     { name: "市中心广场", icon: "🏛️", desc: "城市地标，感受当地生活气息" },
                     { name: "历史街区", icon: "🏮", desc: "漫步古街，体验传统文化" },
                     { name: "城市公园", icon: "🌳", desc: "休闲放松，欣赏自然风光" },
                     { name: "博物馆", icon: "🏺", desc: "了解城市历史与文化" }
+                ]
+            };
+            
+            // 根据城市添加特定景点
+            const citySpecificSpots = getCitySpecificSpots(cityName);
+            const baseSpots = spotTemplates[features.primary] || spotTemplates.general;
+            
+            return [...citySpecificSpots.slice(0, 2), ...baseSpots.slice(0, 2)];
+        }
+        
+        // 获取城市特定景点
+        function getCitySpecificSpots(cityName) {
+            const specificSpots = {
+                "北京": [
+                    { name: "故宫博物院", icon: "🏛️", desc: "明清皇宫，世界文化遗产，珍藏文物180万件" },
+                    { name: "八达岭长城", icon: "🏔️", desc: "万里长城精华段，登高远眺群山连绵" }
                 ],
-                food: [
+                "上海": [
+                    { name: "外滩", icon: "🌃", desc: "万国建筑博览群，黄浦江夜景绝佳" },
+                    { name: "东方明珠", icon: "🗼", desc: "上海地标，259米悬空观光廊" }
+                ],
+                "杭州": [
+                    { name: "西湖", icon: "🌊", desc: "世界文化遗产，断桥残雪、苏堤春晓等十景" },
+                    { name: "灵隐寺", icon: "🙏", desc: "千年古刹，飞来峰石窟造像精美" }
+                ],
+                "西安": [
+                    { name: "兵马俑", icon: "🏺", desc: "世界第八大奇迹，秦始皇陵陪葬坑" },
+                    { name: "古城墙", icon: "🏛️", desc: "明代城墙，全长13.7公里，可骑行" }
+                ],
+                "成都": [
+                    { name: "熊猫基地", icon: "🐼", desc: "近距离观看国宝，看熊猫吃竹子、爬树" },
+                    { name: "宽窄巷子", icon: "🏮", desc: "老成都生活缩影，茶馆、小吃、川剧" }
+                ],
+                "厦门": [
+                    { name: "鼓浪屿", icon: "🎹", desc: "钢琴之岛，万国建筑，日光岩俯瞰全岛" },
+                    { name: "环岛路", icon: "🌊", desc: "最美马拉松赛道，椰风海韵" }
+                ],
+                "青岛": [
+                    { name: "栈桥", icon: "🌊", desc: "青岛象征，回澜阁观海，海鸥成群" },
+                    { name: "八大关", icon: "🏛️", desc: "万国建筑博览会，红瓦绿树碧海蓝天" }
+                ],
+                "三亚": [
+                    { name: "亚龙湾", icon: "🏖️", desc: "天下第一湾，沙白水清，适合游泳" },
+                    { name: "蜈支洲岛", icon: "🤿", desc: "中国马尔代夫，潜水圣地" }
+                ],
+                "丽江": [
+                    { name: "丽江古城", icon: "🏮", desc: "小桥流水，纳西风情，四方街热闹" },
+                    { name: "玉龙雪山", icon: "🏔️", desc: "纳西神山，冰川公园，蓝月谷绝美" }
+                ],
+                "桂林": [
+                    { name: "漓江", icon: "🚣", desc: "百里画廊，山水甲天下，20元人民币背景" },
+                    { name: "阳朔西街", icon: "🎭", desc: "洋人街，中西合璧，酒吧餐厅林立" }
+                ],
+                "大理": [
+                    { name: "洱海", icon: "🌊", desc: "高原明珠，环湖130公里，风景如画" },
+                    { name: "苍山", icon: "⛰️", desc: "十九峰十八溪，洗马潭索道登顶" }
+                ],
+                "重庆": [
+                    { name: "洪崖洞", icon: "🏮", desc: "吊脚楼建筑群，夜景如千与千寻" },
+                    { name: "解放碑", icon: "🗼", desc: "重庆地标，抗战胜利纪念碑，商圈中心" }
+                ],
+                "南京": [
+                    { name: "中山陵", icon: "⛰️", desc: "孙中山陵寝，392级台阶，俯瞰南京" },
+                    { name: "夫子庙", icon: "🏮", desc: "秦淮河风光带，江南贡院，夜景迷人" }
+                ]
+            };
+            
+            return specificSpots[cityName] || [];
+        }
+        
+        // 生成美食推荐
+        function generateFood(cityName, features) {
+            const foodTemplates = {
+                ancient: [
+                    { name: "传统小吃", icon: "🥟", desc: "百年老店，地道风味，传承几代人的手艺" },
+                    { name: "地方名菜", icon: "🍲", desc: "当地特色菜肴，食材新鲜，口味正宗" },
+                    { name: "街头美食", icon: "🍢", desc: "夜市小吃，烟火气息，物美价廉" },
+                    { name: "特色甜品", icon: "🍮", desc: "传统糕点，甜而不腻，老少皆宜" }
+                ],
+                coastal: [
+                    { name: "海鲜大餐", icon: "🦞", desc: "现捞现做，清蒸白灼，原汁原味" },
+                    { name: "渔家菜", icon: "🐟", desc: "渔民家常菜，简单烹饪，鲜美可口" },
+                    { name: "海鲜粥", icon: "🍜", desc: "米粒开花，海鲜提鲜，暖胃暖心" },
+                    { name: "烤海鲜", icon: "🦪", desc: "炭火烤制，香气四溢，配啤酒绝佳" }
+                ],
+                mountain: [
+                    { name: "山珍野味", icon: "🍄", desc: "野生菌菇，山笋野菜，纯天然食材" },
+                    { name: "农家菜", icon: "🥬", desc: "土鸡土鸭，自种蔬菜，绿色健康" },
+                    { name: "山泉水", icon: "💧", desc: "甘甜清冽，泡茶煮饭，别有风味" },
+                    { name: "特色豆腐", icon: "🧈", desc: "山泉水制作，口感细腻，豆香浓郁" }
+                ],
+                plateau: [
+                    { name: "酥油茶", icon: "🍵", desc: "藏式饮品，咸香浓郁，配糌粑" },
+                    { name: "牦牛肉", icon: "🥩", desc: "高原特产，肉质紧实，营养丰富" },
+                    { name: "青稞酒", icon: "🍶", desc: "藏族传统酒，度数不高，清香醇厚" },
+                    { name: "藏式火锅", icon: "🍲", desc: "牦牛肉、菌菇、蔬菜，热气腾腾" }
+                ],
+                metropolis: [
+                    { name: "网红餐厅", icon: "📸", desc: "装修精致，菜品创意，适合拍照" },
+                    { name: "米其林推荐", icon: "⭐", desc: "精致料理，服务一流，体验奢华" },
+                    { name: "美食街", icon: "🍜", desc: "各地美食汇聚，一站式品尝" },
+                    { name: "下午茶", icon: "☕", desc: "精致甜点，悠闲时光，都市生活" }
+                ],
+                general: [
                     { name: "当地特色菜", icon: "🍽️", desc: "品尝正宗本地风味" },
                     { name: "街头小吃", icon: "🍢", desc: "探索路边摊美食" },
                     { name: "老字号餐厅", icon: "🏪", desc: "百年老店，传统味道" },
                     { name: "夜市美食", icon: "🌙", desc: "夜晚的美食聚集地" }
+                ]
+            };
+            
+            const citySpecificFood = getCitySpecificFood(cityName);
+            const baseFood = foodTemplates[features.primary] || foodTemplates.general;
+            
+            return [...citySpecificFood.slice(0, 2), ...baseFood.slice(0, 2)];
+        }
+        
+        // 获取城市特定美食
+        function getCitySpecificFood(cityName) {
+            const specificFood = {
+                "北京": [
+                    { name: "北京烤鸭", icon: "🦆", desc: "全聚德/大董，皮脆肉嫩，配薄饼葱丝" },
+                    { name: "老北京炸酱面", icon: "🍜", desc: "海碗居/老北京炸酱面大王，酱香浓郁" }
                 ],
-                activities: [
+                "上海": [
+                    { name: "南翔小笼包", icon: "🥟", desc: "豫园南翔馒头店，皮薄汁多，先开窗后喝汤" },
+                    { name: "生煎包", icon: "🥟", desc: "小杨生煎，底部金黄酥脆，肉馅鲜美" }
+                ],
+                "杭州": [
+                    { name: "西湖醋鱼", icon: "🐟", desc: "楼外楼招牌，草鱼糖醋烹制，酸甜可口" },
+                    { name: "东坡肉", icon: "🥩", desc: "知味观，肥而不腻，入口即化" }
+                ],
+                "西安": [
+                    { name: "肉夹馍", icon: "🥙", desc: "樊记腊汁肉，白吉馍夹腊汁肉，肥瘦相间" },
+                    { name: "凉皮", icon: "🍜", desc: "魏家凉皮，米皮爽滑，辣椒油香而不辣" }
+                ],
+                "成都": [
+                    { name: "火锅", icon: "🍲", desc: "蜀大侠/小龙坎，牛油锅底，毛肚鸭肠必点" },
+                    { name: "串串香", icon: "🍢", desc: "钢管厂五区小郡肝，麻辣鲜香，数签签算账" }
+                ],
+                "厦门": [
+                    { name: "沙茶面", icon: "🍜", desc: "乌糖沙茶面，沙茶酱浓郁，配料自选" },
+                    { name: "土笋冻", icon: "🧊", desc: "安海土笋冻，星虫熬制，蘸酱油芥末" }
+                ],
+                "青岛": [
+                    { name: "青岛啤酒", icon: "🍺", desc: "一厂原浆最正宗，袋装啤酒街头特色" },
+                    { name: "辣炒蛤蜊", icon: "🦪", desc: "街头大排档，蛤蜊鲜美，辣椒提味" }
+                ],
+                "三亚": [
+                    { name: "椰子鸡", icon: "🥥", desc: "原味主张，椰汁煮文昌鸡，清甜滋补" },
+                    { name: "海鲜大餐", icon: "🦞", desc: "第一市场买海鲜，旁边加工店加工" }
+                ],
+                "丽江": [
+                    { name: "腊排骨火锅", icon: "🍲", desc: "阿婆腊排骨，腌制排骨配蔬菜，汤鲜味美" },
+                    { name: "鸡豆凉粉", icon: "🥗", desc: "丽江特产，凉拌或煎制，口感爽滑" }
+                ],
+                "桂林": [
+                    { name: "桂林米粉", icon: "🍜", desc: "崇善米粉，卤菜粉配锅烧，早餐首选" },
+                    { name: "啤酒鱼", icon: "🐟", desc: "谢三姐啤酒鱼，漓江活鱼，啤酒去腥" }
+                ],
+                "大理": [
+                    { name: "白族三道茶", icon: "🍵", desc: "一苦二甜三回味，白族待客礼仪" },
+                    { name: "乳扇", icon: "🧀", desc: "牛奶制成薄片，烤或炸，配玫瑰糖" }
+                ],
+                "重庆": [
+                    { name: "重庆火锅", icon: "🍲", desc: "珮姐老火锅，九宫格牛油锅，毛肚鸭肠必点" },
+                    { name: "小面", icon: "🍜", desc: "花市豌杂面，麻辣鲜香，早餐首选" }
+                ],
+                "南京": [
+                    { name: "盐水鸭", icon: "🦆", desc: "章云板鸭，皮白肉嫩，咸香适口" },
+                    { name: "鸭血粉丝汤", icon: "🍜", desc: "回味鸭血粉丝，汤鲜味美，配料丰富" }
+                ]
+            };
+            
+            return specificFood[cityName] || [];
+        }
+        
+        // 生成活动推荐
+        function generateActivities(cityName, features, weather) {
+            const baseActivities = {
+                ancient: [
+                    { name: "古城漫步", icon: "🚶", desc: "穿汉服游古街，体验穿越千年的感觉", time: "2-3小时" },
+                    { name: "文化体验", icon: "🎨", desc: "学习传统手工艺，如剪纸、陶艺、书法", time: "2小时" }
+                ],
+                coastal: [
+                    { name: "海滨休闲", icon: "🏖️", desc: "沙滩漫步，游泳戏水，享受阳光海风", time: "半天" },
+                    { name: "海上活动", icon: "🚤", desc: "出海观光、海钓、帆船体验", time: "3-4小时" }
+                ],
+                mountain: [
+                    { name: "登山徒步", icon: "🥾", desc: "沿步道登山，欣赏沿途风景，锻炼身体", time: "4-5小时" },
+                    { name: "日出观赏", icon: "🌅", desc: "早起登山，看云海日出，震撼心灵", time: "2小时" }
+                ],
+                plateau: [
+                    { name: "环湖/转山", icon: "🙏", desc: "顺时针环湖或转山，祈福许愿", time: "1-2天" },
+                    { name: "藏式体验", icon: "🎭", desc: "穿藏服拍照，体验藏族歌舞", time: "2小时" }
+                ],
+                metropolis: [
+                    { name: "城市观光", icon: "🌃", desc: "登顶高楼，俯瞰城市全景，夜景更佳", time: "2小时" },
+                    { name: "购物娱乐", icon: "🛍️", desc: "逛商场、看演出、体验都市夜生活", time: "半天" }
+                ],
+                general: [
                     { name: "城市漫步", icon: "🚶", desc: "探索城市街道，发现隐藏美景", time: "半天" },
-                    { name: "美食探索", icon: "🍜", desc: "品尝当地特色美食", time: "2小时" },
-                    { name: "文化体验", icon: "🎭", desc: "参观博物馆或文化景点", time: "3小时" }
-                ],
-                tips: ["提前规划行程路线", "关注当地天气预报", "尊重当地风俗习惯"],
-                budget: "人均 300-600 元/天"
+                    { name: "美食探索", icon: "🍜", desc: "品尝当地特色美食", time: "2小时" }
+                ]
+            };
+            
+            // 根据天气调整活动
+            const weatherActivities = {
+                sunny: { name: "户外摄影", icon: "📸", desc: "天气晴朗，光线绝佳，适合拍摄风景和人像", time: "2-3小时" },
+                cloudy: { name: "舒适游览", icon: "🌤️", desc: "多云天气不晒不热，最适合户外活动", time: "全天" },
+                overcast: { name: "室内参观", icon: "🏛️", desc: "阴天适合参观博物馆、艺术馆等室内景点", time: "3-4小时" },
+                rain: { name: "雨中美景", icon: "☔", desc: "撑伞漫步，体验烟雨朦胧的独特风情", time: "1-2小时" }
+            };
+            
+            const activities = baseActivities[features.primary] || baseActivities.general;
+            return [weatherActivities[weather.type], ...activities];
+        }
+        
+        // 生成旅行贴士
+        function generateTips(cityName, features, weather) {
+            const baseTips = [
+                `当前天气${weather.name}，温度${weather.temp}°C，建议${weather.temp > 25 ? '穿着轻薄透气的衣物' : weather.temp < 15 ? '携带保暖外套' : '穿着舒适的长袖衣物'}`,
+                `湿度${weather.humidity}%，${weather.humidity > 70 ? '体感可能较闷热，注意补水' : weather.humidity < 40 ? '空气较干燥，注意保湿' : '体感舒适'}`,
+                `风力${weather.windLevel}级，${weather.windLevel > 3 ? '风力较大，注意防风' : '微风拂面，体感舒适'}`
+            ];
+            
+            const featureTips = {
+                ancient: ["古城石板路较多，建议穿舒适的平底鞋", "部分景点需提前预约，建议提前规划", "早晚温差较大，注意增减衣物"],
+                coastal: ["海边紫外线强，务必做好防晒", "游泳注意安全，选择有救生员的区域", "海鲜过敏者注意饮食"],
+                mountain: ["山路崎岖，建议穿防滑运动鞋", "海拔较高地区注意高原反应", "山区天气多变，备好雨具和外套"],
+                plateau: ["高原地区紫外线强烈，做好防晒", "初到高原避免剧烈运动，多休息", "尊重当地宗教习俗"],
+                metropolis: ["地铁出行最便捷，避开早晚高峰", "热门景点建议提前预约", "保管好随身物品"],
+                general: ["提前规划行程路线", "关注当地天气预报", "尊重当地风俗习惯"]
+            };
+            
+            const specificTips = featureTips[features.primary] || featureTips.general;
+            return [...baseTips, ...specificTips.slice(0, 2)];
+        }
+        
+        // 生成路线规划
+        function generateRoute(startCity, destCity, features) {
+            const distance = calculateDistance(
+                citiesDB.find(c => c.name === startCity)?.lat || 39.9,
+                citiesDB.find(c => c.name === startCity)?.lon || 116.4,
+                citiesDB.find(c => c.name === destCity)?.lat || 39.9,
+                citiesDB.find(c => c.name === destCity)?.lon || 116.4
+            );
+            
+            const driveTime = Math.ceil(distance / 80);
+            const highSpeedTime = Math.ceil(distance / 250);
+            
+            let transportAdvice;
+            if (distance < 100) {
+                transportAdvice = "距离较近，建议自驾或乘坐大巴，约1-2小时可达";
+            } else if (distance < 300) {
+                transportAdvice = "高铁最为便捷，约1-2小时；自驾约3-4小时";
+            } else if (distance < 800) {
+                transportAdvice = "建议乘坐高铁，约3-4小时；飞机约1.5小时";
+            } else {
+                transportAdvice = "距离较远，建议飞机出行，约2-3小时";
+            }
+            
+            return {
+                distance: distance.toFixed(1),
+                driveTime: driveTime,
+                highSpeedTime: highSpeedTime,
+                advice: transportAdvice
             };
         }
+        
+        // 生成预算参考
+        function generateBudget(cityName, features) {
+            const budgetLevels = {
+                metropolis: { min: 600, max: 1200 },
+                coastal: { min: 500, max: 1000 },
+                resort: { min: 800, max: 1500 },
+                plateau: { min: 400, max: 800 },
+                general: { min: 300, max: 600 }
+            };
+            
+            let level = features.isMetropolis ? 'metropolis' :
+                       features.isCoastal ? 'coastal' :
+                       features.isResort ? 'resort' :
+                       features.isPlateau ? 'plateau' : 'general';
+            
+            const budget = budgetLevels[level];
+            return `人均 ${budget.min}-${budget.max} 元/天`;
+        }
+
+        // ==================== 工具函数 ====================
+        let currentStartCity = null;
+        let currentSunnyCities = [];
+        let currentSelectedDate = new Date();
 
         function calculateDistance(lat1, lon1, lat2, lon2) {
             const R = 6371;
@@ -661,23 +1022,7 @@
             return R * c;
         }
 
-        function getMockWeather(city, date) {
-            const conditions = [
-                { type: 'sunny', name: '晴', icon: '☀️', temp: 25 },
-                { type: 'cloudy', name: '多云', icon: '⛅', temp: 22 },
-                { type: 'overcast', name: '阴', icon: '☁️', temp: 20 },
-                { type: 'rain', name: '小雨', icon: '🌧️', temp: 18 }
-            ];
-            
-            const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
-            const cityHash = city.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
-            const seed = (dayOfYear + cityHash) % 100;
-            const isGoodWeather = seed < 70;
-            const conditionIndex = isGoodWeather ? (seed % 2) : (2 + (seed % 2));
-            
-            return conditions[conditionIndex];
-        }
-
+        // ==================== 搜索功能 ====================
         async function searchSunnyCities() {
             const cityName = document.getElementById('cityInput').value.trim();
             const radius = parseInt(document.getElementById('radiusInput').value);
@@ -711,7 +1056,7 @@
             }
             
             currentStartCity = startCity;
-            const selectedDate = new Date(document.getElementById('dateInput').value || Date.now());
+            currentSelectedDate = new Date(document.getElementById('dateInput').value || Date.now());
             const sunnyCities = [];
             
             for (const city of citiesDB) {
@@ -719,8 +1064,8 @@
                 
                 const distance = calculateDistance(startCity.lat, startCity.lon, city.lat, city.lon);
                 if (distance <= radius) {
-                    const weather = getMockWeather(city.name, selectedDate);
-                    if (weather.type === 'sunny' || weather.type === 'cloudy') {
+                    const weather = getSeasonalWeather(city.name, currentSelectedDate);
+                    if (weather.isGoodWeather) {
                         sunnyCities.push({ ...city, distance, weather });
                     }
                 }
@@ -754,9 +1099,9 @@
             container.innerHTML = '';
             
             cities.forEach((city, index) => {
-                const guide = travelGuides[city.name] || getDefaultGuide(city.name);
-                const spots = guide.spots || [];
-                const spotsHtml = spots.slice(0, 3).map(s => `<span class="city-tag">${s.name}</span>`).join('');
+                // 检查是否有缓存
+                const cached = getCachedGuide(city.name, currentSelectedDate);
+                const hasCache = !!cached;
                 
                 const card = document.createElement('div');
                 card.className = 'bg-white rounded-xl p-4 mb-3 card-shadow city-card';
@@ -769,11 +1114,13 @@
                             <div class="flex items-center gap-2 mb-1">
                                 <span class="bg-orange-500 text-white text-xs px-1.5 py-0.5 rounded font-bold">${index + 1}</span>
                                 <h3 class="text-lg font-bold truncate">${city.name}</h3>
+                                ${hasCache ? '<span class="cache-badge">已缓存</span>' : ''}
                                 <span class="text-gray-400 text-sm ml-auto flex-shrink-0">${city.distance.toFixed(1)}km</span>
                             </div>
-                            <p class="text-gray-600 text-sm mb-2">${city.weather.name} · ${city.weather.temp}°C</p>
+                            <p class="text-gray-600 text-sm mb-2">${city.weather.name} · ${city.weather.temp}°C · 湿度${city.weather.humidity}%</p>
                             <div class="flex flex-wrap gap-1">
-                                ${spotsHtml}
+                                <span class="city-tag">AQI ${city.weather.aqi}</span>
+                                <span class="city-tag">${city.weather.windLevel}级风</span>
                             </div>
                         </div>
                     </div>
@@ -782,15 +1129,59 @@
             });
         }
 
-        function showCityDetail(city, isSingle = false) {
-            const guide = travelGuides[city.name] || getDefaultGuide(city.name);
-            
+        // ==================== 详情弹窗 ====================
+        async function showCityDetail(city, isSingle = false) {
+            // 显示弹窗
             document.getElementById('modalCityName').textContent = city.name;
             document.getElementById('modalWeather').textContent = `${city.weather.icon} ${city.weather.name} · ${city.weather.temp}°C · 距${currentStartCity.name} ${city.distance.toFixed(1)}km`;
+            document.getElementById('detailModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
             
+            // 显示AI加载状态，隐藏内容
+            document.getElementById('aiLoadingState').classList.remove('hidden');
+            document.getElementById('guideContent').classList.add('hidden');
             document.getElementById('singleCityContent').classList.toggle('hidden', !isSingle);
+            document.getElementById('cacheIndicator').classList.add('hidden');
+            
+            try {
+                // 检查缓存
+                let guide = getCachedGuide(city.name, currentSelectedDate);
+                let fromCache = false;
+                
+                if (guide) {
+                    fromCache = true;
+                    // 模拟从缓存加载的短暂延迟，提升用户体验
+                    await new Promise(r => setTimeout(r, 300));
+                } else {
+                    // 调用AI生成攻略
+                    guide = await generateAIGuide(city.name, city.weather, currentStartCity.name);
+                    // 保存到缓存
+                    saveGuideToCache(city.name, currentSelectedDate, guide);
+                }
+                
+                // 渲染攻略内容
+                renderGuideContent(guide, city, fromCache);
+                
+            } catch (error) {
+                console.error('生成攻略失败:', error);
+                // 使用默认攻略作为后备
+                const defaultGuide = getDefaultGuide(city.name);
+                renderGuideContent(defaultGuide, city, false);
+            }
+        }
+
+        function renderGuideContent(guide, city, fromCache) {
+            // 隐藏加载状态，显示内容
+            document.getElementById('aiLoadingState').classList.add('hidden');
+            document.getElementById('guideContent').classList.remove('hidden');
+            
+            // 显示缓存标记
+            if (fromCache) {
+                document.getElementById('cacheIndicator').classList.remove('hidden');
+            }
             
             // 路线信息
+            const route = guide.route || generateRoute(currentStartCity.name, city.name, analyzeCityFeatures(city.name));
             document.getElementById('routeInfo').innerHTML = `
                 <div class="flex items-center justify-between text-sm">
                     <div class="text-center flex-1">
@@ -798,13 +1189,16 @@
                         <p class="font-bold text-base">${currentStartCity.name}</p>
                     </div>
                     <div class="px-4 text-center">
-                        <p class="text-orange-500 font-bold text-lg">${city.distance.toFixed(1)}km</p>
-                        <p class="text-gray-400 text-xs">约${Math.ceil(city.distance / 80)}小时车程</p>
+                        <p class="text-orange-500 font-bold text-lg">${route.distance}km</p>
+                        <p class="text-gray-400 text-xs">约${route.driveTime}小时车程</p>
                     </div>
                     <div class="text-center flex-1">
                         <p class="text-gray-500">到达</p>
                         <p class="font-bold text-base">${city.name}</p>
                     </div>
+                </div>
+                <div class="mt-3 pt-3 border-t border-gray-200">
+                    <p class="text-xs text-gray-500">🚄 交通建议：${route.advice}</p>
                 </div>
             `;
             
@@ -859,10 +1253,32 @@
                     <span class="text-sm text-gray-500">预算参考：</span>
                     <span class="text-orange-500 font-bold">${guide.budget || "人均 300-600 元/天"}</span>
                 </div>
+                ${guide.generatedBy ? `<p class="text-xs text-gray-400 text-center mt-2">由 ${guide.generatedBy} 生成</p>` : ''}
             `;
-            
-            document.getElementById('detailModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+        }
+
+        function getDefaultGuide(cityName) {
+            return {
+                spots: [
+                    { name: "市中心广场", icon: "🏛️", desc: "城市地标，感受当地生活气息" },
+                    { name: "历史街区", icon: "🏮", desc: "漫步古街，体验传统文化" },
+                    { name: "城市公园", icon: "🌳", desc: "休闲放松，欣赏自然风光" },
+                    { name: "博物馆", icon: "🏺", desc: "了解城市历史与文化" }
+                ],
+                food: [
+                    { name: "当地特色菜", icon: "🍽️", desc: "品尝正宗本地风味" },
+                    { name: "街头小吃", icon: "🍢", desc: "探索路边摊美食" },
+                    { name: "老字号餐厅", icon: "🏪", desc: "百年老店，传统味道" },
+                    { name: "夜市美食", icon: "🌙", desc: "夜晚的美食聚集地" }
+                ],
+                activities: [
+                    { name: "城市漫步", icon: "🚶", desc: "探索城市街道，发现隐藏美景", time: "半天" },
+                    { name: "美食探索", icon: "🍜", desc: "品尝当地特色美食", time: "2小时" },
+                    { name: "文化体验", icon: "🎭", desc: "参观博物馆或文化景点", time: "3小时" }
+                ],
+                tips: ["提前规划行程路线", "关注当地天气预报", "尊重当地风俗习惯"],
+                budget: "人均 300-600 元/天"
+            };
         }
 
         function closeModal() {
