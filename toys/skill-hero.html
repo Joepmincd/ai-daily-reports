@@ -184,9 +184,9 @@
     </main>
 
     <script>
-        // Together AI API 配置
-        const TOGETHER_API_KEY = '7b2f59f8c3e1a4d6b5c8e9f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1';
-        const TOGETHER_API_URL = 'https://api.together.xyz/v1/chat/completions';
+        // Kimi API 配置
+        const KIMI_API_KEY = 'sk-kimi-PGZQ4fiRe5oT86k3AQLgxdtIZBkVbGoYEiYUucqmSttVPucXfUJcN3TebT8sR7xJ';
+        const KIMI_API_URL = 'https://api.kimi.com/coding/v1/chat/completions';
 
         async function generateSkillGuide() {
             const skillInput = document.getElementById('skillInput');
@@ -202,7 +202,7 @@
             document.getElementById('generateBtn').disabled = true;
 
             try {
-                const data = await callTogetherAI(skill);
+                const data = await callKimiAPI(skill);
                 displayResult(skill, data);
             } catch (error) {
                 console.error('Error:', error);
@@ -210,7 +210,7 @@
             }
         }
 
-        async function callTogetherAI(skill) {
+        async function callKimiAPI(skill) {
             const systemPrompt = `你是一位顶级的技能导师和课程设计专家，擅长为初学者设计系统化、高质量的学习路径。
 
 你的教学理念：
@@ -298,23 +298,24 @@
 4. 重要内容用 strong 或 em 标注
 5. 使用 emoji 增加可读性`;
 
-            const response = await fetch(TOGETHER_API_URL, {
+            const response = await fetch(KIMI_API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${TOGETHER_API_KEY}`
+                    'Authorization': `Bearer ${KIMI_API_KEY}`
                 },
                 body: JSON.stringify({
-                    model: 'meta-llama/Llama-3.3-70B-Instruct-Turbo',
+                    model: 'k2p5',
                     messages: [
                         { role: 'system', content: systemPrompt },
                         { role: 'user', content: userPrompt }
                     ],
-                    max_tokens: 4000,
+                    max_tokens: 8000,
                     temperature: 0.7,
-                    top_p: 0.7,
-                    top_k: 50,
-                    repetition_penalty: 1.2
+                    thinking: {
+                        type: "enabled",
+                        budget_tokens: 4000
+                    }
                 })
             });
 
