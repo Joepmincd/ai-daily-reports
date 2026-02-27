@@ -184,9 +184,8 @@
     </main>
 
     <script>
-        // Kimi API 配置
-        const KIMI_API_KEY = 'sk-kimi-PGZQ4fiRe5oT86k3AQLgxdtIZBkVbGoYEiYUucqmSttVPucXfUJcN3TebT8sR7xJ';
-        const KIMI_API_URL = 'https://api.kimi.com/coding/v1/chat/completions';
+        // Cloudflare Worker API 代理地址 - 统一后端
+        const API_PROXY_URL = 'https://ai-daily-api-proxy.gjoecd.workers.dev';
 
         async function generateSkillGuide() {
             const skillInput = document.getElementById('skillInput');
@@ -202,7 +201,14 @@
             document.getElementById('generateBtn').disabled = true;
 
             try {
-                const data = await callKimiAPI(skill);
+                // 通过 Cloudflare Worker 代理调用 API
+                const response = await fetch(`${API_PROXY_URL}/api/skill-guide?skill=${encodeURIComponent(skill)}`);
+                
+                if (!response.ok) {
+                    throw new Error('API 请求失败');
+                }
+
+                const data = await response.json();
                 displayResult(skill, data);
             } catch (error) {
                 console.error('Error:', error);
@@ -210,188 +216,3 @@
             }
         }
 
-        async function callKimiAPI(skill) {
-            const systemPrompt = `你是一位顶级的技能导师和课程设计专家，擅长为初学者设计系统化、高质量的学习路径。
-
-你的教学理念：
-1. 深度而非广度 - 每个知识点都要讲透
-2. 实践导向 - 每个理论都要有对应的动手练习
-3. 循序渐进 - 从简单到复杂，建立知识体系
-4. 真实案例 - 使用真实世界的案例
-
-输出要求：
-- 内容要具体、可操作，避免空洞的理论
-- 每个步骤都要有明确的行动指引
-- 提供真实可用的资源
-- 预判学习者的困难点并给出解决方案`;
-
-            const userPrompt = `请为"${skill}"生成一份深度、系统、高质量的学习指南。
-
-## 要求深度研究的内容：
-
-### 1. 技能全景分析（是什么）
-- 完整定义和核心概念体系
-- 行业定位和重要性
-- 主要应用领域和实际价值
-- 与其他相关技能的关系图谱
-- 需要具备的前置知识
-
-### 2. 深度价值分析（为什么）
-- 具体收益（量化描述）
-- 职业发展应用场景
-- 市场需求现状和趋势
-- 不同水平的能力对应的价值差异
-
-### 3. 系统化学习路径（怎么样）
-**第一阶段：基础构建（第1-2周）**
-- 核心概念详解（3-5个核心概念）
-- 每个概念的具体解释和实例
-- 配套练习
-- 检验标准
-
-**第二阶段：技能深化（第3-4周）**
-- 进阶技术点（4-6个技术点）
-- 常见误区和避坑指南
-- 实战小项目（2-3个）
-- 代码/操作示例
-
-**第三阶段：综合应用（第5-6周）**
-- 完整项目实战（从0到1）
-- 最佳实践和行业规范
-- 性能优化和进阶技巧
-
-### 4. 完整实战案例
-- 项目背景和目标
-- 详细步骤（至少10步，每步都要具体）
-- 完整的代码/操作示例
-- 预期成果和验收标准
-- 常见问题和解决方案
-
-### 5. 学习资源地图
-- 推荐书籍（3-5本）
-- 在线课程（3-5个）
-- 官方文档和权威网站
-- 社区和论坛推荐
-- 练习平台和工具
-
-### 6. 学习路线图
-- 6周的详细学习计划
-- 每天的学习任务
-- 每周的里程碑和检验点
-
-输出格式：
-请以 JSON 格式返回，所有内容使用 HTML 标签格式化：
-{
-  "difficulty": "学习难度和预计时间",
-  "tags": ["标签1", "标签2", "标签3"],
-  "what": "HTML格式的详细内容",
-  "why": "HTML格式的详细内容",
-  "how": "HTML格式的详细内容",
-  "case": "HTML格式的详细内容",
-  "roadmap": "HTML格式的详细内容"
-}
-
-注意：
-1. 内容要深入具体，不要泛泛而谈
-2. 每个部分都要有实质性的内容
-3. 使用 h4, p, ul, ol, li, strong, div 等 HTML 标签
-4. 重要内容用 strong 或 em 标注
-5. 使用 emoji 增加可读性`;
-
-            const response = await fetch(KIMI_API_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${KIMI_API_KEY}`
-                },
-                body: JSON.stringify({
-                    model: 'k2p5',
-                    messages: [
-                        { role: 'system', content: systemPrompt },
-                        { role: 'user', content: userPrompt }
-                    ],
-                    max_tokens: 8000,
-                    temperature: 0.7,
-                    thinking: {
-                        type: "enabled",
-                        budget_tokens: 4000
-                    }
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error('API 请求失败');
-            }
-
-            const result = await response.json();
-            
-            if (result.choices && result.choices[0] && result.choices[0].message) {
-                const content = result.choices[0].message.content;
-                
-                // 提取 JSON 部分
-                const jsonMatch = content.match(/\{[\s\S]*\}/);
-                if (jsonMatch) {
-                    try {
-                        return JSON.parse(jsonMatch[0]);
-                    } catch (e) {
-                        console.error('JSON 解析失败，返回格式化内容');
-                        return {
-                            difficulty: '中等 - 预计4-6周',
-                            tags: ['AI生成', '系统学习', '实战导向'],
-                            what: `<div>${content.substring(0, 1500)}...</div>`,
-                            why: '<div>详细内容请查看完整指南</div>',
-                            how: '<div>详细内容请查看完整指南</div>',
-                            case: '<div>详细内容请查看完整指南</div>',
-                            roadmap: '<div>详细内容请查看完整指南</div>'
-                        };
-                    }
-                }
-            }
-            
-            throw new Error('无法解析响应');
-        }
-
-        function displayResult(skill, data) {
-            document.getElementById('loadingState').classList.add('hidden');
-            document.getElementById('resultArea').classList.remove('hidden');
-            document.getElementById('generateBtn').disabled = false;
-
-            document.getElementById('skillTitle').textContent = skill;
-            document.getElementById('skillSubtitle').textContent = data.difficulty || '适合初学者';
-            document.getElementById('whatContent').innerHTML = data.what || '暂无内容';
-            document.getElementById('whyContent').innerHTML = data.why || '暂无内容';
-            document.getElementById('howContent').innerHTML = data.how || '暂无内容';
-            document.getElementById('caseContent').innerHTML = data.case || '暂无内容';
-            document.getElementById('roadmapContent').innerHTML = data.roadmap || '暂无内容';
-
-            const tagsHtml = (data.tags || ['入门', '实用', '热门']).map(tag => 
-                `<span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">${tag}</span>`
-            ).join('');
-            document.getElementById('skillTags').innerHTML = tagsHtml;
-
-            document.getElementById('resultArea').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        function displayMockResult(skill) {
-            const mockData = {
-                difficulty: '预计学习时间：2-4周',
-                tags: ['入门友好', '实用技能', '热门方向'],
-                what: `<p><strong>${skill}</strong>是一门非常实用的技能。通过系统学习，你可以掌握核心概念和基本操作，为后续深入学习打下坚实基础。</p>`,
-                why: `<ul class="list-disc pl-5 space-y-2">
-                    <li><strong>提升竞争力：</strong>在职场和生活中都有广泛应用</li>
-                    <li><strong>开拓新机会：</strong>为职业发展和个人成长创造更多可能</li>
-                    <li><strong>培养思维方式：</strong>锻炼逻辑思维和解决问题的能力</li>
-                </ul>`,
-                how: `<div class="space-y-4">
-                    <div class="flex gap-3"><div class="step-number">1</div><div><h4 class="font-bold">基础概念</h4><p class="text-gray-600">先了解基本概念和术语，建立知识框架</p></div></div>
-                    <div class="flex gap-3"><div class="step-number">2</div><div><h4 class="font-bold">动手实践</h4><p class="text-gray-600">跟着教程做练习，在实践中学习</p></div></div>
-                    <div class="flex gap-3"><div class="step-number">3</div><div><h4 class="font-bold">项目实战</h4><p class="text-gray-600">完成一个小项目，巩固所学知识</p></div></div>
-                </div>`,
-                case: `<div class="tip-box"><h4 class="font-bold mb-2">🌟 实战案例：从零开始</h4><p>假设你想学习${skill}，可以按照以下步骤：</p><ol class="list-decimal pl-5 mt-2 space-y-1"><li>确定学习目标和时间安排</li><li>收集学习资源（教程、文档、视频）</li><li>每天投入1-2小时学习</li><li>记录学习笔记和心得</li><li>完成一个小作品或项目</li></ol></div>`,
-                roadmap: `<div class="space-y-3"><div class="flex items-center gap-3"><div class="w-3 h-3 bg-green-500 rounded-full"></div><div><h4 class="font-bold">第1周：基础入门</h4><p class="text-sm text-gray-600">掌握基本概念，完成入门教程</p></div></div><div class="flex items-center gap-3"><div class="w-3 h-3 bg-blue-500 rounded-full"></div><div><h4 class="font-bold">第2-3周：进阶学习</h4><p class="text-sm text-gray-600">深入学习核心技能，做练习题</p></div></div><div class="flex items-center gap-3"><div class="w-3 h-3 bg-purple-500 rounded-full"></div><div><h4 class="font-bold">第4周：项目实战</h4><p class="text-sm text-gray-600">完成一个完整项目，巩固知识</p></div></div></div>`
-            };
-            displayResult(skill, mockData);
-        }
-    </script>
-</body>
-</html>
