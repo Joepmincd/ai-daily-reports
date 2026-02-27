@@ -41,19 +41,40 @@ if [ ! -d ".git" ]; then
     git branch -m main
 fi
 
-# 添加所有HTML文件
+# 添加所有HTML文件（包括新生成的日报文件）
 echo "📦 添加文件到Git..." | tee -a $DEPLOY_LOG
+
+# 添加所有HTML文件（包括新增的日报）
 git add *.html 2>&1 | tee -a $DEPLOY_LOG || true
+
+# 特别检查并添加 Product Hunt 日报文件
+for file in producthunt-report-*.html; do
+    if [ -f "$file" ]; then
+        git add "$file" 2>&1 | tee -a $DEPLOY_LOG || true
+        echo "  ✓ 添加文件: $file" | tee -a $DEPLOY_LOG
+    fi
+done
+
+# 添加其他可能的日报文件
+for file in ai-news-*.html x-ai-trends-*.html; do
+    if [ -f "$file" ]; then
+        git add "$file" 2>&1 | tee -a $DEPLOY_LOG || true
+        echo "  ✓ 添加文件: $file" | tee -a $DEPLOY_LOG
+    fi
+done
+
+# 添加 index.html（如果有更新）
+git add index.html 2>&1 | tee -a $DEPLOY_LOG || true
 
 # 检查是否有更改需要提交
 if git diff --cached --quiet; then
-    echo "ℹ️  没有更改需要提交，检查是否有未跟踪的新文件..." | tee -a $DEPLOY_LOG
-    git add *.html 2>&1 || true
-    if git diff --cached --quiet; then
-        echo "✅ 所有文件已是最新，无需部署" | tee -a $DEPLOY_LOG
-        exit 0
-    fi
+    echo "ℹ️  没有更改需要提交" | tee -a $DEPLOY_LOG
+    exit 0
 fi
+
+# 显示要提交的文件列表
+echo "📋 待提交文件:" | tee -a $DEPLOY_LOG
+git diff --cached --name-only | tee -a $DEPLOY_LOG
 
 # 提交更改
 echo "💾 提交更改..." | tee -a $DEPLOY_LOG
