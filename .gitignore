@@ -1,2 +1,13 @@
+# API Keys 备忘录 - 包含敏感信息
 备忘录-api-完整清单.md
 备忘录-api-keys.md
+
+# 系统提示词 - 可能包含敏感配置
+系统提示词.md
+
+# 其他敏感文件
+*.key
+*.pem
+.env
+.env.local
+.env.*.local
