@@ -13,6 +13,8 @@
         .copy-btn { transition: all 0.2s; }
         .copy-btn:hover { transform: scale(1.05); }
         .copy-btn.copied { background: #10b981 !important; }
+        .hot-badge { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+        .source-tag { background: rgba(139,92,246,0.1); color: #8b5cf6; }
     </style>
 </head>
 <body class="text-gray-800">
@@ -23,115 +25,170 @@
             <div class="text-5xl mb-4">🎯</div>
             <h1 class="text-3xl font-bold mb-2">AI提示词案例</h1>
             <p class="text-white/80">2026年02月27日 收集</p>
+            <p class="text-white/60 text-sm mt-2">来源: 即刻App + X(Twitter) 高赞内容</p>
         </div>
     </header>
 
     <main class="container mx-auto px-4 pb-12 max-w-4xl">
         <!-- 说明 -->
         <div class="glass-effect rounded-2xl p-6 mb-6">
-            <p class="text-gray-600">💡 以下是今日收集的AI提示词案例。点击"复制"按钮即可使用。</p>
+            <p class="text-gray-600">💡 以下是今日从即刻App和X(Twitter)收集的高互动AI提示词案例。点击"复制"按钮即可使用。</p>
         </div>
 
-        <!-- 提示词案例 1 -->
+        <!-- 提示词案例 1: 科技自媒体爆款写作 -->
         <div class="glass-effect rounded-2xl p-6 mb-6 prompt-card">
             <div class="flex justify-between items-start mb-4">
                 <div>
-                    <h2 class="text-xl font-bold text-gray-800">📌 代码解释助手</h2>
-                    <p class="text-sm text-gray-500 mt-1">来源: <a href="https://twitter.com/search?q=AI%20prompt" target="_blank" class="text-purple-500 hover:underline">X(Twitter)</a></p>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="hot-badge text-white text-xs px-2 py-1 rounded-full font-bold">🔥 高赞</span>
+                        <span class="source-tag text-xs px-2 py-1 rounded-full">即刻</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-800">📌 科技自媒体爆款文章写作专家</h2>
+                    <p class="text-sm text-gray-500 mt-1">来源: <a href="https://m.okjike.com/originalPosts/6926c91ce266caeeb4eab7bd" target="_blank" class="text-purple-500 hover:underline">即刻@ContentAny · 高赞分享</a></p>
                 </div>
-                <button class="copy-btn px-4 py-2 bg-purple-500 text-white rounded-lg text-sm font-medium" onclick="copyPrompt(this)">
-                    复制
-                </button>
+                <button class="copy-btn px-4 py-2 bg-purple-500 text-white rounded-lg text-sm font-medium" onclick="copyPrompt(this)">复制</button>
             </div>
             <div class="bg-gray-50 rounded-xl p-4 mb-4">
-                <pre class="text-sm text-gray-700 whitespace-pre-wrap font-mono">你是一位资深的程序员导师。请解释以下代码的工作原理，并用通俗易懂的语言说明。如果代码有优化空间，请指出并提供改进建议。
+                <pre class="text-sm text-gray-700 whitespace-pre-wrap font-mono"># Role: 科技自媒体爆款文章写作专家
 
-代码：
-[粘贴代码]
+## Profile
+- Author: ContentAny
+- Version: 2.0
+- Language: 中文
+- Description: 你是一位深耕科技圈多年的自媒体大V，你对科技热点有极高的敏感度，能够从独特的视角解读新闻，不仅能写硬核评测，还能写出有温度的科技评论。
 
-请按以下格式回答：
-1. 代码功能概述
-2. 关键逻辑解释
-3. 潜在问题（如有）
-4. 优化建议（如有）</pre>
+## Goals
+1. 通俗易懂：将"黑话"降维打击，让小白用户也能看懂复杂的科技逻辑（如"大模型原理"比喻为"超级鹦鹉学舌"）
+2. 引发共鸣：在冷冰冰的技术中找到与用户生活的连接点
+
+## Skills
+- 技术降维能力：能用生活中的例子解释技术（例如：把"内存溢出"比喻为"桌子太小放不下菜"）
+- 情绪调动能力：在科技文中穿插情绪锚点
+- 数据分析能力：善于从财报、跑分库、供应链数据中挖掘真相
+
+## Workflow
+1. 选题与切入：
+   - 分析用户输入的主题（如某款新手机、某项AI技术）
+   - 确定切入点：是"避坑指南"、"深度评测"还是"行业揭秘"？
+
+2. 正文撰写：
+   - 开头：3秒法则，通过痛点、数据或反常识结论瞬间抓住眼球
+   - 正文：采用"观点+案例/数据+金句"的结构。技术参数要配合使用场景描述（不要只说"5000mAh电池"，要说"出差一天不用带充电宝"）
+   - 结尾：犀利点评
+
+## Initialization
+你好！我是你的专属科技自媒体写作助手。
+请告诉我你想写的科技主题，或者直接丢给我一篇技术文档，我将立刻为你生成一篇爆款科技文章！</pre>
             </div>
             
             <div class="text-sm text-gray-600">
                 <p class="font-medium mb-2">🎯 使用场景:</p>
-                <p>适合初学者理解复杂代码，或代码审查时使用。</p>
+                <p>科技博主、自媒体人撰写爆款科技文章，将复杂技术用通俗易懂的语言表达，引发读者共鸣。</p>
             </div>
         </div>
 
-        <!-- 提示词案例 2 -->
+        <!-- 提示词案例 2: Nano Banana Pro 草稿转文字 -->
         <div class="glass-effect rounded-2xl p-6 mb-6 prompt-card">
             <div class="flex justify-between items-start mb-4">
                 <div>
-                    <h2 class="text-xl font-bold text-gray-800">📌 文章标题优化</h2>
-                    <p class="text-sm text-gray-500 mt-1">来源: <a href="https://twitter.com/search?q=AI%20prompt" target="_blank" class="text-purple-500 hover:underline">X(Twitter)</a></p>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="hot-badge text-white text-xs px-2 py-1 rounded-full font-bold">🔥 热门</span>
+                        <span class="source-tag text-xs px-2 py-1 rounded-full">即刻</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-800">📌 会议室草稿转清晰文字</h2>
+                    <p class="text-sm text-gray-500 mt-1">来源: <a href="https://voice.newrank.cn/study/detail/05CAB9D2A682EAA7" target="_blank" class="text-purple-500 hover:underline">即刻@超级峰 · Nano Banana Pro技巧</a></p>
                 </div>
-                <button class="copy-btn px-4 py-2 bg-purple-500 text-white rounded-lg text-sm font-medium" onclick="copyPrompt(this)">
-                    复制
-                </button>
+                <button class="copy-btn px-4 py-2 bg-purple-500 text-white rounded-lg text-sm font-medium" onclick="copyPrompt(this)">复制</button>
             </div>
             <div class="bg-gray-50 rounded-xl p-4 mb-4">
-                <pre class="text-sm text-gray-700 whitespace-pre-wrap font-mono">你是一位资深的内容营销专家。请为以下文章生成10个吸引人的标题。
+                <pre class="text-sm text-gray-700 whitespace-pre-wrap font-mono">让文字更清晰、可读性更高一些</pre>
+            </div>
+            
+            <div class="text-sm text-gray-600 mb-4">
+                <p class="font-medium mb-2">📖 完整使用场景:</p>
+                <p class="mb-2">将会议室潦草的草稿拍照上传，配合上述提示词，Nano Banana Pro可以将其转化成书写清晰的文字。</p>
+                <p class="font-medium mb-2">🎯 使用场景:</p>
+                <p>职场人士快速整理会议笔记、手写草稿转电子文档，提高工作效率。</p>
+            </div>
+        </div>
 
-文章内容：
-[粘贴文章内容]
-
-要求：
-1. 标题要吸引眼球，提高点击率
-2. 包含关键词，利于SEO
-3. 长度控制在20字以内
-4. 提供3个严肃专业风格、3个轻松有趣风格、4个悬念好奇风格</pre>
+        <!-- 提示词案例 3: 名人金句海报 -->
+        <div class="glass-effect rounded-2xl p-6 mb-6 prompt-card">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="hot-badge text-white text-xs px-2 py-1 rounded-full font-bold">🔥 热门</span>
+                        <span class="source-tag text-xs px-2 py-1 rounded-full">即刻</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-800">📌 名人金句海报生成</h2>
+                    <p class="text-sm text-gray-500 mt-1">来源: <a href="https://voice.newrank.cn/study/detail/05CAB9D2A682EAA7" target="_blank" class="text-purple-500 hover:underline">即刻@NicoleChan · Nano Banana Pro玩法</a></p>
+                </div>
+                <button class="copy-btn px-4 py-2 bg-purple-500 text-white rounded-lg text-sm font-medium" onclick="copyPrompt(this)">复制</button>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                <pre class="text-sm text-gray-700 whitespace-pre-wrap font-mono">一张宽的名人金句卡，棕色背景，衬线体浅金色"保持饥饿,保持愚蠢"小字"——Steve Jobs"，文字前面带一个大的淡淡的引号，人物头像在左边，文字在右边，文字占画面比例2/3，人物占1/3，人物有点渐变过渡的感觉。</pre>
             </div>
             
             <div class="text-sm text-gray-600">
                 <p class="font-medium mb-2">🎯 使用场景:</p>
-                <p>内容创作者、自媒体运营者撰写文章标题时使用。</p>
+                <p>自媒体人、设计师制作名人名言海报、社交媒体配图，保持人像一致性。</p>
             </div>
         </div>
 
-        <!-- 提示词案例 3 -->
+        <!-- 提示词案例 4: 电商产品组图 -->
         <div class="glass-effect rounded-2xl p-6 mb-6 prompt-card">
             <div class="flex justify-between items-start mb-4">
                 <div>
-                    <h2 class="text-xl font-bold text-gray-800">📌 会议纪要整理</h2>
-                    <p class="text-sm text-gray-500 mt-1">来源: <a href="https://twitter.com/search?q=AI%20prompt" target="_blank" class="text-purple-500 hover:underline">X(Twitter)</a></p>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="hot-badge text-white text-xs px-2 py-1 rounded-full font-bold">🔥 热门</span>
+                        <span class="source-tag text-xs px-2 py-1 rounded-full">即刻/X</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-800">📌 电商产品多角度组图生成</h2>
+                    <p class="text-sm text-gray-500 mt-1">来源: <a href="https://voice.newrank.cn/study/detail/05CAB9D2A682EAA7" target="_blank" class="text-purple-500 hover:underline">即刻/X · Nano Banana Pro玩法</a></p>
                 </div>
-                <button class="copy-btn px-4 py-2 bg-purple-500 text-white rounded-lg text-sm font-medium" onclick="copyPrompt(this)">
-                    复制
-                </button>
+                <button class="copy-btn px-4 py-2 bg-purple-500 text-white rounded-lg text-sm font-medium" onclick="copyPrompt(this)">复制</button>
             </div>
             <div class="bg-gray-50 rounded-xl p-4 mb-4">
-                <pre class="text-sm text-gray-700 whitespace-pre-wrap font-mono">请将以下会议录音转录内容整理成结构化的会议纪要。
-
-会议内容：
-[粘贴会议内容]
-
-请按以下格式整理：
-1. 会议基本信息（时间、地点、参会人）
-2. 会议议题
-3. 讨论要点（分点列出）
-4. 决议事项
-5. 待办事项（标注负责人和截止日期）
-6. 下次会议安排（如有）
-
-要求：
-- 语言简洁专业
-- 重点突出
-- 行动项明确</pre>
+                <pre class="text-sm text-gray-700 whitespace-pre-wrap font-mono">用这个logo制作一件周边套头卫衣，并且生成这件衣服的4个角度，4个不同的动态视图，特写、斜角、半身照和细节照。</pre>
             </div>
             
             <div class="text-sm text-gray-600">
                 <p class="font-medium mb-2">🎯 使用场景:</p>
-                <p>职场人士整理会议记录，提高工作效率。</p>
+                <p>电商卖家快速生成产品展示图，保持品牌Logo和商品细节在不同视角下的一致性。</p>
+            </div>
+        </div>
+
+        <!-- 提示词案例 5: 社交媒体运营 -->
+        <div class="glass-effect rounded-2xl p-6 mb-6 prompt-card">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="source-tag text-xs px-2 py-1 rounded-full">X/Twitter</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-800">📌 社交媒体爆款内容生成</h2>
+                    <p class="text-sm text-gray-500 mt-1">来源: <a href="https://social-lady.com/30-ai-prompts-every-social-media-manager-should-save-in-2025/" target="_blank" class="text-purple-500 hover:underline">Social Lady · 2025热门提示词</a></p>
+                </div>
+                <button class="copy-btn px-4 py-2 bg-purple-500 text-white rounded-lg text-sm font-medium" onclick="copyPrompt(this)">复制</button>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                <pre class="text-sm text-gray-700 whitespace-pre-wrap font-mono">Create 3 short, witty captions for Twitter/X posts about [event or trend]. Each caption should:
+- Be under 280 characters
+- Include relevant hashtags
+- Have a hook that encourages engagement
+- Match a [professional/funny/inspirational] tone
+
+Make them viral-worthy!</pre>
+            </div>
+            
+            <div class="text-sm text-gray-600">
+                <p class="font-medium mb-2">🎯 使用场景:</p>
+                <p>社交媒体运营人员快速生成Twitter/X平台的爆款文案，提高内容互动率。</p>
             </div>
         </div>
 
         <!-- 底部导航 -->
         <div class="glass-effect rounded-2xl p-6 text-center">
-            <p class="text-gray-500 mb-4">🔄 每日更新 · 收集优质AI提示词</p>
+            <p class="text-gray-500 mb-4">🔄 每日更新 · 收集即刻App和X(Twitter)高赞AI提示词</p>
             <a href="prompt-cases-index.html" class="inline-block px-6 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition">查看历史案例</a>
         </div>
     </main>
