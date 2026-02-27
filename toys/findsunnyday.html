@@ -844,45 +844,15 @@
             const selectedDate = new Date(document.getElementById('dateInput').value || Date.now());
             const sunnyCities = [];
             
-            // 调用后端API获取周边城市
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/nearby-cities?lat=${startCity.lat}&lon=${startCity.lon}&radius=${radius * 1000}`);
-                const data = await response.json();
+            // 使用本地数据库获取周边城市（不依赖API）
+            for (const city of citiesDB) {
+                if (city.name === startCity.name) continue;
                 
-                const nearbyCities = data.cities || data; // 兼容两种返回格式
-                
-                // 并行获取所有城市的天气
-                const weatherPromises = [];
-                for (const city of nearbyCities) {
-                    weatherPromises.push(
-                        getWeather(city.name, selectedDate).then(weather => {
-                            if (weather.type === 'sunny' || weather.type === 'cloudy') {
-                                sunnyCities.push({ 
-                                    name: city.name,
-                                    lat: city.lat,
-                                    lon: city.lon,
-                                    distance: city.distance, 
-                                    weather 
-                                });
-                            }
-                        })
-                    );
-                }
-                
-                // 等待所有天气请求完成
-                await Promise.all(weatherPromises);
-            } catch (error) {
-                console.error('获取周边城市失败:', error);
-                // 出错时使用本地数据库
-                for (const city of citiesDB) {
-                    if (city.name === startCity.name) continue;
-                    
-                    const distance = calculateDistance(startCity.lat, startCity.lon, city.lat, city.lon);
-                    if (distance <= radius) {
-                        const weather = await getWeather(city.name, selectedDate);
-                        if (weather.type === 'sunny' || weather.type === 'cloudy') {
-                            sunnyCities.push({ ...city, distance, weather });
-                        }
+                const distance = calculateDistance(startCity.lat, startCity.lon, city.lat, city.lon);
+                if (distance <= radius) {
+                    const weather = await getWeather(city.name, selectedDate);
+                    if (weather.type === 'sunny' || weather.type === 'cloudy') {
+                        sunnyCities.push({ ...city, distance, weather });
                     }
                 }
             }
