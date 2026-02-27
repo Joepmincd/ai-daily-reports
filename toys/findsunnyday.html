@@ -805,9 +805,6 @@
             return conditions[conditionIndex];
         }
 
-        // 后端服务地址 - 统一使用 Cloudflare Worker
-        const API_BASE_URL = 'https://ai-daily-api-proxy.gjoecd.workers.dev';
-
         async function searchSunnyCities() {
             const cityName = document.getElementById('cityInput').value.trim();
             const radius = parseInt(document.getElementById('radiusInput').value);
