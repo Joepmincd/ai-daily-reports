@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seedance 2.0 提示词与案例完全指南</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        }
+        h1 {
+            font-size: 2.2em;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #4a90d9;
+        }
+        h2 {
+            font-size: 1.6em;
+            color: #2c3e50;
+            margin: 35px 0 20px;
+            padding-left: 15px;
+            border-left: 4px solid #4a90d9;
+        }
+        h3 {
+            font-size: 1.3em;
+            color: #34495e;
+            margin: 25px 0 15px;
+        }
+        h4 {
+            font-size: 1.1em;
+            color: #4a5568;
+            margin: 20px 0 10px;
+        }
+        p {
+            margin: 12px 0;
+            text-align: justify;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #e2e8f0;
+        }
+        th {
+            background: #4a90d9;
+            color: #fff;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        tr:hover {
+            background: #edf2f7;
+        }
+        code {
+            background: #f1f5f9;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.9em;
+            color: #e53e3e;
+        }
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+        pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        blockquote {
+            border-left: 4px solid #4a90d9;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #4a5568;
+            font-style: italic;
+        }
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #e2e8f0;
+            margin: 40px 0;
+        }
+        .highlight {
+            background: #fef3c7;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        .tip {
+            background: #e0f2fe;
+            border-left: 4px solid #0ea5e9;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .meta {
+            color: #718096;
+            font-size: 0.9em;
+            margin-bottom: 30px;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h2 {
+                font-size: 1.4em;
+            }
+            table {
+                font-size: 0.85em;
+            }
+            th, td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Seedance 2.0 提示词与案例完全指南</h1>
+        <p class="meta">最后更新：2026年2月28日</p>
+
+        <h2>一、核心特性与多模态能力</h2>
+
+        <h3>1.1 多模态输入系统</h3>
+        <p>Seedance 2.0 支持四种输入类型组合使用：</p>
+        <table>
+            <tr>
+                <th>输入类型</th>
+                <th>数量限制</th>
+                <th>用途</th>
+            </tr>
+            <tr>
+                <td><strong>图片</strong></td>
+                <td>最多 9 张</td>
+                <td>定义视觉风格、角色外观、场景构图</td>
+            </tr>
+            <tr>
+                <td><strong>视频</strong></td>
+                <td>最多 3 段（总计15秒）</td>
+                <td>参考运镜方式、动作模式、转场效果</td>
+            </tr>
+            <tr>
+                <td><strong>音频</strong></td>
+                <td>最多 3 段（MP3，总计15秒）</td>
+                <td>控制情绪基调、节奏卡点、氛围同步</td>
+            </tr>
+            <tr>
+                <td><strong>文本</strong></td>
+                <td>自然语言</td>
+                <td>引导叙事、补充细节、指定参考应用方式</td>
+            </tr>
+        </table>
+
+        <div class="warning">
+            <strong>重要限制</strong>：所有输入类型总计最多 12 个文件。
+        </div>
+
+        <h3>1.2 与竞品对比</h3>
+        <table>
+            <tr>
+                <th>功能点</th>
+                <th>Seedance 2.0</th>
+                <th>Kling 3.0</th>
+                <th>Veo 3.1</th>
+                <th>Sora</th>
+            </tr>
+            <tr>
+                <td>多模态支持</td>
+                <td>图片+视频+音频+文本</td>
+                <td>图片+视频+音频+文本</td>
+                <td>图片（最多3张）+ 文本</td>
+                <td>文本+图片</td>
+            </tr>
+            <tr>
+                <td>视频参考</td>
+                <td>✅ 完整运镜复刻</td>
+                <td>✅ AI Director 功能</td>
+                <td>较弱</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>音频上传</td>
+                <td>✅ 直接上传</td>
+                <td>✅ 多语言口型同步</td>
+                <td>❌ 仅生成</td>
+                <td>❌ 仅生成</td>
+            </tr>
+            <tr>
+                <td>单段时长</td>
+                <td>4-15秒</td>
+                <td>15秒</td>
+                <td>最长60秒</td>
+                <td>最长60秒</td>
+            </tr>
+            <tr>
+                <td>分辨率</td>
+                <td>2K/720P+</td>
+                <td>4K</td>
+                <td>4K</td>
+                <td>高画质</td>
+            </tr>
+            <tr>
+                <td>中文理解</td>
+                <td>优秀</td>
+                <td>良好</td>
+                <td>一般</td>
+                <td>一般</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h2>二、提示词黄金公式</h2>
+
+        <h3>2.1 基础结构</h3>
+        <pre><code>[主体] + [动作] + [场景] + [风格] + [情绪/氛围]</code></pre>
+
+        <h3>2.2 详细拆解</h3>
+        <table>
+            <tr>
+                <th>维度</th>
+                <th>说明</th>
+                <th>示例</th>
+            </tr>
+            <tr>
+                <td><strong>主体</strong></td>
+                <td>角色、对象、主角</td>
+                <td>一个浑身缠绕金色雷电的少年剑士</td>
+            </tr>
+            <tr>
+                <td><strong>动作</strong></td>
+                <td>发生了什么</td>
+                <td>与恶鬼对峙、拔刀瞬间化作闪电</td>
+            </tr>
+            <tr>
+                <td><strong>场景</strong></td>
+                <td>发生在哪里</td>
+                <td>夜间古宅、暴雨中、血雾弥漫</td>
+            </tr>
+            <tr>
+                <td><strong>风格</strong></td>
+                <td>整体视觉风格</td>
+                <td>日式热血动漫、电影级色彩、黑白冲击帧</td>
+            </tr>
+            <tr>
+                <td><strong>情绪</strong></td>
+                <td>氛围、节奏</td>
+                <td>紧张刺激、高燃、冷酷压抑</td>
+            </tr>
+        </table>
+
+        <h3>2.3 @ 符号语法（核心玩法）</h3>
+        <p>模型不会自动猜测意图，必须通过 <code>@</code> 明确指定每个素材的用途：</p>
+        <table>
+            <tr>
+                <th>用法</th>
+                <th>示例</th>
+            </tr>
+            <tr>
+                <td><strong>指定首帧</strong></td>
+                <td><code>@图片1 作为首帧，定下整体画风</code></td>
+            </tr>
+            <tr>
+                <td><strong>参考运镜</strong></td>
+                <td><code>参考@视频1的运镜方式，从全景推到特写</code></td>
+            </tr>
+            <tr>
+                <td><strong>指定角色</strong></td>
+                <td><code>@图片1 中的女生作为主角</code></td>
+            </tr>
+            <tr>
+                <td><strong>融合多视频</strong></td>
+                <td><code>在@视频1和@视频2之间加一个场景转换</code></td>
+            </tr>
+            <tr>
+                <td><strong>延长视频</strong></td>
+                <td><code>将@视频1延长 5 秒</code></td>
+            </tr>
+            <tr>
+                <td><strong>声音参考</strong></td>
+                <td><code>@音频1 作为配乐，对齐画面节奏</code></td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h2>三、电商/广告类提示词案例</h2>
+
+        <h3>3.1 产品展示</h3>
+
+        <h4>美妆产品 - 口红</h4>
+        <pre><code>年轻女性的脸部特写，侧光打亮，
+涂抹口红的特写镜头，嘴唇从无到有、从暗到亮，
+色彩饱和度高，显肤色对比明显，
+高级感十足，近距离微距摄影</code></pre>
+
+        <h4>3C数码 - 耳机</h4>
+        <pre><code>无线耳机360度旋转展示，白色背景，
+产品表面反射灯光流动，强调细节纹理和工艺，
+现代感设计，专业商业级质量，时长8秒</code></pre>
+
+        <h4>奢侈品 - 手表</h4>
+        <pre><code>奢华手表特写，钻石光晕闪烁，成熟男性手腕缓慢转动展示，
+背景虚化的城市夜景，温暖金色光线照亮表盘，
+电影级色彩分级，高级感十足，无文字叠加</code></pre>
+
+        <h4>食品饮料 - 气泡水</h4>
+        <pre><code>气泡水，镜头对准瓶口，展示气泡涌出的动态效果，
+冰爽色调，背景有少量冰块点缀，时长5秒，正方形1:1</code></pre>
+
+        <h3>3.2 开箱与演示</h3>
+
+        <h4>手机开箱</h4>
+        <pre><code>高级手机开箱特写，手指轻轻打开包装盒，
+屏幕缓慢点亮，呈现品牌 logo，
+柔光从侧面照亮，温暖色调，奢华感十足，
+无文字，4K 清晰度</code></pre>
+
+        <h4>服装穿搭</h4>
+        <pre><code>年轻女性全身镜前旋转，展示服装的版型和面料，
+快速换装 3-4 次，展现不同风格搭配，
+背景简洁白墙，自然光照亮，时尚感十足</code></pre>
+
+        <h4>珠宝饰品</h4>
+        <pre><code>钻石或珍珠饰品在各种角度旋转展示，
+灯光照在饰品上，产生璀璨光芒和彩虹色闪光，
+背景虚化，色彩冷调或暖调，高级珠宝店级别</code></pre>
+
+        <h3>3.3 实用电商模板</h3>
+        <table>
+            <tr>
+                <th>场景</th>
+                <th>提示词模板</th>
+            </tr>
+            <tr>
+                <td><strong>美妆产品</strong></td>
+                <td>【哑光口红】，镜头从膏体特写缓慢拉到完整口红，展示旋出、上色过程，暖光氛围，无多余背景，时长6秒，竖屏9:16</td>
+            </tr>
+            <tr>
+                <td><strong>家居用品</strong></td>
+                <td>【折叠晾衣架】，展示从收纳状态展开的全过程，动作流畅，突出'省空间'优势，白色背景，时长10秒，横屏16:9</td>
+            </tr>
+            <tr>
+                <td><strong>电子产品</strong></td>
+                <td>@产品图 被手持展示，手指点击屏幕进行操作演示，屏幕内容清晰可见，背景虚化为现代办公室，科技感十足</td>
+            </tr>
+            <tr>
+                <td><strong>食品美食</strong></td>
+                <td>美食从准备到完成的全过程，微距镜头特写热汤冒气，刀切、倾倒、混合等动作流畅自然，5星大厨级别</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h2>四、生活方式类提示词案例</h2>
+
+        <h3>4.1 日常场景</h3>
+
+        <h4>早晨日常</h4>
+        <pre><code>年轻女性在明亮厨房，阳光透过大窗洒入，
+她慢慢走向咖啡机，按下按钮，
+咖啡倒入白瓷杯，热气升腾，
+温暖色调，治愈系，清晨安宁氛围</code></pre>
+
+        <h4>咖啡厅午后</h4>
+        <pre><code>女性坐在咖啡厅窗边，手持咖啡杯，
+阳光洒在脸上和咖啡杯上，窗外城市风景虚化，
+文艺感，慵懒午后，电影质感</code></pre>
+
+        <h4>阅读学习</h4>
+        <pre><code>舒适书房，年轻人坐在椅子上翻书，
+午后光线透过窗户照亮书页，
+放下书拿起咖啡小口啜饮，宁静致远</code></pre>
+
+        <h3>4.2 运动健康</h3>
+
+        <h4>健身房</h4>
+        <pre><code>健身房，年轻男性在器械上做动作，
+汗珠闪烁，肌肉张力展现，背景虚化霓虹灯，
+动感节奏，激励风格，高能量</code></pre>
+
+        <h4>瑜伽冥想</h4>
+        <pre><code>瑜伽垫上，女性做柔和瑜伽姿态，
+自然光透过大窗照亮，呼吸细节可见，表情平和宁静，
+禅意十足，治愈系音乐氛围</code></pre>
+
+        <h3>4.3 户外与旅行</h3>
+
+        <h4>海滩度假</h4>
+        <pre><code>金色沙滩，夕阳西下，年轻人漫步海边，
+海浪轻拍沙滩，人物脚步在沙上留下痕迹，
+温暖金黄色调，微风吹动头发，放松度假，浪漫氛围</code></pre>
+
+        <h4>城市夜生活</h4>
+        <pre><code>霓虹闪烁的都市街道，年轻人夜间散步，
+路边店铺和招牌灯光绚丽，镜头快速移动捕捉城市律动，
+赛博朋克风格，都市活力</code></pre>
+
+        <hr>
+
+        <h2>五、影视剧情类提示词案例</h2>
+
+        <h3>5.1 动作/武侠</h3>
+
+        <h4>古装武侠对打</h4>
+        <pre><code>古装美女剑客，长裙飘扬，在月夜下与对手对峙，
+拔剑瞬间，剑光闪烁穿过血雾，
+背景为古宅与樱花树，画面瞬间定格为黑白线条冲击帧，
+电影级色彩，冷色调，紧张高燃氛围</code></pre>
+
+        <h4>日式热血动漫风格</h4>
+        <pre><code>日式热血动漫风格。一个浑身缠绕金色雷电的少年剑士，
+与一个操纵暗红血雾的恶鬼对峙。
+少年拔刀瞬间化作一道金色闪电穿过血雾，
+画面瞬间定格为黑白线条的冲击帧，随后恶鬼的身体在雷光中消散。</code></pre>
+
+        <h4>悬崖峭壁打斗</h4>
+        <pre><code>险峻悬崖，两个武士在风中对峙，
+出招瞬间风沙飞扬，镜头快速切换角度，
+背景壮阔高山风景，极致动作感，惊险刺激</code></pre>
+
+        <div class="tip">
+            <strong>提示</strong>：本文档持续更新中，更多案例和进阶技巧敬请期待。
+        </div>
+    </div>
+</body>
+</html>
