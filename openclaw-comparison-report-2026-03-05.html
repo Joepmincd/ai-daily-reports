@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenClaw 四大部署方案全景对比 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111418;
+    --surface2: #181c24;
+    --border: #1e2530;
+    --border-light: #2a3040;
+    --text-primary: #e8edf5;
+    --text-secondary: #8a96aa;
+    --text-muted: #4a5568;
+    --kimi: #00c9a7;
+    --kimi-dim: rgba(0,201,167,0.1);
+    --kimi-border: rgba(0,201,167,0.25);
+    --max: #7c6cfa;
+    --max-dim: rgba(124,108,250,0.1);
+    --max-border: rgba(124,108,250,0.25);
+    --cloud: #f59e0b;
+    --cloud-dim: rgba(245,158,11,0.1);
+    --cloud-border: rgba(245,158,11,0.25);
+    --open: #ef4444;
+    --open-dim: rgba(239,68,68,0.1);
+    --open-border: rgba(239,68,68,0.25);
+    --green: #22c55e;
+    --orange: #f97316;
+    --red: #ef4444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    padding: 80px 40px 60px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse at center, rgba(0,201,167,0.06) 0%, rgba(124,108,250,0.04) 40%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--kimi);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 900;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  .hero h1 .accent { color: var(--kimi); }
+
+  .hero-sub {
+    font-size: 16px;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 32px;
+  }
+
+  .hero-meta {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .hero-meta-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── BACKGROUND EXPLAINER ─── */
+  .explainer {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .explainer h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  .explainer p {
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+    line-height: 1.8;
+  }
+
+  .explainer p strong {
+    color: var(--text-primary);
+  }
+
+  .lineage-box {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-top: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .lineage-box .step {
+    color: var(--text-primary);
+    background: var(--surface2);
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border-light);
+  }
+
+  .lineage-box .arrow { color: var(--text-muted); font-size: 18px; }
+
+  /* ─── CARDS OVERVIEW ─── */
+  .cards-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 40px;
+  }
+
+  .section-header {
+    margin-bottom: 32px;
+  }
+
+  .section-header h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .section-header p {
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+  }
+
+  .card.kimi { border: 1px solid var(--kimi-border); background: linear-gradient(145deg, var(--surface) 60%, var(--kimi-dim)); }
+  .card.max  { border: 1px solid var(--max-border);  background: linear-gradient(145deg, var(--surface) 60%, var(--max-dim)); }
+  .card.cloud{ border: 1px solid var(--cloud-border);background: linear-gradient(145deg, var(--surface) 60%, var(--cloud-dim)); }
+  .card.open { border: 1px solid var(--open-border); background: linear-gradient(145deg, var(--surface) 60%, var(--open-dim)); }
+
+  .card-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .card.kimi  .card-badge { background: var(--kimi-dim); color: var(--kimi); border: 1px solid var(--kimi-border); }
+  .card.max   .card-badge { background: var(--max-dim);  color: var(--max);  border: 1px solid var(--max-border); }
+  .card.cloud .card-badge { background: var(--cloud-dim);color: var(--cloud);border: 1px solid var(--cloud-border); }
+  .card.open  .card-badge { background: var(--open-dim); color: var(--open); border: 1px solid var(--open-border); }
+
+  .card h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+
+  .card-provider {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .card-price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-align: center;
+  }
+
+  .card.kimi  .card-price { background: var(--kimi-dim); color: var(--kimi); }
+  .card.max   .card-price { background: var(--max-dim);  color: var(--max); }
+  .card.cloud .card-price { background: var(--cloud-dim);color: var(--cloud); }
+  .card.open  .card-price { background: var(--open-dim); color: var(--open); }
+
+  /* ─── DIMENSION SECTIONS ─── */
+  .dim-section {
+    border-top: 1px solid var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 40px;
+  }
+
+  .dim-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .dim-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+
+  .dim-title h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .dim-title p {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* Score bars */
+  .score-grid {
+    display: grid;
+    gap: 12px;
+  }
+
+  .score-row {
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 14px 18px;
+    display: grid;
+    grid-template-columns: 140px 1fr auto;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid var(--border);
+  }
+
+  .score-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .score-name small {
+    display: block;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-top: 2px;
+  }
+
+  .score-bar-wrap {
+    background: var(--surface2);
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+  }
+
+  .score-bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s ease;
+  }
+
+  .bar-kimi  { background: linear-gradient(90deg, var(--kimi), rgba(0,201,167,0.6)); }
+  .bar-max   { background: linear-gradient(90deg, var(--max), rgba(124,108,250,0.6)); }
+  .bar-cloud { background: linear-gradient(90deg, var(--cloud), rgba(245,158,11,0.6)); }
+  .bar-open  { background: linear-gradient(90deg, var(--open), rgba(239,68,68,0.6)); }
+
+  .score-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    min-width: 30px;
+    text-align: right;
+  }
+
+  .val-kimi  { color: var(--kimi); }
+  .val-max   { color: var(--max); }
+  .val-cloud { color: var(--cloud); }
+  .val-open  { color: var(--open); }
+
+  /* ─── DETAIL TABLE ─── */
+  .detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: 13px;
+  }
+
+  .detail-table th {
+    padding: 10px 14px;
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .detail-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+
+  .detail-table tr:last-child td { border-bottom: none; }
+  .detail-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .detail-table .label-col {
+    color: var(--text-primary);
+    font-weight: 500;
+    width: 130px;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 600;
+    margin-right: 4px;
+  }
+
+  .tag-green { background: rgba(34,197,94,0.12); color: #22c55e; border: 1px solid rgba(34,197,94,0.2); }
+  .tag-yellow{ background: rgba(234,179,8,0.12);  color: #eab308; border: 1px solid rgba(234,179,8,0.2); }
+  .tag-red   { background: rgba(239,68,68,0.12);   color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+  .tag-blue  { background: rgba(59,130,246,0.12);  color: #60a5fa; border: 1px solid rgba(59,130,246,0.2); }
+
+  /* ─── MATRIX TABLE ─── */
+  .matrix-wrap {
+    overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+
+  .matrix {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .matrix th {
+    padding: 14px 18px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  .matrix th:first-child { text-align: left; color: var(--text-muted); font-size: 11px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.1em; }
+  .matrix th.kimi-h  { color: var(--kimi); background: var(--kimi-dim); }
+  .matrix th.max-h   { color: var(--max);  background: var(--max-dim); }
+  .matrix th.cloud-h { color: var(--cloud);background: var(--cloud-dim); }
+  .matrix th.open-h  { color: var(--open); background: var(--open-dim); }
+
+  .matrix td {
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-secondary);
+    vertical-align: middle;
+  }
+
+  .matrix td:first-child { text-align: left; color: var(--text-primary); font-weight: 500; }
+  .matrix tr:last-child td { border-bottom: none; }
+  .matrix tr:hover td { background: rgba(255,255,255,0.015); }
+
+  .dot-green { color: #22c55e; font-size: 16px; }
+  .dot-yellow{ color: #eab308; font-size: 16px; }
+  .dot-red   { color: #ef4444; font-size: 16px; }
+
+  /* ─── CALLOUT ─── */
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    border-left: 3px solid;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .callout.warn { background: rgba(245,158,11,0.06); border-color: var(--cloud); color: #d4a74a; }
+  .callout.info { background: rgba(0,201,167,0.06);  border-color: var(--kimi); color: #6dcfc0; }
+  .callout.danger{ background: rgba(239,68,68,0.06); border-color: var(--open); color: #d97070; }
+
+  .callout strong { color: inherit; font-weight: 600; }
+
+  /* ─── PERSONA CARDS ─── */
+  .persona-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .persona-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .persona-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .persona-title {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+
+  .persona-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+
+  .persona-rec {
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  /* ─── VERDICT ─── */
+  .verdict {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .verdict h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  .verdict p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    max-width: 680px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 40px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 680px) {
+    .hero, .explainer, .cards-section, .dim-section { padding: 36px 20px; }
+    .score-row { grid-template-columns: 110px 1fr auto; }
+    .detail-table .label-col { width: 100px; }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero h1, .hero-sub, .cards-grid, .score-grid { animation: fadeUp 0.6s ease both; }
+  .hero-sub  { animation-delay: 0.1s; }
+  .cards-grid{ animation-delay: 0.2s; }
+</style>
+</head>
+<body>
+
+<!-- ════════════════ HERO ════════════════ -->
+<section class="hero">
+  <div class="hero-eyebrow">2026 · OpenClaw 生态全景报告</div>
+  <h1>四种方案，一次读懂<br><span class="accent">Claw 部署选型指南</span></h1>
+  <p class="hero-sub">KimiClaw · MaxClaw · 云厂商部署 · 本地部署 OpenClaw ——成本、能力、效果、扩展性深度对比，为新手与非技术人群快速建立认知</p>
+  <div class="hero-meta">
+    <span class="hero-meta-item">📅 数据截至 2026.03</span>
+    <span class="hero-meta-item">📌 面向中国用户</span>
+    <span class="hero-meta-item">🔬 综合 GitHub · X · CSDN · 36氪 · 知乎</span>
+  </div>
+</section>
+
+<!-- ════════════════ BACKGROUND ════════════════ -->
+<section class="explainer">
+  <h2>🦞 先搞懂 OpenClaw 是什么</h2>
+  <p>
+    OpenClaw（前身叫 Clawdbot → Moltbot）是 2026 年初在 GitHub 上爆火的<strong>开源个人 AI Agent</strong>，72 小时斩获 6 万 Star，如今突破 24 万，创下史上增速最快纪录。
+    它的核心理念是：<strong>让 AI 不只是聊天，而是真正干活</strong>——写代码、执行命令、读写文件、操作浏览器，全程自动。
+  </p>
+  <p>
+    中文用户最困惑的点在于：市面上冒出了太多"Claw"产品，分不清是原版、山寨还是托管服务。本报告帮你厘清四种主流路径，找到最适合自己的方案。
+  </p>
+
+  <div class="lineage-box">
+    <span class="step">OpenClaw（原版开源）</span>
+    <span class="arrow">→</span>
+    <span class="step">KimiClaw（月之暗面云托管）</span>
+    <span class="arrow">·</span>
+    <span class="step">MaxClaw（MiniMax 云托管）</span>
+    <span class="arrow">·</span>
+    <span class="step">云厂商自建（阿里云/腾讯云/火山引擎）</span>
+    <span class="arrow">·</span>
+    <span class="step">本地部署（自己电脑/Mac Mini）</span>
+  </div>
+</section>
+
+<!-- ════════════════ OVERVIEW CARDS ════════════════ -->
+<section class="cards-section">
+  <div class="section-header">
+    <h2>方案一览</h2>
+    <p>四种方案的基本定位与入门价格</p>
+  </div>
+  <div class="cards-grid">
+
+    <div class="card kimi">
+      <div class="card-badge">KimiClaw</div>
+      <h3>Kimi Claw</h3>
+      <div class="card-provider">月之暗面 · 官方云托管</div>
+      <p class="card-desc">OpenClaw 的官方云端托管版，月之暗面提供云服务器并预装好环境，内置 Kimi K2.5 模型，开箱即用，数据存于月之暗面服务器。</p>
+      <div class="card-price">Beta 起 ¥199/月（Allegretto 会员）</div>
+    </div>
+
+    <div class="card max">
+      <div class="card-badge">MaxClaw</div>
+      <h3>Max Claw</h3>
+      <div class="card-provider">MiniMax · 一键托管</div>
+      <p class="card-desc">MiniMax Agent 旗下的 OpenClaw 生态接入层，完全无需配置 API，内置 MiniMax M2.5 模型，通过 MiniMax Agent 网页端直接使用。</p>
+      <div class="card-price">平台订阅 ¥39/月起（含用量）</div>
+    </div>
+
+    <div class="card cloud">
+      <div class="card-badge">云厂商部署</div>
+      <h3>云厂商自建</h3>
+      <div class="card-provider">阿里云 / 腾讯云 / 火山引擎</div>
+      <p class="card-desc">国内主流云厂商提供一键部署镜像，用户自行购买 VPS 并配置模型 API，服务器费用 + 模型 Token 费双重计费，灵活选择任意模型。</p>
+      <div class="card-price">服务器 ¥58~200/年 + Token 费</div>
+    </div>
+
+    <div class="card open">
+      <div class="card-badge">本地部署</div>
+      <h3>本地 OpenClaw</h3>
+      <div class="card-provider">自有硬件 · 完全自主</div>
+      <p class="card-desc">将 OpenClaw 直接运行在个人电脑、Mac Mini 或树莓派上，支持接入任意模型（含本地 Ollama），数据完全私有，开发者首选。</p>
+      <div class="card-price">硬件一次性 + API Token（可零成本）</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════ DIM: COST ════════════════ -->
+<section class="dim-section">
+  <div class="dim-title">
+    <div class="dim-icon">💰</div>
+    <div>
+      <h2>成本对比</h2>
+      <p>综合月成本 · 越高代表越贵（满分 10）</p>
+    </div>
+  </div>
+
+  <div class="score-grid">
+    <div class="score-row">
+      <div class="score-name">KimiClaw<small>月之暗面托管</small></div>
+      <div class="score-bar-wrap"><div class="score-bar bar-kimi" style="width:65%"></div></div>
+      <div class="score-val val-kimi">6.5</div>
+    </div>
+    <div class="score-row">
+      <div class="score-name">MaxClaw<small>MiniMax 托管</small></div>
+      <div class="score-bar-wrap"><div class="score-bar bar-max" style="width:40%"></div></div>
+      <div class="score-val val-max">4.0</div>
+    </div>
+    <div class="score-row">
+      <div class="score-name">云厂商部署<small>阿里云/腾讯/火山</small></div>
+      <div class="score-bar-wrap"><div class="score-bar bar-cloud" style="width:55%"></div></div>
+      <div class="score-val val-cloud">5.5</div>
+    </div>
+    <div class="score-row">
+      <div class="score-name">本地 OpenClaw<small>自有硬件</small></div>
+      <div class="score-bar-wrap"><div class="score-bar bar-open" style="width:30%"></div></div>
+      <div class="score-val val-open">3.0</div>
+    </div>
+  </div>
+
+  <div style="overflow-x:auto; margin-top: 24px;">
+    <table class="detail-table">
+      <thead>
+        <tr>
+          <th class="label-col">费用项</th>
+          <th>KimiClaw</th>
+          <th>MaxClaw</th>
+          <th>云厂商部署</th>
+          <th>本地 OpenClaw</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="label-col">订阅/平台费</td>
+          <td>≥¥199/月（会员门槛）</td>
+          <td>¥39/月起</td>
+          <td>服务器 ¥58~200/年</td>
+          <td>0（已有硬件）</td>
+        </tr>
+        <tr>
+          <td class="label-col">模型 Token 费</td>
+          <td>内含（限 Kimi 模型）</td>
+          <td>内含（限 M2.5）</td>
+          <td>按用量，Qwen/Kimi/Claude 等</td>
+          <td>接 API 按量 / 本地模型免费</td>
+        </tr>
+        <tr>
+          <td class="label-col">7×24h 月成本估算</td>
+          <td>¥199~600</td>
+          <td>¥39~300</td>
+          <td>¥200~800（API 为主）</td>
+          <td>¥0~500（按模型选择）</td>
+        </tr>
+        <tr>
+          <td class="label-col">超量风险</td>
+          <td>较低（订阅制）</td>
+          <td>较低（含额度）</td>
+          <td>⚠️ 有案例单日烧 ¥1400</td>
+          <td>⚠️ 需主动监控 Token</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout warn" style="margin-top:20px">
+    <strong>⚠️ Agent 的 Token 黑洞警告：</strong>OpenClaw 在执行复杂任务时，每轮可能触发数十次 API 调用。有用户报告配置不当的自动化任务单日消耗 $200 API 费。不管选择哪种方案，务必设置用量上限。
+  </div>
+</section>
+
+<!-- ════════════════ DIM: CAPABILITY ════════════════ -->
+<section class="dim-section">
+  <div class="dim-title">
+    <div class="dim-icon">🧠</div>
+    <div>
+      <h2>能力对比</h2>
+      <p>底层模型智力 · 工具调用 · 执行能力</p>
+    </div>
+  </div>
+
+  <div style="overflow-x:auto;">
+  <div class="matrix-wrap">
+  <table class="matrix">
+    <thead>
+      <tr>
+        <th>能力维度</th>
+        <th class="kimi-h">KimiClaw</th>
+        <th class="max-h">MaxClaw</th>
+        <th class="cloud-h">云厂商部署</th>
+        <th class="open-h">本地 OpenClaw</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>底层模型</td>
+        <td>Kimi K2.5<br><small style="color:var(--text-muted)">1T MoE, 32B 激活</small></td>
+        <td>MiniMax M2.5<br><small style="color:var(--text-muted)">230B MoE, 10B 激活</small></td>
+        <td>可选：Qwen3/DeepSeek/<br>Kimi/Claude 等</td>
+        <td>任意：Claude/GPT-5/<br>Kimi/Ollama 本地模型</td>
+      </tr>
+      <tr>
+        <td>编程能力</td>
+        <td><span class="dot-green">●</span> 强（LiveCodeBench 领先）</td>
+        <td><span class="dot-yellow">●</span> 中等（简单任务胜任）</td>
+        <td><span class="dot-green">●</span> 取决于模型选择</td>
+        <td><span class="dot-green">●</span> 取决于模型选择</td>
+      </tr>
+      <tr>
+        <td>Agentic 工具调用</td>
+        <td><span class="dot-green">●</span> 原生优化，BrowseComp 领先</td>
+        <td><span class="dot-yellow">●</span> 基础功能完整</td>
+        <td><span class="dot-yellow">●</span> OpenClaw 框架原生支持</td>
+        <td><span class="dot-green">●</span> 完整工具链，最自由</td>
+      </tr>
+      <tr>
+        <td>多 Agent 协作</td>
+        <td><span class="dot-yellow">●</span> 官方暂未开放 Swarm</td>
+        <td><span class="dot-red">●</span> 暂不支持多 Agent</td>
+        <td><span class="dot-green">●</span> OpenClaw 原生支持 Swarm</td>
+        <td><span class="dot-green">●</span> 完整 Swarm 架构</td>
+      </tr>
+      <tr>
+        <td>上下文窗口</td>
+        <td>最高 256K token</td>
+        <td>约 200K token</td>
+        <td>因模型而异（32K~256K）</td>
+        <td>因模型而异</td>
+      </tr>
+      <tr>
+        <td>中文理解</td>
+        <td><span class="dot-green">●</span> 优秀</td>
+        <td><span class="dot-green">●</span> 优秀</td>
+        <td><span class="dot-green">●</span> 国产模型均优秀</td>
+        <td><span class="dot-yellow">●</span> 取决于模型</td>
+      </tr>
+      <tr>
+        <td>视觉/多模态</td>
+        <td><span class="dot-green">●</span> K2.5 原生多模态</td>
+        <td><span class="dot-yellow">●</span> 有但不稳定，偶有识别错误</td>
+        <td><span class="dot-yellow">●</span> 需配置图像模型</td>
+        <td><span class="dot-yellow">●</span> 需手动配置</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  </div>
+
+  <div class="callout info" style="margin-top:20px">
+    <strong>💡 模型能力参考：</strong>Kimi K2.5 在 BrowseComp（网络搜索+推理）上远超 Claude 和 GPT-5.2，但在纯写作质量上 Claude 系列仍领先。MiniMax M2.5 以极低成本在日常工作流任务中表现不俗，适合高频轻量调用。本地部署因可自由选模型，上限最高，但配置复杂度也最高。
+  </div>
+</section>
+
+<!-- ════════════════ DIM: EASE OF USE ════════════════ -->
+<section class="dim-section">
+  <div class="dim-title">
+    <div class="dim-icon">🚀</div>
+    <div>
+      <h2>上手难度 & 使用体验</h2>
+      <p>从零到跑起来需要多少时间与技术门槛</p>
+    </div>
+  </div>
+
+  <div class="score-grid">
+    <div class="score-row">
+      <div class="score-name">KimiClaw<small>便捷度</small></div>
+      <div class="score-bar-wrap"><div class="score-bar bar-kimi" style="width:80%"></div></div>
+      <div class="score-val val-kimi">8/10</div>
+    </div>
+    <div class="score-row">
+      <div class="score-name">MaxClaw<small>便捷度</small></div>
+      <div class="score-bar-wrap"><div class="score-bar bar-max" style="width:90%"></div></div>
+      <div class="score-val val-max">9/10</div>
+    </div>
+    <div class="score-row">
+      <div class="score-name">云厂商部署<small>便捷度</small></div>
+      <div class="score-bar-wrap"><div class="score-bar bar-cloud" style="width:60%"></div></div>
+      <div class="score-val val-cloud">6/10</div>
+    </div>
+    <div class="score-row">
+      <div class="score-name">本地 OpenClaw<small>便捷度</small></div>
+      <div class="score-bar-wrap"><div class="score-bar bar-open" style="width:35%"></div></div>
+      <div class="score-val val-open">3.5/10</div>
+    </div>
+  </div>
+
+  <div style="overflow-x:auto; margin-top: 24px;">
+  <table class="detail-table">
+    <thead>
+      <tr>
+        <th class="label-col">体验维度</th>
+        <th>KimiClaw</th>
+        <th>MaxClaw</th>
+        <th>云厂商部署</th>
+        <th>本地 OpenClaw</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="label-col">启动时间</td>
+        <td>~5 分钟</td>
+        <td>~5 分钟</td>
+        <td>30分钟~2小时</td>
+        <td>1~4小时（视经验）</td>
+      </tr>
+      <tr>
+        <td class="label-col">技术要求</td>
+        <td><span class="tag tag-green">零门槛</span></td>
+        <td><span class="tag tag-green">零门槛</span></td>
+        <td><span class="tag tag-yellow">基础 Linux</span></td>
+        <td><span class="tag tag-red">需有技术基础</span></td>
+      </tr>
+      <tr>
+        <td class="label-col">接入通讯软件</td>
+        <td>飞书/钉钉/Telegram</td>
+        <td>飞书/钉钉/WhatsApp/Discord 等</td>
+        <td>飞书/钉钉/企微/Telegram 等</td>
+        <td>全平台 15+ 种</td>
+      </tr>
+      <tr>
+        <td class="label-col">多设备同步</td>
+        <td><span class="tag tag-green">✓ 40GB 云存储</span></td>
+        <td><span class="tag tag-green">✓ 云端</span></td>
+        <td><span class="tag tag-green">✓ 随时访问</span></td>
+        <td><span class="tag tag-red">✗ 设备绑定</span></td>
+      </tr>
+      <tr>
+        <td class="label-col">真实用户反馈</td>
+        <td>部分功能受限（如无 Kimi 原生 Agent 集群）；被封闭生态限制</td>
+        <td>无本地浏览器控制；国内平台反爬限制；需安装本地客户端才有完整执行力</td>
+        <td>需自行配置 API；腾讯云版本较老；阿里云体验最佳</td>
+        <td>偶有死循环/空转；AI可能莫名删数据；复杂任务需人工介入</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout danger" style="margin-top:20px">
+    <strong>🚨 注意：云端 Claw 的"翻车"真相</strong><br>
+    有真实用户测试 KimiClaw 和 MaxClaw 后发现：两者在没有安装本地客户端的情况下，无法直接控制浏览器或执行本机命令，功能接近"升级版 Chatbot"。国内平台普遍存在反爬机制，云端 Agent 自动操作小红书、微信等平台受到限制。<strong>如需 OpenClaw 的完整执行能力，仍然需要本地部署一部分组件。</strong>
+  </div>
+</section>
+
+<!-- ════════════════ DIM: EXTENSIBILITY ════════════════ -->
+<section class="dim-section">
+  <div class="dim-title">
+    <div class="dim-icon">🔧</div>
+    <div>
+      <h2>扩展性 & 定制能力</h2>
+      <p>技能安装 · 自定义 Soul · 多模型切换</p>
+    </div>
+  </div>
+
+  <div class="score-grid">
+    <div class="score-row">
+      <div class="score-name">KimiClaw<small>扩展性</small></div>
+      <div class="score-bar-wrap"><div class="score-bar bar-kimi" style="width:50%"></div></div>
+      <div class="score-val val-kimi">5/10</div>
+    </div>
+    <div class="score-row">
+      <div class="score-name">MaxClaw<small>扩展性</small></div>
+      <div class="score-bar-wrap"><div class="score-bar bar-max" style="width:55%"></div></div>
+      <div class="score-val val-max">5.5/10</div>
+    </div>
+    <div class="score-row">
+      <div class="score-name">云厂商部署<small>扩展性</small></div>
+      <div class="score-bar-wrap"><div class="score-bar bar-cloud" style="width:75%"></div></div>
+      <div class="score-val val-cloud">7.5/10</div>
+    </div>
+    <div class="score-row">
+      <div class="score-name">本地 OpenClaw<small>扩展性</small></div>
+      <div class="score-bar-wrap"><div class="score-bar bar-open" style="width:95%"></div></div>
+      <div class="score-val val-open">9.5/10</div>
+    </div>
+  </div>
+
+  <div style="overflow-x:auto; margin-top: 24px;">
+  <div class="matrix-wrap">
+  <table class="matrix">
+    <thead>
+      <tr>
+        <th>扩展维度</th>
+        <th class="kimi-h">KimiClaw</th>
+        <th class="max-h">MaxClaw</th>
+        <th class="cloud-h">云厂商部署</th>
+        <th class="open-h">本地 OpenClaw</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>更换底层模型</td>
+        <td><span class="dot-red">●</span> 仅 Kimi 系列</td>
+        <td><span class="dot-red">●</span> 仅 M2.5</td>
+        <td><span class="dot-green">●</span> 任意（需配置）</td>
+        <td><span class="dot-green">●</span> 任意，含本地模型</td>
+      </tr>
+      <tr>
+        <td>安装 ClawHub Skills</td>
+        <td><span class="dot-green">●</span> 预装 5000 技能</td>
+        <td><span class="dot-yellow">●</span> 内置专家 Agent</td>
+        <td><span class="dot-green">●</span> 完整 Skills 市场</td>
+        <td><span class="dot-green">●</span> 完整 Skills 市场</td>
+      </tr>
+      <tr>
+        <td>自定义 Soul 文件</td>
+        <td><span class="dot-yellow">●</span> 受限</td>
+        <td><span class="dot-yellow">●</span> 部分支持</td>
+        <td><span class="dot-green">●</span> 支持</td>
+        <td><span class="dot-green">●</span> 完整支持</td>
+      </tr>
+      <tr>
+        <td>MCP 工具集成</td>
+        <td><span class="dot-red">●</span> 不支持</td>
+        <td><span class="dot-red">●</span> 不支持</td>
+        <td><span class="dot-green">●</span> 支持</td>
+        <td><span class="dot-green">●</span> 完整支持</td>
+      </tr>
+      <tr>
+        <td>Swarm 多 Agent</td>
+        <td><span class="dot-red">●</span> 未开放</td>
+        <td><span class="dot-red">●</span> 不支持</td>
+        <td><span class="dot-green">●</span> 支持</td>
+        <td><span class="dot-green">●</span> 完整支持</td>
+      </tr>
+      <tr>
+        <td>企业私有化部署</td>
+        <td><span class="dot-red">●</span> 数据在 Kimi 云</td>
+        <td><span class="dot-red">●</span> 数据在 MiniMax 云</td>
+        <td><span class="dot-yellow">●</span> 自有 VPC 可实现</td>
+        <td><span class="dot-green">●</span> 数据完全私有</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  </div>
+</section>
+
+<!-- ════════════════ DIM: SECURITY ════════════════ -->
+<section class="dim-section">
+  <div class="dim-title">
+    <div class="dim-icon">🔒</div>
+    <div>
+      <h2>数据安全 & 隐私</h2>
+      <p>数据存储位置 · 已知安全风险 · 适合场景</p>
+    </div>
+  </div>
+
+  <div style="overflow-x:auto;">
+  <div class="matrix-wrap">
+  <table class="matrix">
+    <thead>
+      <tr>
+        <th>安全维度</th>
+        <th class="kimi-h">KimiClaw</th>
+        <th class="max-h">MaxClaw</th>
+        <th class="cloud-h">云厂商部署</th>
+        <th class="open-h">本地 OpenClaw</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>数据存储位置</td>
+        <td>月之暗面服务器（中国）</td>
+        <td>MiniMax 服务器（中国）</td>
+        <td>选购服务器所在地</td>
+        <td>完全本地</td>
+      </tr>
+      <tr>
+        <td>数据隐私控制</td>
+        <td><span class="dot-yellow">●</span> 中等（商业条款约束）</td>
+        <td><span class="dot-yellow">●</span> 中等</td>
+        <td><span class="dot-green">●</span> 较好（自控 VPS）</td>
+        <td><span class="dot-green">●</span> 最高</td>
+      </tr>
+      <tr>
+        <td>历史安全事件</td>
+        <td>暂无公开记录</td>
+        <td>暂无公开记录</td>
+        <td>腾讯云 QQ bot 识图混乱</td>
+        <td>CVE-2026-25253（已修复）；2 万实例公网裸奔；ClawHub 供应链投毒 1184 恶意技能</td>
+      </tr>
+      <tr>
+        <td>适合敏感业务数据</td>
+        <td><span class="dot-red">●</span> 不建议</td>
+        <td><span class="dot-red">●</span> 不建议</td>
+        <td><span class="dot-yellow">●</span> VPC 隔离后可考虑</td>
+        <td><span class="dot-green">●</span> 适合（需加固配置）</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  </div>
+
+  <div class="callout danger" style="margin-top:20px">
+    <strong>🔴 本地 OpenClaw 安全加固要点：</strong>运行 <code style="background:rgba(239,68,68,0.15);padding:2px 6px;border-radius:3px;font-family:monospace">openclaw security audit --deep</code>；永远不要用 <code style="background:rgba(239,68,68,0.15);padding:2px 6px;border-radius:3px;font-family:monospace">auth: "none"</code>（官方已在新版禁用）；从 ClawHub 安装技能前检查来源；勿将 18789 端口直接暴露公网。
+  </div>
+</section>
+
+<!-- ════════════════ PERSONA GUIDE ════════════════ -->
+<section class="dim-section">
+  <div class="dim-title">
+    <div class="dim-icon">👤</div>
+    <div>
+      <h2>我适合哪种方案？</h2>
+      <p>按人群画像推荐最优路径</p>
+    </div>
+  </div>
+
+  <div class="persona-grid">
+    <div class="persona-card">
+      <div class="persona-icon">🌱</div>
+      <div class="persona-title">完全零基础 · 想快速体验</div>
+      <div class="persona-desc">没有编程经验，只想试试 AI Agent 能干什么，不愿意折腾任何配置。</div>
+      <div class="persona-rec" style="background:var(--max-dim);color:var(--max);">→ MaxClaw（¥39 起步）</div>
+    </div>
+
+    <div class="persona-card">
+      <div class="persona-icon">📱</div>
+      <div class="persona-title">非技术用户 · 习惯 Kimi App</div>
+      <div class="persona-desc">日常使用 Kimi，希望在飞书或手机里有个 7×24 的 AI 助手，不在乎多花点钱。</div>
+      <div class="persona-rec" style="background:var(--kimi-dim);color:var(--kimi);">→ KimiClaw（¥199/月）</div>
+    </div>
+
+    <div class="persona-card">
+      <div class="persona-icon">⚙️</div>
+      <div class="persona-title">有一点技术基础 · 想长期稳定运行</div>
+      <div class="persona-desc">能看懂基础 Linux 命令，希望 7×24 在线，数据在自己服务器，并可随时换模型。</div>
+      <div class="persona-rec" style="background:var(--cloud-dim);color:var(--cloud);">→ 云厂商部署（阿里云/火山引擎）</div>
+    </div>
+
+    <div class="persona-card">
+      <div class="persona-icon">🧑‍💻</div>
+      <div class="persona-title">开发者 / 技术极客</div>
+      <div class="persona-desc">需要最高自由度：自定义模型、完整 Swarm 多 Agent、MCP 工具、数据私有、无平台费。</div>
+      <div class="persona-rec" style="background:var(--open-dim);color:var(--open);">→ 本地 OpenClaw（Mac Mini / VPS）</div>
+    </div>
+
+    <div class="persona-card">
+      <div class="persona-icon">🏢</div>
+      <div class="persona-title">企业用户 · 有合规要求</div>
+      <div class="persona-desc">数据不能上云，需要内部审计、权限管控，处理敏感的订单/财务/客户数据。</div>
+      <div class="persona-rec" style="background:var(--open-dim);color:var(--open);">→ 本地 OpenClaw（内网隔离 + Docker 沙箱）</div>
+    </div>
+
+    <div class="persona-card">
+      <div class="persona-icon">💡</div>
+      <div class="persona-title">跨境电商 / 自媒体运营</div>
+      <div class="persona-desc">想自动化竞品监控、Listing 翻译、日报生成，有一定折腾能力，成本敏感。</div>
+      <div class="persona-rec" style="background:var(--cloud-dim);color:var(--cloud);">→ 云厂商 + 国产模型（Kimi/Qwen）</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ FULL COMPARISON TABLE ════════════════ -->
+<section class="dim-section">
+  <div class="dim-title">
+    <div class="dim-icon">📊</div>
+    <div>
+      <h2>综合评分一览表</h2>
+      <p>五个核心维度满分 10 分</p>
+    </div>
+  </div>
+
+  <div style="overflow-x:auto;">
+  <div class="matrix-wrap">
+  <table class="matrix">
+    <thead>
+      <tr>
+        <th>评分维度</th>
+        <th class="kimi-h">KimiClaw</th>
+        <th class="max-h">MaxClaw</th>
+        <th class="cloud-h">云厂商部署</th>
+        <th class="open-h">本地 OpenClaw</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>💰 成本性价比</td>
+        <td style="color:var(--kimi)">5.5/10</td>
+        <td style="color:var(--max)">8.0/10</td>
+        <td style="color:var(--cloud)">7.0/10</td>
+        <td style="color:var(--open)">8.5/10</td>
+      </tr>
+      <tr>
+        <td>🧠 AI 能力上限</td>
+        <td style="color:var(--kimi)">8.0/10</td>
+        <td style="color:var(--max)">6.5/10</td>
+        <td style="color:var(--cloud)">9.0/10</td>
+        <td style="color:var(--open)">9.5/10</td>
+      </tr>
+      <tr>
+        <td>🚀 上手便捷度</td>
+        <td style="color:var(--kimi)">8.0/10</td>
+        <td style="color:var(--max)">9.5/10</td>
+        <td style="color:var(--cloud)">6.0/10</td>
+        <td style="color:var(--open)">3.5/10</td>
+      </tr>
+      <tr>
+        <td>🔧 扩展灵活性</td>
+        <td style="color:var(--kimi)">5.0/10</td>
+        <td style="color:var(--max)">5.5/10</td>
+        <td style="color:var(--cloud)">7.5/10</td>
+        <td style="color:var(--open)">9.5/10</td>
+      </tr>
+      <tr>
+        <td>🔒 数据安全性</td>
+        <td style="color:var(--kimi)">5.0/10</td>
+        <td style="color:var(--max)">5.0/10</td>
+        <td style="color:var(--cloud)">7.0/10</td>
+        <td style="color:var(--open)">8.5/10</td>
+      </tr>
+      <tr style="background:rgba(255,255,255,0.03)">
+        <td><strong>综合得分</strong></td>
+        <td style="color:var(--kimi);font-weight:700;font-size:15px">6.3</td>
+        <td style="color:var(--max);font-weight:700;font-size:15px">6.9</td>
+        <td style="color:var(--cloud);font-weight:700;font-size:15px">7.3</td>
+        <td style="color:var(--open);font-weight:700;font-size:15px">7.9</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  </div>
+</section>
+
+<!-- ════════════════ VERDICT ════════════════ -->
+<section class="dim-section">
+  <div class="verdict">
+    <h3>📝 编辑总结</h3>
+    <p>
+      <strong style="color:var(--text-primary)">OpenClaw 生态的核心矛盾是：能力与门槛的反比关系。</strong><br><br>
+      云端托管方案（KimiClaw、MaxClaw）大幅降低了入门门槛，但受制于平台闭环，无法调用模型 Agent 集群，也无法控制本地浏览器，实际效果远没有演示视频中那么惊艳。
+      云厂商部署是能力与便捷的折中点，阿里云体验最成熟，适合有一定技术基础的用户长期稳定运行。
+      本地部署 OpenClaw 综合得分最高，但安全风险需要认真对待，复杂任务也依然不够丝滑。<br><br>
+      <strong style="color:var(--text-primary)">建议路径：</strong>先用 MaxClaw（¥39）体验 Agent 工作流概念 → 感兴趣后上阿里云一键部署 → 有编程能力再迁移本地 + 接入 Claude/Kimi API 实现真正完整的执行力。
+    </p>
+  </div>
+</section>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer>
+  数据综合自 GitHub · X · 36氪 · 知乎 · CSDN · 阿里云文档 · 爱范儿 · 极客公园 · 飞书官方 &nbsp;·&nbsp; 2026.03.05 &nbsp;·&nbsp; 本报告仅供参考，价格与功能随版本更新变化
+</footer>
+
+</body>
+</html>
