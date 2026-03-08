@@ -25,6 +25,8 @@
             -webkit-font-smoothing: antialiased;
         }
         .container { max-width: 800px; margin: 0 auto; padding: 12px; }
+        
+        /* Header */
         .header {
             background: linear-gradient(135deg, rgba(29,155,240,0.2), rgba(249,24,128,0.2));
             border: 1px solid rgba(255,255,255,0.1);
@@ -41,7 +43,12 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 8px;
         }
-        .header-date { font-size: 0.9rem; color: var(--gray); }
+        .header-date {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        /* Trend Cards */
         .trend-card {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.08);
@@ -59,136 +66,331 @@
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         .trend-rank {
-            width: 44px; height: 44px;
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.3rem; font-weight: 700; flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            flex-shrink: 0;
         }
         .trend-rank.hot { background: linear-gradient(135deg, #ff6b6b, #ee5a24); }
         .trend-rank.medium { background: linear-gradient(135deg, #feca57, #ff9f43); }
         .trend-rank.cool { background: linear-gradient(135deg, #48dbfb, #0abde3); }
         .trend-title-wrap { flex: 1; }
-        .trend-title { font-size: 1.15rem; font-weight: 700; color: var(--light); line-height: 1.4; }
-        .trend-tag {
-            display: inline-block; font-size: 0.7rem;
-            padding: 3px 10px; border-radius: 20px; margin-top: 6px;
-            background: rgba(29,155,240,0.2); color: var(--primary);
+        .trend-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--light);
+            line-height: 1.4;
         }
+        .trend-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-top: 6px;
+            background: rgba(29,155,240,0.2);
+            color: var(--primary);
+        }
+        
+        /* Overview Section */
         .overview-section {
             background: rgba(29,155,240,0.08);
-            border-radius: 16px; padding: 16px; margin-bottom: 16px;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
         }
         .section-title {
-            font-size: 0.85rem; color: var(--primary); font-weight: 600;
-            margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .overview-text {
-            font-size: 0.95rem; color: rgba(255,255,255,0.85); line-height: 1.7;
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.7;
         }
-        .analysis-section { margin-bottom: 16px; }
-        .analysis-grid { display: grid; gap: 12px; }
+        
+        /* Analysis Section */
+        .analysis-section {
+            margin-bottom: 16px;
+        }
+        .analysis-grid {
+            display: grid;
+            gap: 12px;
+        }
         .analysis-item {
             background: rgba(255,255,255,0.03);
-            border-radius: 12px; padding: 14px;
+            border-radius: 12px;
+            padding: 14px;
             border-left: 3px solid var(--primary);
         }
-        .analysis-item h4 { font-size: 0.85rem; color: var(--gray); margin-bottom: 6px; }
-        .analysis-item p { font-size: 0.9rem; color: rgba(255,255,255,0.9); line-height: 1.6; }
+        .analysis-item h4 {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 6px;
+        }
+        .analysis-item p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.6;
+        }
+        
+        /* MECE Framework */
+        .mece-section {
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        .mece-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .mece-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 0.85rem;
+        }
+        .mece-item h5 {
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+        .mece-item p {
+            color: rgba(255,255,255,0.9);
+            line-height: 1.5;
+        }
+        
+        /* SWOT Framework */
         .swot-section {
             background: rgba(255,255,255,0.03);
-            border-radius: 16px; padding: 16px; margin-bottom: 16px;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
         }
-        .swot-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .swot-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
         .swot-item {
-            border-radius: 10px; padding: 12px; font-size: 0.85rem;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 0.85rem;
         }
         .swot-item.s { background: rgba(0,186,124,0.15); border: 1px solid rgba(0,186,124,0.3); }
         .swot-item.w { background: rgba(255,173,31,0.15); border: 1px solid rgba(255,173,31,0.3); }
         .swot-item.o { background: rgba(29,155,240,0.15); border: 1px solid rgba(29,155,240,0.3); }
         .swot-item.t { background: rgba(249,24,128,0.15); border: 1px solid rgba(249,24,128,0.3); }
-        .swot-item h5 { font-size: 0.75rem; margin-bottom: 6px; font-weight: 600; }
+        .swot-item h5 {
+            font-size: 0.75rem;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
         .swot-item.s h5 { color: var(--success); }
         .swot-item.w h5 { color: var(--warning); }
         .swot-item.o h5 { color: var(--primary); }
         .swot-item.t h5 { color: var(--secondary); }
-        .swot-item ul { list-style: none; color: rgba(255,255,255,0.85); }
-        .swot-item li { padding: 3px 0; padding-left: 12px; position: relative; line-height: 1.4; }
-        .swot-item li::before { content: '›'; position: absolute; left: 0; }
+        .swot-item ul {
+            list-style: none;
+            color: rgba(255,255,255,0.85);
+        }
+        .swot-item li {
+            padding: 3px 0;
+            padding-left: 12px;
+            position: relative;
+            line-height: 1.4;
+        }
+        .swot-item li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Insights Section */
         .insights-section {
             background: linear-gradient(135deg, rgba(29,155,240,0.1), rgba(249,24,128,0.1));
-            border-radius: 16px; padding: 16px;
+            border-radius: 16px;
+            padding: 16px;
             border: 1px solid rgba(255,255,255,0.1);
         }
         .insight-item {
-            display: flex; gap: 12px; padding: 10px 0;
+            display: flex;
+            gap: 12px;
+            padding: 10px 0;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         .insight-item:last-child { border-bottom: none; }
         .insight-icon { font-size: 1.2rem; }
-        .insight-text { flex: 1; font-size: 0.9rem; color: rgba(255,255,255,0.9); line-height: 1.6; }
-        .footer { text-align: center; margin-top: 32px; padding: 20px; color: rgba(255,255,255,0.5); font-size: 0.8rem; }
+        .insight-text {
+            flex: 1;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.6;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 32px;
+            padding: 20px;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8rem;
+        }
+        
+        /* Responsive */
         @media (max-width: 375px) {
             html { font-size: 14px; }
-            .swot-grid { grid-template-columns: 1fr; }
+            .mece-grid, .swot-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Header -->
         <div class="header">
             <div class="header-icon">𝕏</div>
             <h1>X AI趋势日报</h1>
             <div class="header-date">2026年3月2日 · 平台AI热点深度解析</div>
         </div>
         
-        <!-- Trend 1: DeepSeek V4预期 -->
+        <!-- Trend 1: Claude Free Memory -->
         <div class="trend-card">
             <div class="trend-header">
                 <div class="trend-rank hot">1</div>
                 <div class="trend-title-wrap">
-                    <div class="trend-title">DeepSeek V4发布倒计时：万亿参数挑战GPT-5</div>
-                    <span class="trend-tag">#DeepSeek #开源AI #中国AI</span>
+                    <div class="trend-title">Claude免费版开放记忆功能：用户大规模从ChatGPT迁移</div>
+                    <span class="trend-tag">#Claude #Anthropic #AI记忆</span>
                 </div>
             </div>
             
             <div class="overview-section">
                 <div class="section-title">📋 话题概述</div>
                 <div class="overview-text">
-                    DeepSeek V4预计将于3月3日正式发布，这款拥有1万亿参数、32B激活参数的开源模型引发全球AI社区高度关注。据悉V4将采用全新MoE架构，在代码生成、数学推理和多语言处理方面实现重大突破，被业界视为中国AI挑战西方主导格局的关键一役。
+                    3月2日，Anthropic宣布Claude记忆功能向免费用户开放，同时推出更便捷的导入导出功能。此举引发X平台热议，大量用户分享从ChatGPT迁移至Claude的经验。TechCrunch报道指出，ChatGPT近期争议不断，Claude凭借更强的安全声誉和隐私保护正成为用户首选替代品。
                 </div>
             </div>
             
             <div class="swot-section">
-                <div class="section-title">⚡ SWOT分析</div>
+                <div class="section-title">⚡ SWOT分析：Claude vs ChatGPT</div>
                 <div class="swot-grid">
                     <div class="swot-item s">
-                        <h5>S - 优势</h5>
+                        <h5>S - Claude优势</h5>
                         <ul>
-                            <li>完全开源，社区驱动创新</li>
-                            <li>推理成本仅为GPT-4的1/10</li>
-                            <li>中文理解和生成能力领先</li>
+                            <li>Constitutional AI安全架构</li>
+                            <li>免费版开放记忆功能</li>
+                            <li>更强的长文本处理能力</li>
                         </ul>
                     </div>
                     <div class="swot-item w">
-                        <h5>W - 劣势</h5>
+                        <h5>W - Claude劣势</h5>
                         <ul>
-                            <li>海外数据中心部署受限</li>
-                            <li>企业级安全认证待完善</li>
+                            <li>生态整合不如OpenAI丰富</li>
+                            <li>多模态功能相对滞后</li>
                         </ul>
                     </div>
                     <div class="swot-item o">
-                        <h5>O - 机会</h5>
+                        <h5>O - 市场机会</h5>
                         <ul>
-                            <li>发展中国家市场快速扩张</li>
-                            <li>边缘计算场景优势明显</li>
+                            <li>OpenAI争议带来的用户流失</li>
+                            <li>企业客户重视AI安全合规</li>
                         </ul>
                     </div>
                     <div class="swot-item t">
-                        <h5>T - 威胁</h5>
+                        <h5>T - 外部威胁</h5>
                         <ul>
-                            <li>美国芯片出口管制加码</li>
-                            <li>西方舆论偏见影响 adoption</li>
+                            <li>OpenAI快速迭代反击</li>
+                            <li>Grok实时数据优势</li>
                         </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="insights-section">
+                <div class="section-title">💡 关键洞察</div>
+                <div class="insight-item">
+                    <div class="insight-icon">🔄</div>
+                    <div class="insight-text">"记忆功能免费化"是用户迁移的关键催化剂，降低了转换成本，表明AI助手竞争正从模型能力转向用户体验和隐私信任</div>
+                </div>
+                <div class="insight-item">
+                    <div class="insight-icon">📈</div>
+                    <div class="insight-text">Anthropic坚持AI伦理的"保守策略"正在获得回报，与特朗普政府的冲突反而强化了其"负责任AI"品牌形象</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Trend 2: Grok Pentagon & Evolution -->
+        <div class="trend-card">
+            <div class="trend-header">
+                <div class="trend-rank medium">2</div>
+                <div class="trend-title-wrap">
+                    <div class="trend-title">Grok 4.2进化加速：200万Token上下文+五角大楼深度合作</div>
+                    <span class="trend-tag">#Grok #xAI #军事AI</span>
+                </div>
+            </div>
+            
+            <div class="overview-section">
+                <div class="section-title">📋 话题概述</div>
+                <div class="overview-text">
+                    xAI持续加速Grok迭代，Grok 4.2 RC版已上线，具备每周自动学习进化能力。更引人注目的是，Grok凭借200万Token超大上下文窗口和实时X数据情报优势，正式获得五角大楼机密系统接入资格。马斯克邀请用户提交"critical feedback"推动模型快速迭代，Grok月活已达3010万。
+                </div>
+            </div>
+            
+            <div class="mece-section">
+                <div class="section-title">🔲 MECE分析：Grok核心竞争力</div>
+                <div class="mece-grid">
+                    <div class="mece-item">
+                        <h5>上下文长度</h5>
+                        <p>2M tokens (行业最大，Claude 200K, GPT-4o 128K)</p>
+                    </div>
+                    <div class="mece-item">
+                        <h5>实时情报</h5>
+                        <p>原生X平台数据流，无知识截止限制</p>
+                    </div>
+                    <div class="mece-item">
+                        <h5>迭代速度</h5>
+                        <p>4.2版本每周进化，快速吸收用户反馈</p>
+                    </div>
+                    <div class="mece-item">
+                        <h5>架构创新</h5>
+                        <p>4 Agents多代理协作，降低幻觉提升推理</p>
+                    </div>
+                    <div class="mece-item">
+                        <h5>API价格</h5>
+                        <p>Grok 4.1 Fast仅$0.20/M输入tokens</p>
+                    </div>
+                    <div class="mece-item">
+                        <h5>政府合作</h5>
+                        <p>五角大楼机密系统集成，军方背书</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="analysis-section">
+                <div class="section-title">🔍 技术趋势分析</div>
+                <div class="analysis-grid">
+                    <div class="analysis-item">
+                        <h4>长上下文竞赛</h4>
+                        <p>Grok的2M上下文窗口使其能处理整本书籍、大型代码库或长时间对话历史，在文档分析和复杂推理场景建立技术壁垒</p>
+                    </div>
+                    <div class="analysis-item">
+                        <h4>实时数据护城河</h4>
+                        <p>X平台5亿+用户的实时数据流是Grok独有资产，在新闻追踪、舆情分析、市场情报领域形成差异化优势</p>
+                    </div>
+                    <div class="analysis-item">
+                        <h4>军事化应用</h4>
+                        <p>五角大楼选择Grok而非OpenAI/Anthropic，反映军事情报场景对"实时性"和"大容量"的优先于"安全性"考量</p>
                     </div>
                 </div>
             </div>
@@ -197,143 +399,79 @@
                 <div class="section-title">💡 关键洞察</div>
                 <div class="insight-item">
                     <div class="insight-icon">🎯</div>
-                    <div class="insight-text">DeepSeek V4的发布标志着开源模型首次在综合能力上真正对标顶级闭源模型，AI民主化进程进入实质性阶段</div>
+                    <div class="insight-text">Grok通过"超大上下文+实时数据"双引擎建立差异化定位，避开与ChatGPT的通用对话竞争，专攻情报分析和企业知识管理</div>
                 </div>
                 <div class="insight-item">
-                    <div class="insight-icon">💰</div>
-                    <div class="insight-text">低成本+高性能的组合将加速AI应用普及，预计催生大量垂直领域创业公司，改变当前AI应用市场格局</div>
+                    <div class="insight-icon">⚔️</div>
+                    <div class="insight-text">政府合同正在成为AI巨头的新战场，五角大楼的选择将深刻影响企业采购决策，国家安全与商业利益的边界日益模糊</div>
                 </div>
             </div>
         </div>
         
-        <!-- Trend 2: AI编程工具 -->
-        <div class="trend-card">
-            <div class="trend-header">
-                <div class="trend-rank medium">2</div>
-                <div class="trend-title-wrap">
-                    <div class="trend-title">AI编程工具爆发：Cursor vs Claude Code vs Codex</div>
-                    <span class="trend-tag">#AI编程 #Cursor #开发者工具</span>
-                </div>
-            </div>
-            
-            <div class="overview-section">
-                <div class="section-title">📋 话题概述</div>
-                <div class="overview-text">
-                    3月初AI编程助手市场竞争白热化。Cursor以20亿美元估值完成融资，月活突破200万；Anthropic Claude Code支持200+文件上下文理解；OpenAI Codex全面升级支持图像输入。开发者社区热议哪款工具将成为2026年标配。
-                </div>
-            </div>
-            
-            <div class="analysis-section">
-                <div class="section-title">🔍 产品对比分析</div>
-                <div class="analysis-grid">
-                    <div class="analysis-item">
-                        <h4>Cursor - 体验之王</h4>
-                        <p>基于VS Code深度集成，tab补全准确率领先，Composer多文件编辑流畅，初创团队首选</p>
-                    </div>
-                    <div class="analysis-item">
-                        <h4>Claude Code - 深度理解</h4>
-                        <p>超长上下文支持，代码库理解能力最强，适合大型项目重构和架构设计</p>
-                    </div>
-                    <div class="analysis-item">
-                        <h4>Codex - 生态整合</h4>
-                        <p>与GitHub深度集成，图像输入支持UI生成，企业合规性最佳</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="swot-section">
-                <div class="section-title">⚡ SWOT分析：AI编程市场</div>
-                <div class="swot-grid">
-                    <div class="swot-item s">
-                        <h5>S - 优势</h5>
-                        <ul>
-                            <li>开发效率提升3-10倍</li>
-                            <li>降低编程门槛</li>
-                        </ul>
-                    </div>
-                    <div class="swot-item w">
-                        <h5>W - 劣势</h5>
-                        <ul>
-                            <li>代码安全性和版权问题</li>
-                            <li>过度依赖导致技能退化</li>
-                        </ul>
-                    </div>
-                    <div class="swot-item o">
-                        <h5>O - 机会</h5>
-                        <ul>
-                            <li>企业级市场快速增长</li>
-                            <li>Agent自主编程潜力巨大</li>
-                        </ul>
-                    </div>
-                    <div class="swot-item t">
-                        <h5>T - 威胁</h5>
-                        <ul>
-                            <li>科技巨头直接竞争</li>
-                            <li>代码同质化风险</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="insights-section">
-                <div class="section-title">💡 关键洞察</div>
-                <div class="insight-item">
-                    <div class="insight-icon">⚡</div>
-                    <div class="insight-text">AI编程工具正从"辅助写代码"向"理解架构-自动生成-自主测试"的完整闭环演进，Vibe Coding成为主流</div>
-                </div>
-                <div class="insight-item">
-                    <div class="insight-icon">🏆</div>
-                    <div class="insight-text">Cursor的成功证明"极致用户体验"胜过"底层模型优势"，AI应用层的竞争关键是场景理解能力</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Trend 3: 人形机器人 -->
+        <!-- Trend 3: AI Price War -->
         <div class="trend-card">
             <div class="trend-header">
                 <div class="trend-rank cool">3</div>
                 <div class="trend-title-wrap">
-                    <div class="trend-title">人形机器人竞赛升温：Figure AI与特斯拉Optimus正面对决</div>
-                    <span class="trend-tag">#人形机器人 #FigureAI #Optimus</span>
+                    <div class="trend-title">AI API价格战白热化：Gemini 3.1 Flash-Lite仅$0.25/M</div>
+                    <span class="trend-tag">#Gemini #API定价 #成本优化</span>
                 </div>
             </div>
             
             <div class="overview-section">
                 <div class="section-title">📋 话题概述</div>
                 <div class="overview-text">
-                    Figure AI发布新一代人形机器人Figure 03，搭载自研Helix大模型，实现双手协调抓取和家庭任务执行能力。与此同时，特斯拉宣布Optimus V2将于Q2量产，价格目标降至2万美元以下。人形机器人从实验室走向商业化的拐点已至。
+                    Google Gemini 3.1 Flash-Lite以每百万tokens仅$0.25的震撼价格入市，相较半年前下降超10倍。xAI Grok 4.1 Fast ($0.20/M)、OpenAI GPT-4o-mini ($0.15/M)同步降价，AI应用经济性拐点已至。3月2日X平台开发者热议成本优化策略，低成本高吞吐量模型正重塑AI应用开发范式。
+                </div>
+            </div>
+            
+            <div class="analysis-section">
+                <div class="section-title">🔍 核心价格对比</div>
+                <div class="analysis-grid">
+                    <div class="analysis-item">
+                        <h4>经济型模型</h4>
+                        <p>Gemini 3.1 Flash-Lite ($0.25/M) vs Grok 4.1 Fast ($0.20/M) vs GPT-4o-mini ($0.15/M)，低成本场景竞争最激烈</p>
+                    </div>
+                    <div class="analysis-item">
+                        <h4>旗舰模型</h4>
+                        <p>Gemini 3.1 Pro ($2/$12 per M)以前沿性能低价冲击市场，Claude Sonnet ($3/$15)与Grok 4 ($3/$15)同价竞争</p>
+                    </div>
+                    <div class="analysis-item">
+                        <h4>免费额度</h4>
+                        <p>xAI提供$175/月免费额度，Google保留免费层级，开发者获取AI能力的门槛大幅降低</p>
+                    </div>
                 </div>
             </div>
             
             <div class="swot-section">
-                <div class="section-title">⚡ SWOT分析：Figure AI</div>
+                <div class="section-title">⚡ SWOT分析：价格战影响</div>
                 <div class="swot-grid">
                     <div class="swot-item s">
-                        <h5>S - 优势</h5>
+                        <h5>S - 开发者受益</h5>
                         <ul>
-                            <li>宝马等制造巨头订单背书</li>
-                            <li>Helix模型端到端训练</li>
+                            <li>AI应用开发成本大幅降低</li>
+                            <li>初创企业更容易起步</li>
                         </ul>
                     </div>
                     <div class="swot-item w">
-                        <h5>W - 劣势</h5>
+                        <h5>W - 质量风险</h5>
                         <ul>
-                            <li>量产能力待验证</li>
-                            <li>成本仍处高位</li>
+                            <li>低价模型性能参差不齐</li>
+                            <li>需要更多测试验证成本</li>
                         </ul>
                     </div>
                     <div class="swot-item o">
-                        <h5>O - 机会</h5>
+                        <h5>O - 市场扩容</h5>
                         <ul>
-                            <li>劳动力短缺推动需求</li>
-                            <li>家庭服务市场蓝海</li>
+                            <li>AI应用普及速度加快</li>
+                            <li>长尾场景商业可行</li>
                         </ul>
                     </div>
                     <div class="swot-item t">
-                        <h5>T - 威胁</h5>
+                        <h5>T - 行业洗牌</h5>
                         <ul>
-                            <li>特斯拉制造优势碾压</li>
-                            <li>中国厂商快速跟进</li>
+                            <li>中小AI厂商生存压力</li>
+                            <li>依赖规模的商业模式受冲击</li>
                         </ul>
                     </div>
                 </div>
@@ -342,19 +480,20 @@
             <div class="insights-section">
                 <div class="section-title">💡 关键洞察</div>
                 <div class="insight-item">
-                    <div class="insight-icon">🏭</div>
-                    <div class="insight-text">人形机器人2026年将首先在制造业和物流领域规模化落地，家庭场景仍需3-5年技术成熟周期</div>
+                    <div class="insight-icon">💰</div>
+                    <div class="insight-text">API价格下降10倍意味着AI应用从"奢侈品"变为"日用品"，2026年将迎来AI原生应用爆发元年</div>
                 </div>
                 <div class="insight-item">
-                    <div class="insight-icon">🧠</div>
-                    <div class="insight-text">具身智能的核心突破点在于"世界模型"构建，而非机械结构，Figure Helix展示了端到端学习的潜力</div>
+                    <div class="insight-icon">🔧</div>
+                    <div class="insight-text">开发者需建立"模型路由"能力，根据任务复杂度动态选择模型，在保证质量的前提下最大化成本效益</div>
                 </div>
             </div>
         </div>
         
+        <!-- Footer -->
         <div class="footer">
             <p>X AI趋势日报 · 基于X平台热门话题分析</p>
-            <p style="margin-top: 8px;">数据来源：X平台、TechCrunch、The Information</p>
+            <p style="margin-top: 8px;">数据来源：X平台、The Neuron、TechCrunch、AI Business Weekly</p>
         </div>
     </div>
 </body>
