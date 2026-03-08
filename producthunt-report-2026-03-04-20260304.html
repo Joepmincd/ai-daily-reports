@@ -1,70 +1,150 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Product Hunt日报 - 2026年3月4日</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif;background:linear-gradient(135deg,#ff6b6b 0%,#f9ca24 100%);min-height:100vh;color:#1e293b}
-.container{max-width:800px;margin:0 auto;padding:12px}
-.header{background:rgba(255,255,255,0.95);border-radius:20px;padding:24px 20px;margin-bottom:20px;box-shadow:0 8px 32px rgba(0,0,0,0.1)}
-.header h1{font-size:1.6rem;background:linear-gradient(135deg,#ff6b6b,#f9ca24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
-.header-date{font-size:0.9rem;color:#64748b}
-.product-card{background:rgba(255,255,255,0.95);border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 4px 20px rgba(0,0,0,0.1)}
-.product-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.product-rank{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#ff6b6b,#f9ca24);display:flex;align-items:center;justify-content:center;font-weight:700;color:white}
-.product-title{font-size:1.1rem;font-weight:700;color:#1e293b;flex:1}
-.product-tag{display:inline-block;padding:4px 10px;border-radius:20px;font-size:0.75rem;font-weight:600;background:rgba(255,107,107,0.15);color:#ff6b6b}
-.product-desc{font-size:0.95rem;color:#475569;margin-bottom:12px}
-.product-meta{display:flex;flex-wrap:wrap;gap:12px;font-size:0.85rem;color:#64748b;margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,0,0,0.05)}
-.footer{text-align:center;padding:24px;color:rgba(255,255,255,0.9);font-size:0.85rem;margin-top:20px}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Hunt日报 - 2026年3月4日</title>
+    <style>
+        :root { --bg-primary: #0f0f1a; --bg-secondary: #161628; --bg-card: #1e1e35; --accent-ph: #ff6154; --text-primary: #ffffff; --text-secondary: #a0a8c0; --border-color: #2d2d4a; --gradient-ph: linear-gradient(135deg, #ff6154 0%, #ff8a7a 100%); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .header { background: var(--bg-secondary); padding: 40px; border-radius: 20px; margin-bottom: 30px; border: 1px solid var(--border-color); }
+        .header h1 { font-size: 2rem; background: var(--gradient-ph); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
+        .header-date { color: var(--text-secondary); font-size: 1rem; }
+        .product-card { background: var(--bg-card); border-radius: 16px; padding: 24px; margin-bottom: 20px; border: 1px solid var(--border-color); }
+        .product-header { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+        .product-rank { width: 40px; height: 40px; border-radius: 50%; background: var(--gradient-ph); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; }
+        .product-title { font-size: 1.3rem; font-weight: 700; flex: 1; }
+        .product-tag { background: rgba(255,97,84,0.2); color: var(--accent-ph); padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; }
+        .product-desc { color: var(--text-secondary); margin-bottom: 12px; }
+        .product-meta { display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.9rem; color: var(--text-secondary); padding-top: 12px; border-top: 1px solid var(--border-color); }
+        .footer { text-align: center; padding: 30px; color: var(--text-secondary); font-size: 0.9rem; }
+    </style>
 </head>
 <body>
-<div class="container">
-<div class="header">
-<h1>🚀 Product Hunt日报</h1>
-<div class="header-date">📅 2026年3月4日</div>
-</div>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Product Hunt日报</h1>
+            <div class="header-date">📅 2026年3月4日</div>
+        </div>
 
-<div class="product-card">
-<div class="product-header"><div class="product-rank">1</div><div class="product-title">Huawei Cloud Stack</div><span class="product-tag">云计算</span></div>
-<div class="product-desc">华为全栈AI云服务，集成昇腾芯片和MindSpore框架</div>
-<div class="product-meta">定位：企业云服务 | 商业模式：按需付费 | 核心功能：AI训练、推理、部署</div>
-</div>
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-rank">1</div>
+                <div class="product-title">Anything API</div>
+                <span class="product-tag">开发者工具</span>
+            </div>
+            <div class="product-desc">将任意网站转换为结构化API，无需后端代码即可获取数据，支持实时数据抓取和自定义字段映射。</div>
+            <div class="product-meta">
+                <span>🏢 独立开发者</span>
+                <span>💰 免费试用/付费</span>
+                <span>🔧 API生成、数据抓取</span>
+            </div>
+        </div>
 
-<div class="product-card">
-<div class="product-header"><div class="product-rank">2</div><div class="product-title">PowerClaw</div><span class="product-tag">AI Agent</span></div>
-<div class="product-desc">基于OpenClaw的企业级智能体平台，支持私有化部署</div>
-<div class="product-meta">定位：企业AI平台 | 商业模式：企业授权 | 核心功能：流程自动化、知识库</div>
-</div>
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-rank">2</div>
+                <div class="product-title">Enia Code</div>
+                <span class="product-tag">AI编程</span>
+            </div>
+            <div class="product-desc">主动式AI代码优化工具，自动分析代码库并提出重构建议，集成主流IDE和版本控制系统。</div>
+            <div class="product-meta">
+                <span>🏢 Enia Labs</span>
+                <span>💰 免费/团队版</span>
+                <span>🔧 代码优化、重构建议</span>
+            </div>
+        </div>
 
-<div class="product-card">
-<div class="product-header"><div class="product-rank">3</div><div class="product-title">Qwen Glasses</div><span class="product-tag">智能硬件</span></div>
-<div class="product-desc">阿里千问AI眼镜，实时翻译、物体识别、语音助手</div>
-<div class="product-meta">定位：消费级AI硬件 | 商业模式：硬件销售 | 核心功能：视觉AI、语音交互</div>
-</div>
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-rank">3</div>
+                <div class="product-title">Kodo</div>
+                <span class="product-tag">AI设计</span>
+            </div>
+            <div class="product-desc">通过AI对话生成可编辑的设计稿，支持Figma导入导出，让非设计师也能快速创建专业UI。</div>
+            <div class="product-meta">
+                <span>🏢 Kodo Studio</span>
+                <span>💰 免费/Pro版</span>
+                <span>🔧 UI设计、原型制作</span>
+            </div>
+        </div>
 
-<div class="product-card">
-<div class="product-header"><div class="product-rank">4</div><div class="product-title">GridScale AI</div><span class="product-tag">能源AI</span></div>
-<div class="product-desc">AI驱动的电网优化平台，预测负荷、调度资源</div>
-<div class="product-meta">定位：能源基础设施 | 商业模式：企业SaaS | 核心功能：负荷预测、智能调度</div>
-</div>
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-rank">4</div>
+                <div class="product-title">Gemini 3.1 Flash-Lite</div>
+                <span class="product-tag">大模型</span>
+            </div>
+            <div class="product-desc">Google推出的轻量化高性能模型，专为高容量工作负载优化，在保证质量的同时大幅降低延迟和成本。</div>
+            <div class="product-meta">
+                <span>🏢 Google</span>
+                <span>💰 API按量付费</span>
+                <span>🔧 高速推理、批量处理</span>
+            </div>
+        </div>
 
-<div class="product-card">
-<div class="product-header"><div class="product-rank">5</div><div class="product-title">Devin Enterprise</div><span class="product-tag">编程AI</span></div>
-<div class="product-desc">Cognition AI的企业版开发助手，支持团队协作</div>
-<div class="product-meta">定位：企业开发工具 | 商业模式：团队订阅 | 核心功能：代码生成、项目管理</div>
-</div>
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-rank">5</div>
+                <div class="product-title">Picsart Persona</div>
+                <span class="product-tag">AI创意</span>
+            </div>
+            <div class="product-desc">AI影响者设计工具，创建虚拟人物形象和故事线，支持多平台内容自动适配和发布。</div>
+            <div class="product-meta">
+                <span>🏢 Picsart</span>
+                <span>💰 订阅制</span>
+                <span>🔧 虚拟形象、内容创作</span>
+            </div>
+        </div>
 
-<div class="product-card">
-<div class="product-header"><div class="product-rank">6</div><div class="product-title">AI Data Center OS</div><span class="product-tag">基础设施</span></div>
-<div class="product-desc">数据中心智能管理系统，优化能耗和算力分配</div>
-<div class="product-meta">定位：DCIM解决方案 | 商业模式：授权+服务 | 核心功能：能耗优化、容量规划</div>
-</div>
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-rank">6</div>
+                <div class="product-title">GPT-5.3 Instant</div>
+                <span class="product-tag">AI助手</span>
+            </div>
+            <div class="product-desc">OpenAI发布的日常对话优化版本，响应速度提升3倍，适合高频交互场景和实时对话应用。</div>
+            <div class="product-meta">
+                <span>🏢 OpenAI</span>
+                <span>💰 API按量付费</span>
+                <span>🔧 快速对话、实时响应</span>
+            </div>
+        </div>
 
-<div class="footer">Product Hunt日报 · 每日精选热门产品</div>
-</div>
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-rank">7</div>
+                <div class="product-title">Maxclaw Mobile</div>
+                <span class="product-tag">AI代理</span>
+            </div>
+            <div class="product-desc">移动端AI Agent平台，让手机变身智能助手，支持语音控制、自动任务执行和跨应用操作。</div>
+            <div class="product-meta">
+                <span>🏢 Maxclaw</span>
+                <span>💰 免费/高级版</span>
+                <span>🔧 移动Agent、语音控制</span>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-rank">8</div>
+                <div class="product-title">Vocova</div>
+                <span class="product-tag">AI工具</span>
+            </div>
+            <div class="product-desc">支持1000+平台的音视频转录服务，自动识别说话人、生成摘要和多语言字幕，准确率达98%。</div>
+            <div class="product-meta">
+                <span>🏢 Vocova Inc</span>
+                <span>💰 按分钟付费</span>
+                <span>🔧 转录、字幕、摘要</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Product Hunt日报 · 每日精选热门产品</p>
+            <p>数据来源：Product Hunt、公开市场信息</p>
+        </div>
+    </div>
 </body>
 </html>
