@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 热点新闻日报 - 2026年3月15日</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #8b5cf6;
+            --bg-dark: #0f0f1a;
+            --bg-card: rgba(255,255,255,0.05);
+            --bg-glass: rgba(255,255,255,0.08);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255,255,255,0.7);
+            --text-muted: rgba(255,255,255,0.5);
+            --gradient-1: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            --gradient-2: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* 动态背景 */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(99,102,241,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(236,72,153,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(139,92,246,0.1) 0%, transparent 40%);
+            animation: bgMove 20s ease-in-out infinite;
+        }
+        
+        @keyframes bgMove {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(2%, 2%) rotate(2deg); }
+            66% { transform: translate(-2%, 1%) rotate(-1deg); }
+        }
+        
+        /* 粒子效果 */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 头部区域 */
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            background: var(--gradient-1);
+            filter: blur(100px);
+            opacity: 0.3;
+            border-radius: 50%;
+        }
+        
+        .date-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .date-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+        
+        .header .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        /* 统计卡片 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(99,102,241,0.3);
+            box-shadow: 0 8px 32px rgba(99,102,241,0.15);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        
+        /* 新闻卡片 */
+        .news-grid {
+            display: grid;
+            gap: 24px;
+        }
+        
+        .news-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 28px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .news-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(99,102,241,0.2);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .news-card:hover::before {
+            opacity: 1;
+        }
+        
+        .news-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .news-number {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .news-meta {
+            flex: 1;
+        }
+        
+        .news-category {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(99,102,241,0.2);
+            color: #818cf8;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+        
+        .news-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        .news-title {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        
+        .news-summary {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+        
+        .news-analysis {
+            background: var(--bg-glass);
+            border-left: 3px solid var(--accent);
+            padding: 16px 20px;
+            border-radius: 0 12px 12px 0;
+            margin-top: 16px;
+        }
+        
+        .news-analysis-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .news-analysis-content {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .news-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #818cf8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-top: 16px;
+            transition: all 0.2s;
+        }
+        
+        .news-link:hover {
+            color: #a5b4fc;
+            gap: 10px;
+        }
+        
+        .news-link::after {
+            content: '→';
+            transition: transform 0.2s;
+        }
+        
+        .news-link:hover::after {
+            transform: translateX(4px);
+        }
+        
+        /* 底部 */
+        .footer {
+            text-align: center;
+            padding: 60px 20px 40px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 16px;
+        }
+        
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .footer-link:hover {
+            color: var(--primary);
+        }
+        
+        /* 响应式 */
+        @media (max-width: 640px) {
+            .container {
+                padding: 20px 16px;
+            }
+            
+            .header {
+                padding: 40px 16px;
+            }
+            
+            .news-card {
+                padding: 20px;
+            }
+            
+            .news-header {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* 加载动画 */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+        
+        .news-card:nth-child(1) { animation-delay: 0.1s; }
+        .news-card:nth-child(2) { animation-delay: 0.2s; }
+        .news-card:nth-child(3) { animation-delay: 0.3s; }
+        .news-card:nth-child(4) { animation-delay: 0.4s; }
+        .news-card:nth-child(5) { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <header class="header fade-in">
+            <div class="date-badge">今日日报</div>
+            <h1>AI 热点新闻日报</h1>
+            <p class="subtitle">精选 5 条全球人工智能领域最新动态与深度解读</p>
+        </header>
+        
+        <div class="stats-grid fade-in">
+            <div class="stat-card">
+                <div class="stat-value">5</div>
+                <div class="stat-label">精选新闻</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">3</div>
+                <div class="stat-label">人才变动</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">2</div>
+                <div class="stat-label">产业动态</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">2</div>
+                <div class="stat-label">技术突破</div>
+            </div>
+        </div>
+        
+        <div class="news-grid">
+            <article class="news-card fade-in">
+                <div class="news-header">
+                    <div class="news-number">1</div>
+                    <div class="news-meta">
+                        <span class="news-category">人才变动</span>
+                        <div class="news-date">2026年3月12日 · 阿里/字节</div>
+                    </div>
+                </div>
+                <h2 class="news-title">阿里千问大模型后训练负责人郁博文加入字节跳动</h2>
+                <p class="news-summary">原阿里巴巴通义实验室Qwen（千问）大模型后训练负责人郁博文已正式加入字节跳动，担任Seed团队视觉模型与多模态交互团队后训练负责人。这是继3月初从阿里离职后的首次职业动向明确。</p>
+                <div class="news-analysis">
+                    <div class="news-analysis-title">💡 深度解读</div>
+                    <div class="news-analysis-content">大厂之间的人才争夺战持续升温。千问作为国内开源大模型的领军者，其核心负责人跳槽字节，反映了字节在AI领域的战略布局加速。视觉+多模态方向正是当前AI应用落地的关键赛道，此次人事变动或将加剧国内大模型市场的竞争格局。</div>
+                </div>
+            </article>
+            
+            <article class="news-card fade-in">
+                <div class="news-header">
+                    <div class="news-number">2</div>
+                    <div class="news-meta">
+                        <span class="news-category">产业动态</span>
+                        <div class="news-date">2026年3月11日 · 腾讯</div>
+                    </div>
+                </div>
+                <h2 class="news-title">腾讯"龙虾"AI矩阵全线出击，马化腾凌晨官宣</h2>
+                <p class="news-summary">腾讯董事会主席马化腾凌晨2点在朋友圈高调官宣"龙虾"AI产品矩阵，包括WorkBuddy、QClaw等全系产品。消息一出，腾讯股价一周暴涨超11%，市值重返5万亿港元。</p>
+                <div class="news-analysis">
+                    <div class="news-analysis-title">💡 深度解读</div>
+                    <div class="news-analysis-content">AI智能体（OpenClaw/"龙虾"）正在从极客玩具变成主流赛道。腾讯选择"零部署、开箱即用"策略，降低了普通用户的使用门槛，这是AI从1.0（对话）向2.0（智能体）演进的重要标志。多地政府已出台"养龙虾"激励政策，行业热度可见一斑。</div>
+                </div>
+            </article>
+            
+            <article class="news-card fade-in">
+                <div class="news-header">
+                    <div class="news-number">3</div>
+                    <div class="news-meta">
+                        <span class="news-category">争议焦点</span>
+                        <div class="news-date">2026年3月12日 · OpenAI</div>
+                    </div>
+                </div>
+                <h2 class="news-title">OpenAI与五角大楼合作引发"QuitGPT"全球抵制运动</h2>
+                <p class="news-summary">OpenAI与五角大楼签署机密协议，GPT系列模型正式接入美军分类网络JWCC。此举触发"QuitGPT"全球抵制运动，超1200万用户在72小时内迁移至Claude。欧盟AI办公室已启动紧急合规审查。</p>
+                <div class="news-analysis">
+                    <div class="news-analysis-title">💡 深度解读</div>
+                    <div class="news-analysis-content">AI军备化已成为敏感议题。OpenAI此举标志着其从"AI安全倡导者"向"军事承包商"的角色转变。用户用脚投票的背后，是对AI技术被滥用的担忧。Anthropic顺势推出"Not Your Weapon"隐私承诺，趁机抢占市场。监管压力将推动AI伦理框架加速落地。</div>
+                </div>
+            </article>
+            
+            <article class="news-card fade-in">
+                <div class="news-header">
+                    <div class="news-number">4</div>
+                    <div class="news-meta">
+                        <span class="news-category">产业动态</span>
+                        <div class="news-date">2026年1月29日 · 亚马逊</div>
+                    </div>
+                </div>
+                <h2 class="news-title">亚马逊宣布裁员16,000人，AI重塑劳动力市场</h2>
+                <p class="news-summary">亚马逊宣布新一轮裁员，影响约16,000名企业员工，主要集中在中层管理和行政岗位。公司表示这是向AI驱动自动化和"智能体"工作流程的战略转型，同时继续招聘AI专业工程人才。</p>
+                <div class="news-analysis">
+                    <div class="news-analysis-title">💡 深度解读</div>
+                    <div class="news-analysis-content">AI对就业市场的冲击已从预言变为现实。亚马逊的裁员模式揭示了"AI优先"企业的转型路径：减少传统岗位，增加AI技术人才。这是"就业重构"而非"就业消失"，但转型期的阵痛不可避免。职场人士需要加速AI技能学习以适应新常态。</div>
+                </div>
+            </article>
+            
+            <article class="news-card fade-in">
+                <div class="news-header">
+                    <div class="news-number">5</div>
+                    <div class="news-meta">
+                        <span class="news-category">技术突破</span>
+                        <div class="news-date">2026年2月16日 · MIT</div>
+                    </div>
+                </div>
+                <h2 class="news-title">MIT新AI模型有望大幅降低蛋白质药物研发成本</h2>
+                <p class="news-summary">MIT研究人员开发出新型生成式AI模型，能以前所未有的准确度预测合成蛋白质如何折叠以及与生物靶点的相互作用。这项技术有望为制药公司节省数十亿美元的研发成本。</p>
+                <div class="news-analysis">
+                    <div class="news-analysis-title">💡 深度解读</div>
+                    <div class="news-analysis-content">AI在生命科学领域的应用正从概念走向实用。这项突破标志着药物发现向"可编程"方向转变，将加速癌症、自身免疫疾病和罕见遗传疾病的治疗方案研发。2026年被视为AI药物临床转化的关键年，多款AI设计的药物将进入中后期临床试验。</div>
+                </div>
+            </article>
+        </div>
+        
+        <footer class="footer">
+            <p>AI 热点新闻日报 · 每日更新</p>
+            <div class="footer-links">
+                <a href="https://joepmincd.github.io/ai-daily-reports/" class="footer-link" target="_blank">更多日报</a>
+                <a href="#" class="footer-link">订阅更新</a>
+            </div>
+            <p style="margin-top: 24px; font-size: 0.8rem; opacity: 0.6;">Generated on 2026-03-15</p>
+        </footer>
+    </div>
+    
+    <script>
+        // 粒子效果
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+        
+        createParticles();
+    </script>
+</body>
+</html>
