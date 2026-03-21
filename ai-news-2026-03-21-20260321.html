@@ -3,25 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI热点新闻日报 - 2026年03月21日</title>
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
-        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        h1 { color: #333; border-bottom: 3px solid #667eea; padding-bottom: 10px; }
-        .date { color: #666; margin-bottom: 20px; }
-        .placeholder { text-align: center; padding: 50px; color: #999; }
-        .placeholder-icon { font-size: 48px; margin-bottom: 20px; }
+    <title>AI 热点新闻日报 - 2026年3月21日</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                font-family: 'Noto Sans SC', sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+            }
+            .serif {
+                font-family: 'Noto Serif SC', serif;
+            }
+        }
+        @layer components {
+            .glass-card {
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            .gradient-text {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .news-card {
+                transition: all 0.3s ease;
+            }
+            .news-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            }
+            .tag {
+                display: inline-flex;
+                align-items: center;
+                padding: 4px 12px;
+                border-radius: 9999px;
+                font-size: 12px;
+                font-weight: 500;
+            }
+            .tag-blue {
+                background: #dbeafe;
+                color: #1e40af;
+            }
+            .tag-green {
+                background: #dcfce7;
+                color: #166534;
+            }
+            .tag-purple {
+                background: #f3e8ff;
+                color: #7c3aed;
+            }
+            .tag-orange {
+                background: #ffedd5;
+                color: #9a3412;
+            }
+            .tag-red {
+                background: #fee2e2;
+                color: #991b1b;
+            }
+        }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>🤖 AI热点新闻日报</h1>
-        <div class="date">2026年03月21日</div>
-        <div class="placeholder">
-            <div class="placeholder-icon">🔜</div>
-            <p>自动生成功能开发中...</p>
-            <p style="font-size: 14px; color: #bbb;">预计接入AI搜索API自动获取今日热点</p>
+<body class="py-8 px-4">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <header class="glass-card rounded-2xl p-8 mb-8 text-center">
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <span class="text-4xl">🤖</span>
+                <span class="text-5xl">📰</span>
+            </div>
+            <h1 class="serif text-4xl md:text-5xl font-bold gradient-text mb-4">AI 热点新闻日报</h1>
+            <div class="flex items-center justify-center gap-4 text-gray-600">
+                <span class="text-xl">2026年3月21日 · 星期六</span>
+                <span class="px-3 py-1 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-full text-sm">今日日报</span>
+            </div>
+        </header>
+
+        <!-- 执行摘要 -->
+        <section class="glass-card rounded-2xl p-6 mb-8">
+            <h2 class="serif text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <span class="text-2xl">📊</span> 今日摘要
+            </h2>
+            <div class="prose max-w-none text-gray-700 leading-relaxed">
+                <p class="mb-4">今日 AI 领域聚焦<strong>中美欧三大阵营的技术竞争与产业博弈</strong>。中国 AI 核心产业规模预计突破 <strong>1.2 万亿元</strong>，企业数量超 <strong>6000 家</strong>；美国"星际之门计划"投入 <strong>5000 亿美元</strong>重塑 AI 基础设施主导地位；欧盟《人工智能法案》正式生效，日本立法落地并启动万亿投资。全球 AI 竞赛进入白热化阶段。</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                <div class="text-center p-4 bg-indigo-50 rounded-xl">
+                    <div class="text-3xl font-bold text-indigo-600">1.2万亿</div>
+                    <div class="text-sm text-gray-600">中国AI产业规模</div>
+                </div>
+                <div class="text-center p-4 bg-purple-50 rounded-xl">
+                    <div class="text-3xl font-bold text-purple-600">6000+</div>
+                    <div class="text-sm text-gray-600">中国AI企业</div>
+                </div>
+                <div class="text-center p-4 bg-blue-50 rounded-xl">
+                    <div class="text-3xl font-bold text-blue-600">5000亿</div>
+                    <div class="text-sm text-gray-600">美国投资额(美元)</div>
+                </div>
+                <div class="text-center p-4 bg-green-50 rounded-xl">
+                    <div class="text-3xl font-bold text-green-600">万亿</div>
+                    <div class="text-sm text-gray-600">日本投资额(日元)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 新闻列表 -->
+        <div class="space-y-6">
+            
+            <!-- 新闻1 -->
+            <article class="glass-card news-card rounded-2xl p-6">
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <span class="tag tag-red">🇨🇳 中国</span>
+                    <span class="tag tag-blue">产业规模</span>
+                    <span class="tag tag-purple">政策</span>
+                </div>
+                <h3 class="serif text-xl font-bold text-gray-800 mb-3">中国 AI 核心产业规模突破 1.2 万亿，企业数量超 6000 家</h3>
+                <div class="prose text-gray-600 leading-relaxed mb-4">
+                    <p>据中国信息通信研究院数据，2025 年我国人工智能核心产业规模预计突破 <strong>1.2 万亿元</strong>，较上年增长超 24%。企业数量超 <strong>6000 家</strong>，智能算力规模达 <strong>1590 EFLOPS</strong>。</p>
+                    <p class="mt-2">生产制造环节的大模型应用增长显著，应用案例占比由去年的 19.9% 增长至 25.9%。AI 大模型已应用到金融、医疗、制造、交通、教育等多个行业，实现从"经验决策"到"数据+模型"驱动的智能决策转变。</p>
+                </div>
+                <div class="flex items-center justify-between text-sm text-gray-500">
+                    <span>来源：央视新闻 / IT之家</span>
+                    <a href="https://www.ithome.com/0/915/017.htm" target="_blank" class="text-indigo-600 hover:text-indigo-800">阅读原文 →</a>
+                </div>
+            </article>
+
+            <!-- 新闻2 -->
+            <article class="glass-card news-card rounded-2xl p-6">
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <span class="tag tag-blue">🇺🇸 美国</span>
+                    <span class="tag tag-orange">投资</span>
+                    <span class="tag tag-purple">基础设施</span>
+                </div>
+                <h3 class="serif text-xl font-bold text-gray-800 mb-3">"星际之门计划"：美国 5000 亿美元豪赌 AI 基础设施</h3>
+                <div class="prose text-gray-600 leading-relaxed mb-4">
+                    <p>2025 年 1 月，美国总统特朗普正式宣布启动<strong>"星际之门计划"</strong>（Stargate Project），由 OpenAI、软银和甲骨文牵头，计划未来 4 年投入 <strong>5000 亿美元</strong>，首期投入 1000 亿美元。</p>
+                    <p class="mt-2">该计划被视为美国版的"阿波罗计划"，目标是重塑美国在 AI 领域的主导地位，预计将创造 10 万个就业岗位。随后 Meta、亚马逊等科技巨头相继加码，全球 AI 基础设施建设进入白热化竞争阶段。</p>
+                </div>
+                <div class="flex items-center justify-between text-sm text-gray-500">
+                    <span>来源：科技观察 / QIIA</span>
+                    <a href="https://www.qiia.org/zh-hans/node/1766" target="_blank" class="text-indigo-600 hover:text-indigo-800">阅读原文 →</a>
+                </div>
+            </article>
+
+            <!-- 新闻3 -->
+            <article class="glass-card news-card rounded-2xl p-6">
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <span class="tag tag-purple">🔬 技术突破</span>
+                    <span class="tag tag-green">开源</span>
+                    <span class="tag tag-red">🇨🇳 中国</span>
+                </div>
+                <h3 class="serif text-xl font-bold text-gray-800 mb-3">DeepSeek-R1 引发全球震动：低成本高性能的"中国方案"</h3>
+                <div class="prose text-gray-600 leading-relaxed mb-4">
+                    <p>2025 年 1 月，中国深度求索公司发布开源大模型 <strong>DeepSeek-R1</strong>，凭借极低的训练成本和比肩国际领先水平的推理能力，引发全球 AI 领域震动。</p>
+                    <p class="mt-2">DeepSeek-R1 采用纯强化学习训练方式，首次证明无需海量标注数据也可实现顶尖推理能力。这一突破为全球 AI 大模型发展提供了<strong>低成本、高效能的"中国路径"</strong>，被科技日报评选为 2025 年国内十大科技新闻之首。</p>
+                </div>
+                <div class="flex items-center justify-between text-sm text-gray-500">
+                    <span>来源：科技日报 / 中国科学院</span>
+                    <a href="https://www.cas.cn/cm/202512/t20251225_5093679.shtml" target="_blank" class="text-indigo-600 hover:text-indigo-800">阅读原文 →</a>
+                </div>
+            </article>
+
+            <!-- 新闻4 -->
+            <article class="glass-card news-card rounded-2xl p-6">
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <span class="tag tag-orange">⚖️ 监管</span>
+                    <span class="tag tag-blue">🇪🇺 欧洲</span>
+                    <span class="tag tag-purple">政策</span>
+                </div>
+                <h3 class="serif text-xl font-bold text-gray-800 mb-3">欧盟《人工智能法案》生效，全球首个综合性 AI 监管框架落地</h3>
+                <div class="prose text-gray-600 leading-relaxed mb-4">
+                    <p>欧盟《人工智能法案》作为全球首个主要监管机构推出的综合性 AI 法规，已正式生效实施。该法案建立了基于风险分级的监管体系，对高风险 AI 应用提出严格要求。</p>
+                    <p class="mt-2">世界经济论坛与埃森哲联合发布的报告指出，尽管对 AI 治理的认知度有所提升，但各机构在负责任 AI 实践方面仍处于起步阶段。监管沙盒被视为推进负责任 AI 创新的有效工具。</p>
+                </div>
+                <div class="flex items-center justify-between text-sm text-gray-500">
+                    <span>来源：世界经济论坛</span>
+                    <a href="https://cn.weforum.org/stories/2026/01/the-top-ai-stories-from-2025-cn/" target="_blank" class="text-indigo-600 hover:text-indigo-800">阅读原文 →</a>
+                </div>
+            </article>
+
+            <!-- 新闻5 -->
+            <article class="glass-card news-card rounded-2xl p-6">
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <span class="tag tag-green">🇯🇵 日本</span>
+                    <span class="tag tag-orange">立法</span>
+                    <span class="tag tag-purple">投资</span>
+                </div>
+                <h3 class="serif text-xl font-bold text-gray-800 mb-3">日本 AI 立法落地，万亿投资启动"以 AI 创新反攻"战略</h3>
+                <div class="prose text-gray-600 leading-relaxed mb-4">
+                    <p>2025 年 5 月，日本参议院通过首部专门针对 AI 的法律《人工智能相关技术研究开发及应用推进法》。12 月，内阁会议通过首个"AI 基本计划"，核心目标是依托高质量数据与通信优势<strong>"以 AI 创新反攻"</strong>。</p>
+                    <p class="mt-2">该计划将投资超 <strong>1 万亿日元</strong>，重点锚定医疗 AI 与工业机器人等优势领域，与韩国聚焦半导体形成错位竞争。这标志着日本在中美欧 AI 竞争格局中寻求破局的战略决心。</p>
+                </div>
+                <div class="flex items-center justify-between text-sm text-gray-500">
+                    <span>来源：科技观察 / QIIA</span>
+                    <a href="https://www.qiia.org/zh-hans/node/1766" target="_blank" class="text-indigo-600 hover:text-indigo-800">阅读原文 →</a>
+                </div>
+            </article>
+
         </div>
+
+        <!-- 深度洞察 -->
+        <section class="glass-card rounded-2xl p-6 mt-8">
+            <h2 class="serif text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <span class="text-2xl">💡</span> 深度洞察
+            </h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="p-4 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl">
+                    <h4 class="font-bold text-indigo-800 mb-2">🌍 全球竞争格局</h4>
+                    <p class="text-sm text-gray-700">中美欧日四大阵营各自发力：美国重基础设施投入，中国重产业应用落地，欧洲重监管框架，日本聚焦垂直领域突破。</p>
+                </div>
+                <div class="p-4 bg-gradient-to-br from-green-50 to-teal-50 rounded-xl">
+                    <h4 class="font-bold text-green-800 mb-2">🏭 产业应用深化</h4>
+                    <p class="text-sm text-gray-700">AI 从"能对话"走向"能做事"，生产制造环节应用占比突破 25%，标志着 AI 进入实体经济深水区。</p>
+                </div>
+                <div class="p-4 bg-gradient-to-br from-orange-50 to-red-50 rounded-xl">
+                    <h4 class="font-bold text-orange-800 mb-2">⚖️ 治理与创新的平衡</h4>
+                    <p class="text-sm text-gray-700">各国在加速 AI 创新的同时加紧构建监管框架，如何在治理与创新间取得平衡成为关键议题。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="glass-card rounded-2xl p-6 mt-8 text-center">
+            <p class="text-gray-600 mb-2">🤖 由 AI 自动生成 · 每日 8:30 推送</p>
+            <p class="text-sm text-gray-500">数据来源：公开新闻报道 · 仅供参考学习</p>
+            <div class="flex items-center justify-center gap-4 mt-4">
+                <a href="https://joepmincd.github.io/ai-daily-reports/" target="_blank" class="text-indigo-600 hover:text-indigo-800 text-sm">GitHub Pages</a>
+                <span class="text-gray-400">·</span>
+                <a href="https://ai-daily-reports.pages.dev/" target="_blank" class="text-indigo-600 hover:text-indigo-800 text-sm">Cloudflare Pages</a>
+            </div>
+        </footer>
     </div>
 </body>
 </html>
