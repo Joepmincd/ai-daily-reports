@@ -3,25 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI热点新闻日报 - 2026年03月22日</title>
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
-        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        h1 { color: #333; border-bottom: 3px solid #667eea; padding-bottom: 10px; }
-        .date { color: #666; margin-bottom: 20px; }
-        .placeholder { text-align: center; padding: 50px; color: #999; }
-        .placeholder-icon { font-size: 48px; margin-bottom: 20px; }
+    <title>AI 热点新闻日报 - 2026年3月22日</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                font-family: 'Noto Sans SC', sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+            }
+            .serif {
+                font-family: 'Noto Serif SC', serif;
+            }
+        }
+        @layer components {
+            .glass-card {
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            .gradient-text {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .news-card {
+                transition: all 0.3s ease;
+            }
+            .news-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            }
+            .tag {
+                display: inline-flex;
+                align-items: center;
+                padding: 4px 12px;
+                border-radius: 9999px;
+                font-size: 12px;
+                font-weight: 500;
+            }
+            .tag-blue {
+                background: #dbeafe;
+                color: #1e40af;
+            }
+            .tag-green {
+                background: #dcfce7;
+                color: #166534;
+            }
+            .tag-purple {
+                background: #f3e8ff;
+                color: #7c3aed;
+            }
+            .tag-orange {
+                background: #ffedd5;
+                color: #9a3412;
+            }
+            .tag-red {
+                background: #fee2e2;
+                color: #991b1b;
+            }
+        }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>🤖 AI热点新闻日报</h1>
-        <div class="date">2026年03月22日</div>
-        <div class="placeholder">
-            <div class="placeholder-icon">🔜</div>
-            <p>自动生成功能开发中...</p>
-            <p style="font-size: 14px; color: #bbb;">预计接入AI搜索API自动获取今日热点</p>
+<body class="py-8 px-4">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <header class="glass-card rounded-2xl p-8 mb-8 text-center">
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <span class="text-4xl">🤖</span>
+                <span class="text-5xl">📰</span>
+            </div>
+            <h1 class="serif text-4xl md:text-5xl font-bold gradient-text mb-4">AI 热点新闻日报</h1>
+            <div class="flex items-center justify-center gap-4 text-gray-600">
+                <span class="text-xl">2026年3月22日 · 星期日</span>
+                <span class="px-3 py-1 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-full text-sm">今日日报</span>
+            </div>
+        </header>
+
+        <!-- 执行摘要 -->
+        <section class="glass-card rounded-2xl p-6 mb-8">
+            <h2 class="serif text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <span class="text-2xl">📊</span> 今日摘要
+            </h2>
+            <div class="prose max-w-none text-gray-700 leading-relaxed">
+                <p class="mb-4">今日 AI 领域聚焦<strong>技术突破、产业合作与伦理博弈</strong>。Nvidia 以战略合作吸纳 Groq 核心团队，进一步巩固 AI 芯片霸主地位；中国创业公司 Monica 发布全球首款通用 AI 智能体 Manus，标志着 AI 从"对话交互"迈向"人机协作"新纪元；Amazon AI 人脸识别功能引发隐私争议，凸显技术创新与公民权利的张力；中国开源模型 MiniMax M2 首次跻身全球前五，改写 AI 算力游戏规则；好莱坞创作者组建联盟应对 AI 威胁，创意产业与技术的冲突持续升级。</p>
+            </div>
+        </section>
+
+        <!-- 新闻列表 -->
+        <div class="space-y-6">
+            
+            <!-- 新闻1 -->
+            <article class="glass-card news-card rounded-2xl p-6">
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <span class="tag tag-blue">🇺🇸 美国</span>
+                    <span class="tag tag-purple">芯片</span>
+                    <span class="tag tag-orange">战略合作</span>
+                </div>
+                <h3 class="serif text-xl font-bold text-gray-800 mb-3">Nvidia 战略合作 Groq：吸纳核心工程师与创始人</h3>
+                <div class="prose text-gray-600 leading-relaxed mb-4">
+                    <p>Nvidia 与 AI 芯片创业公司 Groq 达成重大战略合作，获得 Groq AI 推理芯片技术的<strong>非独家授权</strong>，同时吸纳 Groq 创始人兼前 CEO <strong>Jonathan Ross</strong> 及多位核心工程师加入。</p>
+                    <p class="mt-2">Groq 将继续独立运营，由新领导团队接管。此次合作虽非传闻中的 200 亿美元收购，但标志着 Nvidia 在 AI 推理基础设施领域的深度布局，进一步巩固其在 AI 芯片市场的霸主地位。</p>
+                </div>
+                <div class="flex items-center justify-between text-sm text-gray-500">
+                    <span>来源：Times of India / Crescendo AI</span>
+                    <a href="https://www.crescendo.ai/news/latest-ai-news-and-updates" target="_blank" class="text-indigo-600 hover:text-indigo-800">阅读原文 →</a>
+                </div>
+            </article>
+
+            <!-- 新闻2 -->
+            <article class="glass-card news-card rounded-2xl p-6">
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <span class="tag tag-red">🇨🇳 中国</span>
+                    <span class="tag tag-purple">AI Agent</span>
+                    <span class="tag tag-green">突破</span>
+                </div>
+                <h3 class="serif text-xl font-bold text-gray-800 mb-3">Monica 发布全球首款通用 AI 智能体 Manus</h3>
+                <div class="prose text-gray-600 leading-relaxed mb-4">
+                    <p>3月6日，中国创业公司 Monica 研发的全球首款通用 AI 智能体 <strong>Manus</strong> 正式发布。该智能体可自主理解、规划并执行复杂任务，无需人类干预即可完成多步骤操作。</p>
+                    <p class="mt-2">在 GAIA 基准测试中，Manus 取得了 SOTA（State-of-the-Art）成绩，性能超越 OpenAI 同层次大模型。发布后迅速引爆科技圈与资本市场，标志着 AI 技术从"对话交互"迈向<strong>"人机协作"新纪元</strong>。随后扣子空间、智谱 AI、阿里等平台纷纷跟进布局。</p>
+                </div>
+                <div class="flex items-center justify-between text-sm text-gray-500">
+                    <span>来源：每日经济新闻 / 智源社区</span>
+                    <a href="https://www.nbd.com.cn/articles/2025-12-25/4195246.html" target="_blank" class="text-indigo-600 hover:text-indigo-800">阅读原文 →</a>
+                </div>
+            </article>
+
+            <!-- 新闻3 -->
+            <article class="glass-card news-card rounded-2xl p-6">
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <span class="tag tag-orange">⚠️ 隐私</span>
+                    <span class="tag tag-blue">🇺🇸 美国</span>
+                    <span class="tag tag-red">争议</span>
+                </div>
+                <h3 class="serif text-xl font-bold text-gray-800 mb-3">Amazon Ring AI 人脸识别上线：隐私争议与政治博弈</h3>
+                <div class="prose text-gray-600 leading-relaxed mb-4">
+                    <p>Amazon 在美国推出 Ring 门铃的 AI 人脸识别功能 "Familiar Faces"，可识别家人、朋友和快递员并发送个性化提醒。该功能默认关闭，数据处理在云端完成。</p>
+                    <p class="mt-2">然而功能上线引发<strong>强烈隐私担忧</strong>，电子前沿基金会（EFF）和参议员 Ed Markey 警告其可能扩大监控范围并带来生物识别数据滥用风险。伊利诺伊州、得克萨斯州和俄勒冈州波特兰等地因严格的生物识别隐私法已<strong>禁用该功能</strong>。</p>
+                </div>
+                <div class="flex items-center justify-between text-sm text-gray-500">
+                    <span>来源：Fox News / Crescendo AI</span>
+                    <a href="https://www.crescendo.ai/news/latest-ai-news-and-updates" target="_blank" class="text-indigo-600 hover:text-indigo-800">阅读原文 →</a>
+                </div>
+            </article>
+
+            <!-- 新闻4 -->
+            <article class="glass-card news-card rounded-2xl p-6">
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <span class="tag tag-green">🇨🇳 中国</span>
+                    <span class="tag tag-purple">开源</span>
+                    <span class="tag tag-blue">突破</span>
+                </div>
+                <h3 class="serif text-xl font-bold text-gray-800 mb-3">中国开源模型首次跻身全球前五：MiniMax M2 改写算力规则</h3>
+                <div class="prose text-gray-600 leading-relaxed mb-4">
+                    <p>10月，通用人工智能公司 MiniMax（稀宇科技）发布开源文本大模型 <strong>M2</strong>，在全球行业测评榜单 Artificial Analysis 上总分冲入<strong>全球前五、开源第一</strong>。这是中国开源模型首次跻身全球前五。</p>
+                    <p class="mt-2">M2 综合成本低至约 <strong>0.53 美元/百万 Tokens</strong>，不及 Claude 4.5 Sonnet 的 8%，推理速度是其近两倍，深度改写了 AI 领域的"算力游戏"规则，为低成本高性能模型发展开辟新路径。</p>
+                </div>
+                <div class="flex items-center justify-between text-sm text-gray-500">
+                    <span>来源：每日经济新闻 / 智源社区</span>
+                    <a href="https://www.nbd.com.cn/articles/2025-12-25/4195246.html" target="_blank" class="text-indigo-600 hover:text-indigo-800">阅读原文 →</a>
+                </div>
+            </article>
+
+            <!-- 新闻5 -->
+            <article class="glass-card news-card rounded-2xl p-6">
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <span class="tag tag-purple">🎬 娱乐</span>
+                    <span class="tag tag-orange">⚖️ 版权</span>
+                    <span class="tag tag-blue">🇺🇸 美国</span>
+                </div>
+                <h3 class="serif text-xl font-bold text-gray-800 mb-3">好莱坞创作者组建联盟：对抗 AI 威胁</h3>
+                <div class="prose text-gray-600 leading-relaxed mb-4">
+                    <p>12月18日，知名导演、编剧和演员联合发起成立<strong>好莱坞创作者 AI 联盟</strong>（Hollywood Creators Coalition on AI），旨在倡导娱乐产业中 AI 技术的伦理使用。</p>
+                    <p class="mt-2">该组织寻求建立行业范围内的保护措施，防止数字肖像未经授权使用和创意岗位被自动化取代。通过联合各工会和个人创作者，联盟旨在推动立法变革，确保 AI 始终是人类创意的辅助工具，而非替代品。</p>
+                </div>
+                <div class="flex items-center justify-between text-sm text-gray-500">
+                    <span>来源：The Hollywood Reporter / Crescendo AI</span>
+                    <a href="https://www.crescendo.ai/news/latest-ai-news-and-updates" target="_blank" class="text-indigo-600 hover:text-indigo-800">阅读原文 →</a>
+                </div>
+            </article>
+
         </div>
+
+        <!-- 深度洞察 -->
+        <section class="glass-card rounded-2xl p-6 mt-8">
+            <h2 class="serif text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <span class="text-2xl">💡</span> 深度洞察
+            </h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="p-4 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl">
+                    <h4 class="font-bold text-indigo-800 mb-2">🤖 Agent 时代来临</h4>
+                    <p class="text-sm text-gray-700">Manus 的发布标志着 AI 从"能对话"到"能做事"的质变。AI Agent 将成为2025-2026年最热门的赛道，各大厂商正加速布局。</p>
+                </div>
+                <div class="p-4 bg-gradient-to-br from-green-50 to-teal-50 rounded-xl">
+                    <h4 class="font-bold text-green-800 mb-2">⚖️ 创新 vs 治理</h4>
+                    <p class="text-sm text-gray-700">Amazon Ring 隐私争议与好莱坞创作者联盟成立，凸显 AI 快速发展与伦理治理之间的张力。平衡创新与社会责任成为关键议题。</p>
+                </div>
+                <div class="p-4 bg-gradient-to-br from-orange-50 to-red-50 rounded-xl">
+                    <h4 class="font-bold text-orange-800 mb-2">🇨🇳 中国开源崛起</h4>
+                    <p class="text-sm text-gray-700">MiniMax M2 跻身全球前五，DeepSeek 引领低成本高性能路线，中国开源模型正在改写全球 AI 竞争格局。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="glass-card rounded-2xl p-6 mt-8 text-center">
+            <p class="text-gray-600 mb-2">🤖 由 AI 自动生成 · 每日 8:30 推送</p>
+            <p class="text-sm text-gray-500">数据来源：公开新闻报道 · 仅供参考学习</p>
+            <div class="flex items-center justify-center gap-4 mt-4">
+                <a href="https://joepmincd.github.io/ai-daily-reports/" target="_blank" class="text-indigo-600 hover:text-indigo-800 text-sm">GitHub Pages</a>
+                <span class="text-gray-400">·</span>
+                <a href="https://ai-daily-reports.pages.dev/" target="_blank" class="text-indigo-600 hover:text-indigo-800 text-sm">Cloudflare Pages</a>
+            </div>
+        </footer>
     </div>
 </body>
 </html>
