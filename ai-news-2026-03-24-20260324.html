@@ -3,25 +3,457 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI热点新闻日报 - 2026年03月24日</title>
+    <title>AI 热点新闻日报 - 2026年3月24日</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
-        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        h1 { color: #333; border-bottom: 3px solid #667eea; padding-bottom: 10px; }
-        .date { color: #666; margin-bottom: 20px; }
-        .placeholder { text-align: center; padding: 50px; color: #999; }
-        .placeholder-icon { font-size: 48px; margin-bottom: 20px; }
+        :root {
+            --bg-primary: #faf8f5;
+            --bg-secondary: #f5f0e8;
+            --text-primary: #2c2420;
+            --text-secondary: #5a5048;
+            --accent: #8b6914;
+            --accent-light: #d4a84b;
+            --border: #e0d5c8;
+            --card-bg: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+        
+        .newspaper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 报头 */
+        .masthead {
+            text-align: center;
+            border-bottom: 3px double var(--text-primary);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .masthead-title {
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: 8px;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-family: 'Noto Serif SC', serif;
+        }
+        
+        .masthead-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .masthead-date {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* 导语 */
+        .intro {
+            background: var(--bg-secondary);
+            padding: 25px 30px;
+            margin-bottom: 35px;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .intro-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        /* 头条新闻 */
+        .headline-story {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        
+        .headline-label {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            font-size: 11px;
+            padding: 4px 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 15px;
+        }
+        
+        .headline-title {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        
+        .headline-meta {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .headline-content {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+        
+        .headline-content p {
+            margin-bottom: 15px;
+        }
+        
+        .key-points {
+            background: var(--bg-secondary);
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .key-points-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .key-points ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .key-points li {
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        
+        .key-points li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        
+        /* 新闻列表 */
+        .news-grid {
+            display: grid;
+            gap: 25px;
+        }
+        
+        .news-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        
+        .news-category {
+            font-size: 11px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 10px;
+        }
+        
+        .news-title {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        
+        .news-meta {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .news-summary {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+        
+        .news-impact {
+            font-size: 14px;
+            color: var(--text-primary);
+            padding: 12px 15px;
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent-light);
+        }
+        
+        .news-impact strong {
+            color: var(--accent);
+        }
+        
+        /* 页脚 */
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        
+        .footer-links {
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+            margin: 0 15px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer-copy {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        /* 标签 */
+        .tag {
+            display: inline-block;
+            font-size: 11px;
+            padding: 3px 10px;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            margin-right: 8px;
+            margin-bottom: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* 统计 */
+        .stats-box {
+            display: flex;
+            justify-content: space-around;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent);
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        @media (max-width: 600px) {
+            .masthead-title {
+                font-size: 28px;
+                letter-spacing: 4px;
+            }
+            
+            .headline-title {
+                font-size: 22px;
+            }
+            
+            .stats-box {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🤖 AI热点新闻日报</h1>
-        <div class="date">2026年03月24日</div>
-        <div class="placeholder">
-            <div class="placeholder-icon">🔜</div>
-            <p>自动生成功能开发中...</p>
-            <p style="font-size: 14px; color: #bbb;">预计接入AI搜索API自动获取今日热点</p>
+    <div class="newspaper">
+        <!-- 报头 -->
+        <header class="masthead">
+            <h1 class="masthead-title">AI 热点新闻</h1>
+            <p class="masthead-subtitle">Artificial Intelligence Daily Report</p>
+            <p class="masthead-date">2026年3月24日 · 星期二 · 第1期</p>
+        </header>
+        
+        <!-- 导语 -->
+        <div class="intro">
+            <p class="intro-text">
+                本期聚焦：DeepSeek-V3-0324重磅发布，推理性能大幅提升；谷歌Gemini 2.5 Pro向所有用户免费开放；OpenAI首发语音Agent；Manus国内产品完成AI服务登记；百度文心一言全面免费开放。AI技术竞争进入白热化阶段，应用落地加速。
+            </p>
         </div>
+        
+        <!-- 统计 -->
+        <div class="stats-box">
+            <div class="stat-item">
+                <div class="stat-number">5</div>
+                <div class="stat-label">精选要闻</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">3</div>
+                <div class="stat-label">中国</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">2</div>
+                <div class="stat-label">国际</div>
+            </div>
+        </div>
+        
+        <!-- 头条新闻 -->
+        <article class="headline-story">
+            <span class="headline-label">头条 · 模型发布</span>
+            <h2 class="headline-title">DeepSeek-V3-0324 重磅发布：推理能力大幅提升，MIT开源</h2>
+            <div class="headline-meta">发布日期：2025年3月24日 · 来源：DeepSeek官方 / Hugging Face</div>
+            <div class="headline-content">
+                <p>2025年3月24日，中国AI公司DeepSeek正式发布其最新的混合专家（MoE）语言模型DeepSeek-V3-0324。该模型总参数达6710亿，每次激活370亿参数，在多个关键基准测试中实现了显著的性能提升。</p>
+                <p>本次更新的核心亮点在于推理能力的飞跃。在AIME数学推理测试中，得分从39.6提升至59.4（+19.8）；在GPQA科学问答中，从59.1提升至68.4（+9.3）；在LiveCodeBench代码测试中，从39.2提升至49.2（+10.0）。此外，模型在前端Web开发能力、中文写作和搜索能力方面均有显著优化。</p>
+                
+                <div class="key-points">
+                    <div class="key-points-title">核心亮点</div>
+                    <ul>
+                        <li><strong>推理性能突破</strong>：AIME测试提升19.8分，GPQA提升9.3分</li>
+                        <li><strong>前端开发增强</strong>：生成的网页和游戏前端更具美观性</li>
+                        <li><strong>中文能力优化</strong>：适合中长篇写作和报告分析</li>
+                        <li><strong>完全开源</strong>：采用MIT许可证，托管在Hugging Face</li>
+                        <li><strong>性价比优势</strong>：低成本高性能，挑战西方模型定价策略</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="margin-top: 15px;">
+                <span class="tag">#DeepSeek</span>
+                <span class="tag">#大模型</span>
+                <span class="tag">#开源</span>
+                <span class="tag">#中国AI</span>
+            </div>
+        </article>
+        
+        <!-- 新闻列表 -->
+        <div class="news-grid">
+            <!-- 新闻2 -->
+            <article class="news-item">
+                <div class="news-category">国际 · 谷歌</div>
+                <h3 class="news-title">谷歌 Gemini 2.5 Pro 向所有用户免费开放</h3>
+                <div class="news-meta">2025年3月31日 · Google官方</div>
+                <p class="news-summary">
+                    谷歌宣布将其号称"最强推理模型"的Gemini 2.5 Pro免费向所有用户开放。该模型支持模拟推理，在LMSYS Chatbot竞技场排行榜上名列前茅。免费用户可通过网页选择该模型，但有使用限制，付费用户享有更大上下文窗口（100万令牌）。
+                </p>
+                <div class="news-impact">
+                    <strong>影响分析：</strong>此举将大幅增加用户采用率，收集更多训练数据，同时可能推动AI应用的普及化，加剧大模型市场竞争。
+                </div>
+                <div style="margin-top: 15px;">
+                    <span class="tag">#Google</span>
+                    <span class="tag">#Gemini</span>
+                    <span class="tag">#免费</span>
+                </div>
+            </article>
+            
+            <!-- 新闻3 -->
+            <article class="news-item">
+                <div class="news-category">国际 · OpenAI</div>
+                <h3 class="news-title">OpenAI 首发语音Agent：智能体技术重大突破</h3>
+                <div class="news-meta">2025年3月21日 · OpenAI官方</div>
+                <p class="news-summary">
+                    OpenAI宣布推出其首款语音Agent，标志着智能体（Agent）技术实现重大突破。该语音Agent能够进行自然对话，理解上下文，并执行复杂任务。这标志着AI从文本交互向多模态交互的重要迈进，为未来的AI助手形态奠定基础。
+                </p>
+                <div class="news-impact">
+                    <strong>影响分析：</strong>语音Agent的发布将加速AI在客服、教育、医疗等领域的应用落地，推动人机交互方式的革新。
+                </div>
+                <div style="margin-top: 15px;">
+                    <span class="tag">#OpenAI</span>
+                    <span class="tag">#语音Agent</span>
+                    <span class="tag">#智能体</span>
+                </div>
+            </article>
+            
+            <!-- 新闻4 -->
+            <article class="news-item">
+                <div class="news-category">中国 · AI Agent</div>
+                <h3 class="news-title">Manus国内产品 Monica 完成生成式AI服务登记</h3>
+                <div class="news-meta">2025年3月21日 · 北京</div>
+                <p class="news-summary">
+                    国内初创公司Monica推出的通用AI代理Manus在国内市场取得重要进展，其国内产品Monica在北京完成了生成式人工智能服务登记。这标志着该产品正式获得官方认可和监管许可，为其在国内市场的推广和应用铺平道路。
+                </p>
+                <div class="news-impact">
+                    <strong>影响分析：</strong>完成合规登记意味着Manus可以在中国境内合法开展业务，预计将加速国内AI Agent赛道的发展。
+                </div>
+                <div style="margin-top: 15px;">
+                    <span class="tag">#Manus</span>
+                    <span class="tag">#Monica</span>
+                    <span class="tag">#AIAgent</span>
+                    <span class="tag">#合规</span>
+                </div>
+            </article>
+            
+            <!-- 新闻5 -->
+            <article class="news-item">
+                <div class="news-category">中国 · 百度</div>
+                <h3 class="news-title">百度文心一言全面免费开放：新增多项高级功能</h3>
+                <div class="news-meta">2025年4月1日起 · 百度官方</div>
+                <p class="news-summary">
+                    百度宣布自4月1日起，文心一言PC端和APP端全面免费开放。同时新增超长文档处理、多语种对话和高级AI绘画功能。此外，百度还发布了Ernie X1推理模型（性能对标DeepSeek R1，价格仅一半）和Ernie 4.5基础模型（多基准测试优于GPT-4.5，价格仅1%）。
+                </p>
+                <div class="news-impact">
+                    <strong>影响分析：</strong>文心一言全面免费将大幅降低企业及开发者使用门槛，加剧国内大模型市场的"价格战"，推动AI应用普及。
+                </div>
+                <div style="margin-top: 15px;">
+                    <span class="tag">#百度</span>
+                    <span class="tag">#文心一言</span>
+                    <span class="tag">#免费</span>
+                    <span class="tag">#价格战</span>
+                </div>
+            </article>
+        </div>
+        
+        <!-- 小结 -->
+        <div class="intro" style="margin-top: 35px;">
+            <p class="intro-text">
+                <strong>本期小结：</strong>本周AI领域呈现"开源+免费"的激烈竞争态势。DeepSeek-V3-0324以MIT协议开源发布，谷歌Gemini 2.5 Pro向所有用户免费开放，百度文心一言宣布全面免费——这些举措标志着大模型市场正从"技术竞争"转向"生态竞争"和"应用落地竞争"。AI Agent领域也迎来重要突破，OpenAI语音Agent首发，Manus国内产品完成合规登记。2025年，AI应用大规模落地的元年已至。
+            </p>
+        </div>
+        
+        <!-- 页脚 -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="https://joepmincd.github.io/ai-daily-reports/">← 返回汇总页</a>
+                <a href="https://ai-daily-reports.pages.dev/">Cloudflare镜像</a>
+            </div>
+            <p class="footer-copy">AI 热点新闻日报 · 每日精选人工智能领域重要资讯</p>
+        </footer>
     </div>
 </body>
 </html>
