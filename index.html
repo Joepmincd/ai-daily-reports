@@ -322,17 +322,17 @@
             <div class="header-top">
                 <h1>📁 AI 日报中心</h1>
             </div>
-            <div class="header-stats">
+                        <div class="header-stats">
                 <div class="stat-item">
-                    <div class="stat-value" id="dailyCount">133</div>
+                    <div class="stat-value" id="dailyCount">85</div>
                     <div class="stat-label">日报</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" id="summaryCount">0</div>
+                    <div class="stat-value" id="summaryCount">3</div>
                     <div class="stat-label">总结</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" id="tipsCount">3</div>
+                    <div class="stat-value" id="tipsCount">2</div>
                     <div class="stat-label">使用技巧</div>
                 </div>
                 <div class="stat-item">
@@ -341,6 +341,17 @@
                 </div>
             </div>
         </div>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('daily')">📰 日报</button>
+            <button class="nav-tab" onclick="switchTab('summary')">📚 总结</button>
+            <button class="nav-tab" onclick="switchTab('tips')">💡 使用技巧</button>
+            <button class="nav-tab" onclick="switchTab('toys')">🎮 小玩意儿</button>
+            <button class="nav-tab" onclick="switchTab('timeline')">📅 时间线</button>
+        </div>
+        
         
         <!-- Navigation -->
         <div class="nav-tabs">
@@ -353,48 +364,714 @@
         
         <!-- Content -->
         <div class="content-area" id="contentArea">
-            
-<!-- Daily Tab -->
+            <!-- Daily Tab -->
 <div id="daily" class="tab-content active">
-                <h2 class="section-title">📅 今日日报 (3月24日)</h2>
+                <h2 class="section-title">📰 今日日报 (3月26日)</h2>
+                <div class="file-grid">
+                    <a href="ai-news-2026-03-26-20260326.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">AI热点新闻日报</div>
+                                <span class="file-tag file-tag-new">NEW</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">DeepSeek-V3-0324发布、马斯克赞Kimi、美国商务部实体清单</div>
+                    </a>
+                    <a href="x-ai-trends-2026-03-26-20260326.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🔥</div>
+                            <div class="file-info">
+                                <div class="file-name">X AI趋势日报</div>
+                                <span class="file-tag file-tag-new">NEW</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">DeepSeek PH登顶、马斯克赞Kimi、美国实体清单</div>
+                    </a>
+                    <a href="producthunt-report-2026-03-26-20260326.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🚀</div>
+                            <div class="file-info">
+                                <div class="file-name">Product Hunt日报</div>
+                                <span class="file-tag file-tag-new">NEW</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">Jotform Boards、mcpt、Meilisearch AI、new.email</div>
+                    </a>
+                </div>
+
+                <h2 class="section-title" style="margin-top:30px">📅 近期日报</h2>
+                <div class="file-grid">
+                    <a href="ai-news-2026-03-26-20260326.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">3月26日 AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">DeepSeek-V3-0324发布、马斯克赞Kimi、美国商务部实体清单</div>
+                    </a>
+                    <a href="ai-news-2026-03-25-20260325.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">3月25日 AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">金山办公2000亿词元、可灵10亿营收、词元经济投资热</div>
+                    </a>
+                    <a href="ai-news-2026-03-24-20260324.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">3月24日 AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">DeepSeek-V3-0324发布、Cursor承认用Kimi、Claude联网搜索</div>
+                    </a>
+                    <a href="ai-news-2026-03-23-20260323.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">3月23日 AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">Token中文名"词元"、140万亿词元调用、马斯克Terafab</div>
+                    </a>
+                    <a href="ai-news-2026-03-22-20260322.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">3月22日 AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">3月22日AI热点新闻汇总</div>
+                    </a>
+                    <a href="ai-news-2026-03-21-20260321.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">3月21日 AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">3月21日AI热点新闻汇总</div>
+                    </a>
+                    <a href="ai-news-2026-03-20-20260320.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">3月20日 AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">OpenAI语音模型、软银收购Ampere、华为AI智能体元年</div>
+                    </a>
+                    <a href="ai-news-2026-03-19-20260319.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">3月19日 AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">黄仁勋GTC演讲、腾讯元宝日活增20倍、OpenAI语音API</div>
+                    </a>
+                    <a href="ai-news-2026-03-18-20260318.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">3月18日 AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">Llama破10亿下载、Kimi 200万字、高通骁龙8s</div>
+                    </a>
+                    <a href="ai-news-2026-03-17-20260317.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">3月17日 AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">GPT-o1数学满分、OpenAI争议言论、Figure机器人工厂</div>
+                    </a>
+                    <a href="ai-news-2026-03-16-20260316.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">3月16日 AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">3月16日AI热点新闻汇总</div>
+                    </a>
+                    <a href="ai-news-2026-03-15-20260315.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">3月15日 AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">3月15日AI热点新闻汇总</div>
+                    </a>
+                </div>
+
+
+                <h2 class="section-title">📅 3月26日</h2>
+                <div class="file-grid">
+                    <a href="ai-news-2026-03-26-20260326.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">DeepSeek-V3-0324发布、马斯克赞Kimi、美国商务部实体清单</div>
+                    </a>
+                    <a href="x-ai-trends-2026-03-26-20260326.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🔥</div>
+                            <div class="file-info">
+                                <div class="file-name">X AI趋势日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">DeepSeek PH登顶、马斯克赞Kimi、美国实体清单</div>
+                    </a>
+                    <a href="producthunt-report-2026-03-26-20260326.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🚀</div>
+                            <div class="file-info">
+                                <div class="file-name">Product Hunt日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">Jotform Boards、mcpt、Meilisearch AI、new.email</div>
+                    </a>
+                </div>
+
+                <h2 class="section-title">📅 3月25日</h2>
+                <div class="file-grid">
+                    <a href="ai-news-2026-03-25-20260325.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">金山办公2000亿词元、可灵10亿营收、词元经济投资热</div>
+                    </a>
+                    <a href="x-ai-trends-2026-03-25-20260325.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🔥</div>
+                            <div class="file-info">
+                                <div class="file-name">X AI趋势日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">金山词元调用量、可灵营收、词元经济投资主线</div>
+                    </a>
+                    <a href="producthunt-report-2026-03-25-20260325.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🚀</div>
+                            <div class="file-info">
+                                <div class="file-name">Product Hunt日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">Inferless、Supercut、Zapier MCP、AI Voices</div>
+                    </a>
+                </div>
+
+                <h2 class="section-title">📅 3月24日</h2>
                 <div class="file-grid">
                     <a href="ai-news-2026-03-24-20260324.html" class="file-card">
                         <div class="file-header">
                             <div class="file-icon">🤖</div>
                             <div class="file-info">
                                 <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
+                                <span class="file-tag">日报</span>
                             </div>
                         </div>
-                        <div class="file-desc">DeepSeek-V3-0324发布、谷歌Gemini 2.5 Pro免费开放、OpenAI语音Agent首发、Manus国内完成登记、百度文心一言全面免费</div>
+                        <div class="file-desc">DeepSeek-V3-0324发布、Cursor承认用Kimi、Claude联网搜索</div>
+                    </a>
+                    <a href="x-ai-trends-2026-03-24-20260324.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🔥</div>
+                            <div class="file-info">
+                                <div class="file-name">X AI趋势日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">DeepSeek开源发布、Cursor用Kimi、Claude联网</div>
+                    </a>
+                    <a href="producthunt-report-2026-03-24-20260324.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🚀</div>
+                            <div class="file-info">
+                                <div class="file-name">Product Hunt日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">DeepSeek-V3-0324、Mintlify、Slack AI、Resend</div>
                     </a>
                 </div>
 
-                <h2 class="section-title" style="margin-top:30px">📅 近期日报</h2>
+                <h2 class="section-title">📅 3月23日</h2>
+                <div class="file-grid">
+                    <a href="ai-news-2026-03-23-20260323.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">Token中文名"词元"、140万亿词元调用、马斯克Terafab</div>
+                    </a>
+                    <a href="x-ai-trends-2026-03-23-20260323.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🔥</div>
+                            <div class="file-info">
+                                <div class="file-name">X AI趋势日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">Token中文名发布、140万亿调用量、马斯克Terafab</div>
+                    </a>
+                    <a href="producthunt-report-2026-03-23-20260323.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🚀</div>
+                            <div class="file-info">
+                                <div class="file-name">Product Hunt日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">Cursor Composer、Arc Browser、Motion、Replicate</div>
+                    </a>
+                </div>
+
+                <h2 class="section-title">📅 3月22日</h2>
+                <div class="file-grid">
+                    <a href="ai-news-2026-03-22-20260322.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">Amazon 在美国推出 Ring 门铃的 AI 人脸识别功能 "Familiar Faces"，可识别家人、朋友和快递员并发送个性化提醒。该功能默认关闭...</div>
+                    </a>
+                </div>
+
+                <h2 class="section-title">📅 3月21日</h2>
+                <div class="file-grid">
+                    <a href="ai-news-2026-03-21-20260321.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">欧盟《人工智能法案》正式生效实施</div>
+                    </a>
+                </div>
+
+                <h2 class="section-title">📅 3月20日</h2>
+                <div class="file-grid">
+                    <a href="ai-news-2026-03-20-20260320.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">OpenAI语音模型、软银收购Ampere、华为AI智能体元年</div>
+                    </a>
+                    <a href="x-ai-trends-2026-03-20-20260320.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🔥</div>
+                            <div class="file-info">
+                                <div class="file-name">X AI趋势日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">OpenAI语音模型、软银收购、AI智能体元年</div>
+                    </a>
+                    <a href="producthunt-report-2026-03-20-20260320.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🚀</div>
+                            <div class="file-info">
+                                <div class="file-name">Product Hunt日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">Zapier AI Actions、Supabase、HubSpot AI、Vercel AI SDK</div>
+                    </a>
+                </div>
+
+                <h2 class="section-title">📅 3月19日</h2>
+                <div class="file-grid">
+                    <a href="ai-news-2026-03-19-20260319.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">黄仁勋GTC演讲、腾讯元宝日活增20倍、OpenAI语音API</div>
+                    </a>
+                    <a href="x-ai-trends-2026-03-19-20260319.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🔥</div>
+                            <div class="file-info">
+                                <div class="file-name">X AI趋势日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">黄仁勋演讲、腾讯元宝增长、OpenAI语音模型</div>
+                    </a>
+                    <a href="producthunt-report-2026-03-19-20260319.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🚀</div>
+                            <div class="file-info">
+                                <div class="file-name">Product Hunt日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">Descript AI、Postman AI、1Password 8、Loom AI</div>
+                    </a>
+                </div>
+
+                <h2 class="section-title">📅 3月18日</h2>
+                <div class="file-grid">
+                    <a href="ai-news-2026-03-18-20260318.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">Llama破10亿下载、Kimi 200万字、高通骁龙8s</div>
+                    </a>
+                    <a href="x-ai-trends-2026-03-18-20260318.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🔥</div>
+                            <div class="file-info">
+                                <div class="file-name">X AI趋势日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">Llama破10亿、Kimi长文本革命、高通骁龙8s</div>
+                    </a>
+                    <a href="producthunt-report-2026-03-18-20260318.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🚀</div>
+                            <div class="file-info">
+                                <div class="file-name">Product Hunt日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">Notion AI 2.0、Tableau GPT、Linear AI、Gamma</div>
+                    </a>
+                </div>
+
+                <h2 class="section-title">📅 3月17日</h2>
+                <div class="file-grid">
+                    <a href="ai-news-2026-03-17-20260317.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">GPT-o1数学满分、OpenAI争议言论、Figure机器人工厂</div>
+                    </a>
+                    <a href="x-ai-trends-2026-03-17-20260317.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🔥</div>
+                            <div class="file-info">
+                                <div class="file-name">X AI趋势日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">GPT-o1数学满分、Figure BotQ、OpenAI争议</div>
+                    </a>
+                    <a href="producthunt-report-2026-03-17-20260317.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🚀</div>
+                            <div class="file-info">
+                                <div class="file-name">Product Hunt日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">GitHub Copilot X、Voiceflow AI、Figma AI、Perplexity Enterprise</div>
+                    </a>
+                </div>
+
+                <h2 class="section-title">📅 3月16日</h2>
+                <div class="file-grid">
+                    <a href="ai-news-2026-03-16-20260316.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">AI 热点新闻日报 · 每日精选全球AI重要动态</div>
+                    </a>
+                </div>
+
+                <h2 class="section-title">📅 3月15日</h2>
+                <div class="file-grid">
+                    <a href="ai-news-2026-03-15-20260315.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">3月15日</div>
+                    </a>
+                </div>
+
+                <h2 class="section-title">📅 3月8日</h2>
+                <div class="file-grid">
+                    <a href="ai-news-2026-03-08-20260308.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">这一数据揭示AI应用正从实验走向规模化生产，对网络基础设施提出全新要求。为支撑AI多模态的端云数据交互，网络需从过去以下行为主，迈向上下行超大带宽；为实现...</div>
+                    </a>
+                </div>
+
+                <h2 class="section-title">📅 3月7日</h2>
+                <div class="file-grid">
+                    <a href="ai-news-2026-03-07-20260307.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">AI 热点新闻日报 · 每日精选全球AI重要资讯</div>
+                    </a>
+                    <a href="x-ai-trends-2026-03-07-20260307.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🔥</div>
+                            <div class="file-info">
+                                <div class="file-name">X AI趋势日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">由Andrej Karpathy在2025年初提出的"氛围编程"概念，在2026年3月达到现象级热度。开发者分享使用Claude Code、Cursor等...</div>
+                    </a>
+                    <a href="producthunt-report-2026-03-07-20260307.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🚀</div>
+                            <div class="file-info">
+                                <div class="file-name">Product Hunt日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">测试是AI编程时代被忽视的关键环节。当AI生成代码的速度提升10倍时，传统人工测试成为瓶颈。TestSprite瞄准这一痛点，将测试也Agent化，形成"...</div>
+                    </a>
+                </div>
+
+                <h2 class="section-title">📅 3月6日</h2>
+                <div class="file-grid">
+                    <a href="ai-news-2026-03-06-20260306.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">AI 热点新闻日报 · 每日精选全球AI重要资讯</div>
+                    </a>
+                    <a href="x-ai-trends-2026-03-06-20260306.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🔥</div>
+                            <div class="file-info">
+                                <div class="file-name">X AI趋势日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">Veo 3等模型实现文本到视频、音频同步生成</div>
+                    </a>
+                    <a href="producthunt-report-2026-03-06-20260306.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🚀</div>
+                            <div class="file-info">
+                                <div class="file-name">Product Hunt日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">Product Hunt 日报 · 每日精选全球创新产品</div>
+                    </a>
+                </div>
+
+                <h2 class="section-title">📅 3月5日</h2>
+                <div class="file-grid">
+                    <a href="ai-news-2026-03-05-20260305.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">AI 热点新闻日报 · 每日精选全球AI重要资讯</div>
+                    </a>
+                    <a href="x-ai-trends-2026-03-05-20260305.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🔥</div>
+                            <div class="file-info">
+                                <div class="file-name">X AI趋势日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">大量用户表示不满，认为强制跟随系统设置降低了使用灵活性，特别是需要在不同场景下快速切换的用户群体</div>
+                    </a>
+                    <a href="producthunt-report-2026-03-05-20260305.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🚀</div>
+                            <div class="file-info">
+                                <div class="file-name">Product Hunt日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">中小企业运营者、个人效率极客、RPA替代需求者</div>
+                    </a>
+                </div>
+
+                <h2 class="section-title">📅 3月4日</h2>
                 <div class="file-grid">
                     <a href="ai-news-2026-03-04-20260304.html" class="file-card">
                         <div class="file-header">
                             <div class="file-icon">🤖</div>
                             <div class="file-info">
-                                <div class="file-name">3月4日 AI热点新闻日报</div>
+                                <div class="file-name">AI热点新闻日报</div>
                                 <span class="file-tag">日报</span>
                             </div>
                         </div>
-                        <div class="file-desc">华为超节点亮相MWC、OpenClaw产业落地、美国电网扩建、千问AI眼镜</div>
+                        <div class="file-desc">AI 热点新闻日报 · 每日精选全球AI重要资讯</div>
                     </a>
+                    <a href="x-ai-trends-2026-03-04-20260304.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🔥</div>
+                            <div class="file-info">
+                                <div class="file-name">X AI趋势日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">搭载盘古端侧大模型，支持离线翻译、文档处理、图像生成，无需联网即可使用AI功能</div>
+                    </a>
+                    <a href="producthunt-report-2026-03-04-20260304.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🚀</div>
+                            <div class="file-info">
+                                <div class="file-name">Product Hunt日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">数据来源: Product Hunt | 每日更新</div>
+                    </a>
+                </div>
+
+                <h2 class="section-title">📅 3月3日</h2>
+                <div class="file-grid">
+                    <a href="ai-news-2026-03-03-20260303.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🤖</div>
+                            <div class="file-info">
+                                <div class="file-name">AI热点新闻日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">AI 热点新闻日报 · 每日精选全球AI重要资讯</div>
+                    </a>
+                    <a href="x-ai-trends-2026-03-03-20260303.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🔥</div>
+                            <div class="file-info">
+                                <div class="file-name">X AI趋势日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">从实验性功能到生产级部署，上下文管理、工具调用可靠性显著提升</div>
+                    </a>
+                    <a href="producthunt-report-2026-03-03-20260303.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🚀</div>
+                            <div class="file-info">
+                                <div class="file-name">Product Hunt日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">数据来源: Product Hunt | 每日更新</div>
+                    </a>
+                </div>
+
+                <h2 class="section-title">📅 3月2日</h2>
+                <div class="file-grid">
                     <a href="ai-news-2026-03-02-20260302.html" class="file-card">
                         <div class="file-header">
                             <div class="file-icon">🤖</div>
                             <div class="file-info">
-                                <div class="file-name">3月2日 AI热点新闻日报</div>
+                                <div class="file-name">AI热点新闻日报</div>
                                 <span class="file-tag">日报</span>
                             </div>
                         </div>
-                        <div class="file-desc">DeepSeek V4即将发布、英伟达费曼芯片预告、AI医疗爆发</div>
+                        <div class="file-desc">AI 热点新闻日报 · 每日精选全球AI重要资讯</div>
+                    </a>
+                    <a href="x-ai-trends-2026-03-02-20260302.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🔥</div>
+                            <div class="file-info">
+                                <div class="file-name">X AI趋势日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">2M tokens (行业最大，Claude 200K, GPT-4o 128K)</div>
+                    </a>
+                    <a href="producthunt-report-2026-03-02-20260302.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🚀</div>
+                            <div class="file-info">
+                                <div class="file-name">Product Hunt日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">数据来源: Product Hunt | 每日更新</div>
                     </a>
                 </div>
 
-                <h2 class="section-title" style="margin-top:30px">📅 3月1日</h2>
+                <h2 class="section-title">📅 3月1日</h2>
                 <div class="file-grid">
                     <a href="ai-news-2026-03-01-20260301.html" class="file-card">
                         <div class="file-header">
@@ -404,621 +1081,64 @@
                                 <span class="file-tag">日报</span>
                             </div>
                         </div>
-                        <div class="file-desc">GPT-4.5发布、Claude 3.7 Sonnet、Manus AI Agent刷屏</div>
+                        <div class="file-desc">AI 热点新闻日报 · 每日精选全球AI重要资讯</div>
+                    </a>
+                    <a href="x-ai-trends-2026-03-01-20260301.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🔥</div>
+                            <div class="file-info">
+                                <div class="file-name">X AI趋势日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">Gemini 3.1 Pro (13/16基准测试领先)</div>
+                    </a>
+                    <a href="producthunt-report-2026-03-01-20260301.html" class="file-card">
+                        <div class="file-header">
+                            <div class="file-icon">🚀</div>
+                            <div class="file-info">
+                                <div class="file-name">Product Hunt日报</div>
+                                <span class="file-tag">日报</span>
+                            </div>
+                        </div>
+                        <div class="file-desc">AI助手迁移工具，降低用户从ChatGPT转向Claude的门槛，实现零摩擦平台转换。</div>
                     </a>
                 </div>
 
-                <h2 class="section-title" style="margin-top:30px">📅 2月28日</h2>
+                <h2 class="section-title">📅 2月28日</h2>
                 <div class="file-grid">
                     <a href="ai-news-2026-02-28-20260228.html" class="file-card">
                         <div class="file-header">
                             <div class="file-icon">🤖</div>
                             <div class="file-info">
                                 <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
+                                <span class="file-tag">日报</span>
                             </div>
                         </div>
-                        <div class="file-desc">OpenAI融资1100亿美元、英伟达市值蒸发3万亿、人形机器人破圈</div>
+                        <div class="file-desc">本报告采用「金字塔原理」组织：结论先行（核心洞察）→ 分类展开（资本/产业/市场/政策四维度）→ 细节支撑（具体新闻事件）。遵循MECE原则，确保各维度相...</div>
                     </a>
                     <a href="x-ai-trends-2026-02-28.html" class="file-card">
                         <div class="file-header">
                             <div class="file-icon">🔥</div>
                             <div class="file-info">
                                 <div class="file-name">X AI趋势日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
+                                <span class="file-tag">日报</span>
                             </div>
                         </div>
-                        <div class="file-desc">AI Agent爆发、GPT-4o图像生成免费开放、AI基础设施能源危机</div>
+                        <div class="file-desc">从实验走向生产，企业级AI Agent部署进入规模化阶段，Anthropic、OpenAI、Google等巨头竞相推出企业级解决方案。</div>
                     </a>
                     <a href="producthunt-report-2026-02-28-20260228.html" class="file-card">
                         <div class="file-header">
                             <div class="file-icon">🚀</div>
                             <div class="file-info">
                                 <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
+                                <span class="file-tag">日报</span>
                             </div>
                         </div>
-                        <div class="file-desc">Claude in Excel、theORQL、PromptURLs、Producer AI by Google</div>
+                        <div class="file-desc">数据来源: Product Hunt | 每日更新</div>
                     </a>
                 </div>
 
-                <h2 class="section-title" style="margin-top:30px">📅 2月27日</h2>
-                <div class="file-grid">
-                    <a href="ai-news-2026-02-27-20260227.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag">日报</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">中国AI调用量首超美国、具身智能迈入应用时代</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-27-20260227.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag">日报</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">中国AI调用量首超美国、具身智能迈入应用时代</div>
-                    </a>
-                    <a href="x-ai-trends-2026-02-27.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🔥</div>
-                            <div class="file-info">
-                                <div class="file-name">X AI趋势日报</div>
-                                <span class="file-tag">日报</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">中国AI调用量首超美国、具身智能迈入应用时代</div>
-                    </a>
-                </div>
-
-                <h2 class="section-title" style="margin-top:30px">📦 历史日报</h2>
-                <div class="file-grid">
-                    <a href="ai-news-2026-03-01-20260301.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">GPT-4.5发布、Claude 3.7 Sonnet、Manus AI Agent刷屏</div>
-                    </a>
-                    <a href="x-ai-trends-2026-02-26.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🔥</div>
-                            <div class="file-info">
-                                <div class="file-name">X AI趋势日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">科技巨头6500亿投资、AI社交实验、应用爆发</div>
-                    </a>
-                    <a href="x-ai-trends-2026-02-26-20260226.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🔥</div>
-                            <div class="file-info">
-                                <div class="file-name">X AI趋势日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">科技巨头6500亿投资、AI社交实验、应用爆发</div>
-                    </a>
-                    <a href="x-ai-trends-2026-02-25.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🔥</div>
-                            <div class="file-info">
-                                <div class="file-name">X AI趋势日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">全球AI新闻汇总</div>
-                    </a>
-                    <a href="x-ai-trends-2026-02-25-20260225.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🔥</div>
-                            <div class="file-info">
-                                <div class="file-name">X AI趋势日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">全球AI新闻汇总</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-26-20260226.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">科技巨头6500亿投资、AI社交实验、应用爆发</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-25.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">全球AI新闻汇总</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-25-20260225.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">全球AI新闻汇总</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-24.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-24</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-24-20260224.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-24</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-23.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-23</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-23-20260223.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-23</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-22.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-22</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-22-20260222.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-22</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-21.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-21</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-21-20260221.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-21</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-20.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-20</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-20-20260220.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-20</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-19.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-19</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-19-20260219.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-19</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-18.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-18</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-18-20260218.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-18</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-17.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-17</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-17-20260217.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-17</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-16.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-16</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-16-20260216.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-16</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-15.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-15</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-15-20260215.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-15</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-14.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-14</div>
-                    </a>
-                    <a href="producthunt-report-2026-02-14-20260214.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🚀</div>
-                            <div class="file-info">
-                                <div class="file-name">Product Hunt日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-14</div>
-                    </a>
-                    <a href="ai-news-2026-02-26.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">科技巨头6500亿投资、AI社交实验、应用爆发</div>
-                    </a>
-                    <a href="ai-news-2026-02-26-20260226.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">科技巨头6500亿投资、AI社交实验、应用爆发</div>
-                    </a>
-                    <a href="ai-news-2026-02-25.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">全球AI新闻汇总</div>
-                    </a>
-                    <a href="ai-news-2026-02-25-20260225.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">全球AI新闻汇总</div>
-                    </a>
-                    <a href="ai-news-2026-02-23.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-23</div>
-                    </a>
-                    <a href="ai-news-2026-02-23-20260223.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-23</div>
-                    </a>
-                    <a href="ai-news-2026-02-22.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-22</div>
-                    </a>
-                    <a href="ai-news-2026-02-22-20260222.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-22</div>
-                    </a>
-                    <a href="ai-news-2026-02-21.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-21</div>
-                    </a>
-                    <a href="ai-news-2026-02-21-20260221.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-21</div>
-                    </a>
-                    <a href="ai-news-2026-02-20.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-20</div>
-                    </a>
-                    <a href="ai-news-2026-02-20-20260220.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-20</div>
-                    </a>
-                    <a href="ai-news-2026-02-19.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-19</div>
-                    </a>
-                    <a href="ai-news-2026-02-19-20260219.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-19</div>
-                    </a>
-                    <a href="ai-news-2026-02-18.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-18</div>
-                    </a>
-                    <a href="ai-news-2026-02-18-20260218.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-18</div>
-                    </a>
-                    <a href="ai-news-2026-02-17.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-17</div>
-                    </a>
-                    <a href="ai-news-2026-02-17-20260217.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-17</div>
-                    </a>
-                    <a href="ai-news-2026-02-16.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-16</div>
-                    </a>
-                    <a href="ai-news-2026-02-16-20260216.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-16</div>
-                    </a>
-                    <a href="ai-news-2026-02-15.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-15</div>
-                    </a>
-                    <a href="ai-news-2026-02-15-20260215.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-15</div>
-                    </a>
-                    <a href="ai-news-2026-02-14.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-14</div>
-                    </a>
-                    <a href="ai-news-2026-02-14-20260214.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🤖</div>
-                            <div class="file-info">
-                                <div class="file-name">AI热点新闻日报</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">2026-02-14</div>
-                    </a>
-                </div>
             </div>
             <!-- Summary Tab -->
             <div id="summary" class="tab-content">
@@ -1059,7 +1179,6 @@
                     </a>
                 </div>
             </div>
-            
             <!-- Tips Tab -->
             <div id="tips" class="tab-content">
                 <h2 class="section-title">💡 使用技巧</h2>
@@ -1087,17 +1206,6 @@
                         <div class="file-desc">从脚本到成片，手把手教你用AI制作专业视频</div>
                     </a>
                     
-                    <a href="tips/seedance-prompts-2026-02-28.html" class="file-card">
-                        <div class="file-header">
-                            <div class="file-icon">🎨</div>
-                            <div class="file-info">
-                                <div class="file-name">Seedance提示词案例</div>
-                                <span class="file-tag file-tag-new">NEW</span>
-                            </div>
-                        </div>
-                        <div class="file-desc">从X和即刻收集的高赞Seedance AI视频生成提示词案例</div>
-                    </a>
-                    
                     <a href="seedance-2.0-guide.html" class="file-card">
                         <div class="file-header">
                             <div class="file-icon">📚</div>
@@ -1110,7 +1218,6 @@
                     </a>
                 </div>
             </div>
-            
             <!-- Toys Tab -->
             <div id="toys" class="tab-content">
                 <h2 class="section-title">🎮 小玩意儿</h2>
@@ -1161,10 +1268,20 @@
                     </a>
                 </div>
             </div>
-            
             <!-- Timeline Tab -->
             <div id="timeline" class="tab-content">
                 <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026年3月26日</div>
+                        <div class="timeline-content">
+                            <div class="timeline-files">
+                                <a href="ai-news-2026-03-26-20260326.html" class="timeline-file">
+                                    <span>🤖</span>
+                                    <span>AI热点新闻日报</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="timeline-item">
                         <div class="timeline-date">2026年3月24日</div>
                         <div class="timeline-content">
@@ -1176,7 +1293,156 @@
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026年3月22日</div>
+                        <div class="timeline-content">
+                            <div class="timeline-files">
+                                <a href="ai-news-2026-03-22-20260322.html" class="timeline-file">
+                                    <span>🤖</span>
+                                    <span>AI热点新闻日报</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026年3月21日</div>
+                        <div class="timeline-content">
+                            <div class="timeline-files">
+                                <a href="ai-news-2026-03-21-20260321.html" class="timeline-file">
+                                    <span>🤖</span>
+                                    <span>AI热点新闻日报</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026年3月16日</div>
+                        <div class="timeline-content">
+                            <div class="timeline-files">
+                                <a href="ai-news-2026-03-16-20260316.html" class="timeline-file">
+                                    <span>🤖</span>
+                                    <span>AI热点新闻日报</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026年3月15日</div>
+                        <div class="timeline-content">
+                            <div class="timeline-files">
+                                <a href="ai-news-2026-03-15-20260315.html" class="timeline-file">
+                                    <span>🤖</span>
+                                    <span>AI热点新闻日报</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026年3月8日</div>
+                        <div class="timeline-content">
+                            <div class="timeline-files">
+                                <a href="ai-news-2026-03-08-20260308.html" class="timeline-file">
+                                    <span>🤖</span>
+                                    <span>AI热点新闻日报</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026年3月7日</div>
+                        <div class="timeline-content">
+                            <div class="timeline-files">
+                                <a href="ai-news-2026-03-07-20260307.html" class="timeline-file">
+                                    <span>🤖</span>
+                                    <span>AI热点新闻日报</span>
+                                </a>
+                                <a href="x-ai-trends-2026-03-07-20260307.html" class="timeline-file">
+                                    <span>🔥</span>
+                                    <span>X AI趋势日报</span>
+                                </a>
+                                <a href="producthunt-report-2026-03-07-20260307.html" class="timeline-file">
+                                    <span>🚀</span>
+                                    <span>Product Hunt日报</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026年3月6日</div>
+                        <div class="timeline-content">
+                            <div class="timeline-files">
+                                <a href="ai-news-2026-03-06-20260306.html" class="timeline-file">
+                                    <span>🤖</span>
+                                    <span>AI热点新闻日报</span>
+                                </a>
+                                <a href="x-ai-trends-2026-03-06-20260306.html" class="timeline-file">
+                                    <span>🔥</span>
+                                    <span>X AI趋势日报</span>
+                                </a>
+                                <a href="producthunt-report-2026-03-06-20260306.html" class="timeline-file">
+                                    <span>🚀</span>
+                                    <span>Product Hunt日报</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026年3月5日</div>
+                        <div class="timeline-content">
+                            <div class="timeline-files">
+                                <a href="ai-news-2026-03-05-20260305.html" class="timeline-file">
+                                    <span>🤖</span>
+                                    <span>AI热点新闻日报</span>
+                                </a>
+                                <a href="x-ai-trends-2026-03-05-20260305.html" class="timeline-file">
+                                    <span>🔥</span>
+                                    <span>X AI趋势日报</span>
+                                </a>
+                                <a href="producthunt-report-2026-03-05-20260305.html" class="timeline-file">
+                                    <span>🚀</span>
+                                    <span>Product Hunt日报</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026年3月4日</div>
+                        <div class="timeline-content">
+                            <div class="timeline-files">
+                                <a href="ai-news-2026-03-04-20260304.html" class="timeline-file">
+                                    <span>🤖</span>
+                                    <span>AI热点新闻日报</span>
+                                </a>
+                                <a href="x-ai-trends-2026-03-04-20260304.html" class="timeline-file">
+                                    <span>🔥</span>
+                                    <span>X AI趋势日报</span>
+                                </a>
+                                <a href="producthunt-report-2026-03-04-20260304.html" class="timeline-file">
+                                    <span>🚀</span>
+                                    <span>Product Hunt日报</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026年3月3日</div>
+                        <div class="timeline-content">
+                            <div class="timeline-files">
+                                <a href="ai-news-2026-03-03-20260303.html" class="timeline-file">
+                                    <span>🤖</span>
+                                    <span>AI热点新闻日报</span>
+                                </a>
+                                <a href="x-ai-trends-2026-03-03-20260303.html" class="timeline-file">
+                                    <span>🔥</span>
+                                    <span>X AI趋势日报</span>
+                                </a>
+                                <a href="producthunt-report-2026-03-03-20260303.html" class="timeline-file">
+                                    <span>🚀</span>
+                                    <span>Product Hunt日报</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="timeline-item">
                         <div class="timeline-date">2026年3月2日</div>
                         <div class="timeline-content">
@@ -1185,10 +1451,17 @@
                                     <span>🤖</span>
                                     <span>AI热点新闻日报</span>
                                 </a>
+                                <a href="x-ai-trends-2026-03-02-20260302.html" class="timeline-file">
+                                    <span>🔥</span>
+                                    <span>X AI趋势日报</span>
+                                </a>
+                                <a href="producthunt-report-2026-03-02-20260302.html" class="timeline-file">
+                                    <span>🚀</span>
+                                    <span>Product Hunt日报</span>
+                                </a>
                             </div>
                         </div>
                     </div>
-                    
                     <div class="timeline-item">
                         <div class="timeline-date">2026年3月1日</div>
                         <div class="timeline-content">
@@ -1197,21 +1470,47 @@
                                     <span>🤖</span>
                                     <span>AI热点新闻日报</span>
                                 </a>
+                                <a href="x-ai-trends-2026-03-01-20260301.html" class="timeline-file">
+                                    <span>🔥</span>
+                                    <span>X AI趋势日报</span>
+                                </a>
+                                <a href="producthunt-report-2026-03-01-20260301.html" class="timeline-file">
+                                    <span>🚀</span>
+                                    <span>Product Hunt日报</span>
+                                </a>
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026年2月28日</div>
+                        <div class="timeline-content">
+                            <div class="timeline-files">
+                                <a href="ai-news-2026-02-28-20260228.html" class="timeline-file">
+                                    <span>🤖</span>
+                                    <span>AI热点新闻日报</span>
+                                </a>
+                                <a href="x-ai-trends-2026-02-28.html" class="timeline-file">
+                                    <span>🔥</span>
+                                    <span>X AI趋势日报</span>
+                                </a>
+                                <a href="producthunt-report-2026-02-28-20260228.html" class="timeline-file">
+                                    <span>🚀</span>
+                                    <span>Product Hunt日报</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="timeline-item">
                         <div class="timeline-date">2026年2月27日</div>
                         <div class="timeline-content">
                             <div class="timeline-files">
-                                <a href="x-ai-trends-2026-02-27.html" class="timeline-file">
-                                    <span>🔥</span>
-                                    <span>X AI趋势日报</span>
-                                </a>
                                 <a href="ai-news-2026-02-27-20260227.html" class="timeline-file">
                                     <span>🤖</span>
                                     <span>AI热点新闻日报</span>
+                                </a>
+                                <a href="x-ai-trends-2026-02-27.html" class="timeline-file">
+                                    <span>🔥</span>
+                                    <span>X AI趋势日报</span>
                                 </a>
                                 <a href="producthunt-report-2026-02-27-20260227.html" class="timeline-file">
                                     <span>🚀</span>
@@ -1220,18 +1519,25 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="timeline-item">
                         <div class="timeline-date">2026年2月26日</div>
                         <div class="timeline-content">
                             <div class="timeline-files">
-                                <a href="x-ai-trends-2026-02-26-20260226.html" class="timeline-file">
-                                    <span>🔥</span>
-                                    <span>X AI趋势日报</span>
+                                <a href="ai-news-2026-02-26.html" class="timeline-file">
+                                    <span>🤖</span>
+                                    <span>AI热点新闻日报</span>
                                 </a>
                                 <a href="ai-news-2026-02-26-20260226.html" class="timeline-file">
                                     <span>🤖</span>
                                     <span>AI热点新闻日报</span>
+                                </a>
+                                <a href="x-ai-trends-2026-02-26-20260226.html" class="timeline-file">
+                                    <span>🔥</span>
+                                    <span>X AI趋势日报</span>
+                                </a>
+                                <a href="x-ai-trends-2026-02-26.html" class="timeline-file">
+                                    <span>🔥</span>
+                                    <span>X AI趋势日报</span>
                                 </a>
                                 <a href="producthunt-report-2026-02-26-20260226.html" class="timeline-file">
                                     <span>🚀</span>
@@ -1240,43 +1546,36 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="timeline-item">
                         <div class="timeline-date">2026年2月25日</div>
                         <div class="timeline-content">
                             <div class="timeline-files">
-                                <a href="x-ai-trends-2026-02-25-20260225.html" class="timeline-file">
-                                    <span>🔥</span>
-                                    <span>X AI趋势日报</span>
-                                </a>
                                 <a href="ai-news-2026-02-25-20260225.html" class="timeline-file">
                                     <span>🤖</span>
                                     <span>AI热点新闻日报</span>
+                                </a>
+                                <a href="x-ai-trends-2026-02-25-20260225.html" class="timeline-file">
+                                    <span>🔥</span>
+                                    <span>X AI趋势日报</span>
                                 </a>
                                 <a href="producthunt-report-2026-02-25-20260225.html" class="timeline-file">
                                     <span>🚀</span>
                                     <span>Product Hunt日报</span>
                                 </a>
-                                <a href="三年春节AI发展回顾-2024-2026.html" class="timeline-file">
-                                    <span>🧧</span>
-                                    <span>三年春节AI发展回顾</span>
-                                </a>
                             </div>
                         </div>
                     </div>
-                    
                     <div class="timeline-item">
                         <div class="timeline-date">2026年2月24日</div>
                         <div class="timeline-content">
                             <div class="timeline-files">
                                 <a href="producthunt-report-2026-02-24-20260224.html" class="timeline-file">
-                                    <span>📦</span>
+                                    <span>🚀</span>
                                     <span>Product Hunt日报</span>
                                 </a>
                             </div>
                         </div>
                     </div>
-                    
                     <div class="timeline-item">
                         <div class="timeline-date">2026年2月23日</div>
                         <div class="timeline-content">
@@ -1292,7 +1591,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="timeline-item">
                         <div class="timeline-date">2026年2月22日</div>
                         <div class="timeline-content">
@@ -1308,7 +1606,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="timeline-item">
                         <div class="timeline-date">2026年2月21日</div>
                         <div class="timeline-content">
@@ -1324,7 +1621,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="timeline-item">
                         <div class="timeline-date">2026年2月20日</div>
                         <div class="timeline-content">
@@ -1340,7 +1636,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="timeline-item">
                         <div class="timeline-date">2026年2月19日</div>
                         <div class="timeline-content">
@@ -1356,7 +1651,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="timeline-item">
                         <div class="timeline-date">2026年2月18日</div>
                         <div class="timeline-content">
@@ -1372,7 +1666,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="timeline-item">
                         <div class="timeline-date">2026年2月17日</div>
                         <div class="timeline-content">
@@ -1388,7 +1681,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="timeline-item">
                         <div class="timeline-date">2026年2月16日</div>
                         <div class="timeline-content">
@@ -1404,7 +1696,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="timeline-item">
                         <div class="timeline-date">2026年2月15日</div>
                         <div class="timeline-content">
@@ -1420,7 +1711,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="timeline-item">
                         <div class="timeline-date">2026年2月14日</div>
                         <div class="timeline-content">
@@ -1436,15 +1726,18 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
-            
         </div>
         
+        <!-- Footer -->
         <div class="footer">
-            最后更新：<span id="updateTime"></span>
+            <p>📊 持续更新 · 记录AI时代的每一天</p>
+            <p style="margin-top:8px;opacity:0.7">共收录 85 份日报 · 数据截止至 2026年3月26日</p>
         </div>
     </div>
+
     
     <script>
         // Tab switching
